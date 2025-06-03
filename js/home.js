@@ -1,16 +1,32 @@
 
-// Simulated API data
 const apiData = {
-    enregistrements: 1500,
-    regions: 2300,
-    installateurs: 800,
-    regionsAnnee: 3000,
-    annee: 1200,
-    marques: 400,
-    onduleurs: 600,
-    baseAnnee: 1900,
-    installations: 2800
+    enregistrements: 0,
+    regions: 0,
+    installateurs: 0,
+    regionsAnnee: 0,
+    annee: 0,
+    marques: 0,
+    onduleurs: 0,
+    baseAnnee: 0,
+    installations: 0
 };
+
+$(document).ready(function () {
+    $.ajax({
+        url: 'api/stats.php',
+        method: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            for (const key in data) {
+                apiData[key] = data[key];
+            }
+        },
+        error: function () {
+            console.error('Error during data retrival from database');
+        }
+    });
+});
+
 
 // Animate counters
 function animateCounter(element, finalValue) {

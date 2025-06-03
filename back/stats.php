@@ -55,13 +55,13 @@ try {
     $response = [
         "enregistrements" => $totalInputs,
         "regions" => $totalRegiion,
-        "base" => $totalInstallations,
+        "installations" => $totalInstallations,
         "installateurs" => $totalinstallateurs,
-        "par_annee" => $totalInstallationsByYear,
-        "region_par_annee" => $totalInstallationsFromRegionByYear,
-        "panneaux_marques" => $totalBrandsPann,
+        "annee" => $totalInstallationsByYear,
+        "regionsAnnee" => $totalInstallationsFromRegionByYear,
+        "marques" => $totalBrandsPann,
         "onduleurs" => $totalBrandsOnd,
-        "base_par_annee" => $totalInputsByYear
+        "baseAnnee" => $totalInputsByYear
     ];
 
 
