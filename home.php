@@ -1,21 +1,103 @@
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<html lang="fr">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accueil - Panneaux Photovoltaïque</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/home.css">
+</head>
 
-    <title>Hello, world!</title>
-  </head>
-  <body>
-    <h1>Hello, world!</h1>
+<body>
+  <header class="header-container">
+    <img class="logo" src="assets/logo.png">
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-  </body>
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link active" href="#" data-tab="accueil">Accueil</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="search.php" data-tab="recherche">Recherche</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="map.php" data-tab="carte">Carte</a>
+      </li>
+    </ul>
+  </header>
+
+  <section class="hero-section">
+    <div class="hero-content">
+      <h3>« Notre objectif est de sensibiliser le public au développement des énergies renouvelables en France, en
+        localisant les installations de panneaux solaires et en partageant des informations claires sur leur mise en
+        œuvre. »</h3>
+    </div>
+  </section>
+
+  <section class="stats-section">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="circle" data-stat="enregistrements">0</div>
+        <div class="circle-label">Enregistrements en Base</div>
+      </div>
+
+      <div class="stat-item">
+        <div class="circle" data-stat="regions">0</div>
+        <div class="circle-label">Installations par Région</div>
+      </div>
+
+      <div class="stat-item">
+        <div class="circle" data-stat="installateurs">0</div>
+        <div class="circle-label">Installateurs</div>
+      </div>
+
+      <div class="stat-item">
+        <div class="circle" data-stat="regionsAnnee">0</div>
+        <div class="circle-label">Installations en Région par Année</div>
+      </div>
+
+      <div class="stat-item">
+        <div class="circle" data-stat="annee">0</div>
+        <div class="circle-label">Installations par Année</div>
+      </div>
+
+      <div class="stat-item">
+        <div class="circle" data-stat="marques">0</div>
+        <div class="circle-label">Marques de Panneaux Solaire</div>
+      </div>
+
+      <div class="stat-item">
+        <div class="circle" data-stat="onduleurs">0</div>
+        <div class="circle-label">Marques d'Onduleur</div>
+      </div>
+
+      <div class="stat-item">
+        <div class="circle" data-stat="baseAnnee">0</div>
+        <div class="circle-label">Enregistrements en Base par Année</div>
+      </div>
+
+      <div class="stat-item">
+        <div class="circle" data-stat="installations">0</div>
+        <div class="circle-label">Installations</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="map-section">
+    <p>Pour plus de détails et recherche précise :</p>
+    <div class="action-buttons">
+      <a href="map.php" class="btn-custom btn-carte">Carte 📍</a>
+      <a href="search.php" class="btn-custom btn-recherche">Recherche 🔍</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 PanneauxPhotovoltaique.fr — Tous droits réservés.</p>
+    <p>
+      <a>Ibrahim SAOU</a> |
+      <a>Erwan LANGLAIS</a> |
+      <a>Achille WAGNER</a>
+    </p>
+  </footer>
+  <script src="js/home.js"></script>
+</body>
 </html>
