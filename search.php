@@ -1,0 +1,113 @@
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recherche - Panneaux Photovoltaïque</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/search.css">
+</head>
+
+<body>
+  <header class="header-container">
+    <img class="logo" src="assets/logo.png">
+
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link" href="home.php" data-tab="accueil">Accueil</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="#" data-tab="recherche">Recherche</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="map.php" data-tab="carte">Carte</a>
+      </li>
+    </ul>
+  </header>
+
+  <section class="research-param">
+    <select class="select-box" id="ondBrand">
+      <h3>Marque de l'onduleur</h3>
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+      <option>6</option>
+      <option>7</option>
+      <option>8</option>
+      <option>9</option>
+      <option>10</option>
+      <option>11</option>
+      <option>12</option>
+      <option>13</option>
+      <option>14</option>
+      <option>15</option>
+      <option>16</option>
+      <option>17</option>
+      <option>18</option>
+      <option>19</option>
+      <option>20</option>
+      <!-- A modifier avec les 20 premiers résultats de la BDD -->
+    </select>
+    <select class="select-box" id="panelBrand">
+      <h3>Marque du panneau</h3>
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+      <option>6</option>
+      <option>7</option>
+      <option>8</option>
+      <option>9</option>
+      <option>10</option>
+      <option>11</option>
+      <option>12</option>
+      <option>13</option>
+      <option>14</option>
+      <option>15</option>
+      <option>16</option>
+      <option>17</option>
+      <option>18</option>
+      <option>19</option>
+      <option>20</option>
+      <!-- A modifier avec les 20 premiers résultats de la BDD -->
+    </select>
+    <select class="select-box" id="department">
+      <h3>Département</h3>
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+      <option>6</option>
+      <option>7</option>
+      <option>8</option>
+      <option>9</option>
+      <option>10</option>
+      <option>11</option>
+      <option>12</option>
+      <option>13</option>
+      <option>14</option>
+      <option>15</option>
+      <option>16</option>
+      <option>17</option>
+      <option>18</option>
+      <option>19</option>
+      <option>20</option>
+      <!-- A modifier avec 20 résultats aléatoires de la BDD -->
+    </select>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 PanneauxPhotovoltaique.fr — Tous droits réservés.</p>
+    <p>
+      <a>Ibrahim SAOU</a> |
+      <a>Erwan LANGLAIS</a> |
+      <a>Achille WAGNER</a>
+    </p>
+  </footer>
+  <script src="js/home.js"></script>
+</body>
+</html>
