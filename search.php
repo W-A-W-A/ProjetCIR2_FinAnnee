@@ -28,74 +28,74 @@
   <section class="research-param">
     <select class="select-box" id="ondBrand">
       <h3>Marque de l'onduleur</h3>
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-      <option>6</option>
-      <option>7</option>
-      <option>8</option>
-      <option>9</option>
-      <option>10</option>
-      <option>11</option>
-      <option>12</option>
-      <option>13</option>
-      <option>14</option>
-      <option>15</option>
-      <option>16</option>
-      <option>17</option>
-      <option>18</option>
-      <option>19</option>
-      <option>20</option>
+      <option id="ond1">1</option>
+      <option id="ond2">2</option>
+      <option id="ond3">3</option>
+      <option id="ond4">4</option>
+      <option id="ond5">5</option>
+      <option id="ond6">6</option>
+      <option id="ond7">7</option>
+      <option id="ond8">8</option>
+      <option id="ond9">9</option>
+      <option id="ond10">10</option>
+      <option id="ond11">11</option>
+      <option id="ond12">12</option>
+      <option id="ond13">13</option>
+      <option id="ond14">14</option>
+      <option id="ond15">15</option>
+      <option id="ond16">16</option>
+      <option id="ond17">17</option>
+      <option id="ond18">18</option>
+      <option id="ond19">19</option>
+      <option id="ond20">20</option>
       <!-- A modifier avec les 20 premiers résultats de la BDD -->
     </select>
     <select class="select-box" id="panelBrand">
       <h3>Marque du panneau</h3>
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-      <option>6</option>
-      <option>7</option>
-      <option>8</option>
-      <option>9</option>
-      <option>10</option>
-      <option>11</option>
-      <option>12</option>
-      <option>13</option>
-      <option>14</option>
-      <option>15</option>
-      <option>16</option>
-      <option>17</option>
-      <option>18</option>
-      <option>19</option>
-      <option>20</option>
+      <option id="pan1">1</option>
+      <option id="pan2">2</option>
+      <option id="pan3">3</option>
+      <option id="pan4">4</option>
+      <option id="pan5">5</option>
+      <option id="pan6">6</option>
+      <option id="pan7">7</option>
+      <option id="pan8">8</option>
+      <option id="pan9">9</option>
+      <option id="pan10">10</option>
+      <option id="pan11">11</option>
+      <option id="pan12">12</option>
+      <option id="pan13">13</option>
+      <option id="pan14">14</option>
+      <option id="pan15">15</option>
+      <option id="pan16">16</option>
+      <option id="pan17">17</option>
+      <option id="pan18">18</option>
+      <option id="pan19">19</option>
+      <option id="pan20">20</option>
       <!-- A modifier avec les 20 premiers résultats de la BDD -->
     </select>
     <select class="select-box" id="department">
       <h3>Département</h3>
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-      <option>6</option>
-      <option>7</option>
-      <option>8</option>
-      <option>9</option>
-      <option>10</option>
-      <option>11</option>
-      <option>12</option>
-      <option>13</option>
-      <option>14</option>
-      <option>15</option>
-      <option>16</option>
-      <option>17</option>
-      <option>18</option>
-      <option>19</option>
-      <option>20</option>
+      <option id="dep1">1</option>
+      <option id="dep2">2</option>
+      <option id="dep3">3</option>
+      <option id="dep4">4</option>
+      <option id="dep5">5</option>
+      <option id="dep6">6</option>
+      <option id="dep7">7</option>
+      <option id="dep8">8</option>
+      <option id="dep9">9</option>
+      <option id="dep10">10</option>
+      <option id="dep11">11</option>
+      <option id="dep12">12</option>
+      <option id="dep13">13</option>
+      <option id="dep14">14</option>
+      <option id="dep15">15</option>
+      <option id="dep16">16</option>
+      <option id="dep17">17</option>
+      <option id="dep18">18</option>
+      <option id="dep19">19</option>
+      <option id="dep20">20</option>
       <!-- A modifier avec 20 résultats aléatoires de la BDD -->
     </select>
   </section>
