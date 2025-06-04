@@ -62,9 +62,10 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     color: white;
-    padding: 3rem 2rem;
+    padding: 1rem 2rem;
     text-align: center;
-    position: relative;
+    position:relative;
+    align-content: center;
     display: flex;
     flex-direction: column;
     min-width: 200px;
@@ -91,15 +92,15 @@ body {
 
 .select-box label {
     font-weight: 600;
-    color: #64B6AC;
+    color: #509080;
     font-size: 0.9rem;
 }
 .select-box select{
     padding: 8px 12px;
-    border: 2px solid #DAFFEF;
+    border: 2px solid #A0D0C0;
     border-radius: 8px;
     background: white;
-    color: #64B6AC;
+    color: #509080;
     font-size: 0.9rem;
     min-width: 150px;
 }
