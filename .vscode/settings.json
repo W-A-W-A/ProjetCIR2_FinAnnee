@@ -22,6 +22,20 @@
             "name": "cir2_g10",
             "database": "solaire",
             "username": "admin"
+        },
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "cir2_g10_1",
+            "database": "solaire",
+            "username": "admin",
+            "askForPassword": true
         }
     ]
 }
