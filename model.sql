@@ -128,6 +128,20 @@ CREATE TABLE Departement(
 
 
 #------------------------------------------------------------
+# Table: Commune
+#------------------------------------------------------------
+
+CREATE TABLE Commune(
+        code_insee Int NOT NULL ,
+        com_nom    Varchar (255) NOT NULL ,
+        id         Int NOT NULL
+	,CONSTRAINT Commune_PK PRIMARY KEY (code_insee)
+
+	,CONSTRAINT Commune_Departement_FK FOREIGN KEY (id) REFERENCES Departement(id)
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
 # Table: Installation
 #------------------------------------------------------------
 
@@ -150,12 +164,12 @@ CREATE TABLE Installation(
         id_Panneau        Int ,
         id_Ondulateur     Int ,
         id_Installateur   Int ,
-        id_Departement    Int
+        code_insee        Int
 	,CONSTRAINT Installation_PK PRIMARY KEY (id)
 
 	,CONSTRAINT Installation_Panneau_FK FOREIGN KEY (id_Panneau) REFERENCES Panneau(id)
 	,CONSTRAINT Installation_Ondulateur0_FK FOREIGN KEY (id_Ondulateur) REFERENCES Ondulateur(id)
 	,CONSTRAINT Installation_Installateur1_FK FOREIGN KEY (id_Installateur) REFERENCES Installateur(id)
-	,CONSTRAINT Installation_Departement2_FK FOREIGN KEY (id_Departement) REFERENCES Departement(id)
+	,CONSTRAINT Installation_Commune2_FK FOREIGN KEY (code_insee) REFERENCES Commune(code_insee)
 )ENGINE=InnoDB;
 
