@@ -68,16 +68,39 @@ body {
     display: flex;
     flex-direction: column;
     min-width: 200px;
+    min-height: calc(100vh - 160px);
+}
+
+.research-select {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .select-box {
-    display: flex;
-    width: 100%;
-    padding: 10px;
     border: 2px solid #e0e0e0;
     border-radius: 8px;
     background: white;
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.select-box select{
+    padding: 8px 12px;
+    border: 2px solid #C0FDFB;
+    border-radius: 8px;
+    background: white;
+    color: #2C5F5A;
+    font-size: 0.9rem;
+    min-width: 150px;
 }
 
 
