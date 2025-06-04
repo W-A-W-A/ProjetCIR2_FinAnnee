@@ -13,7 +13,7 @@ const apiData = {
 
 $(document).ready(function () {
     $.ajax({
-        url: 'api/stats.php',
+        url: 'back/stats.php',
         method: 'GET',
         dataType: 'json',
         success: function (data) {
