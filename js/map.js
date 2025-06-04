@@ -2,12 +2,85 @@
 const map = L.map('map').setView([46.6034, 1.8883], 6);
 
 // Add OpenStreetMap tiles
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(map);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+    //     , 
+    //     {
+    //     attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    // }
+).addTo(map);
+
+let solarInstallations = [];
+let apiData = {};
+
+// Function to load solar installations data
+function loadSolarInstallations(filters = {}) {
+    // Build query parameters
+    let queryParams = new URLSearchParams();
+
+    if (filters.department && filters.department !== 'all') {
+        queryParams.append('department', filters.department);
+    }
+    if (filters.region && filters.region !== 'all') {
+        queryParams.append('region', filters.region);
+    }
+    if (filters.year && filters.year !== 'all') {
+        queryParams.append('year', filters.year);
+    }
+
+    const url = `back/solar_installations.php${queryParams.toString() ? '?' + queryParams.toString() : ''}`;
+
+    $.ajax({
+        url: url,
+        method: 'GET',
+        dataType: 'json',
+        success: function (response) {
+            if (response.success) {
+                solarInstallations = response.data;
+                apiData.solarInstallations = response.data;
+
+                // Update map with new data
+                updateMap(solarInstallations);
+
+                console.log(`Loaded ${response.count} solar installations`);
+            } else {
+                console.error('API Error:', response.error);
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error('Error during data retrieval from database:', error);
+            console.error('Status:', status);
+            console.error('Response:', xhr.responseText);
+        }
+    });
+}
+
+
+// Initial load when document is ready
+$(document).ready(function () {
+    // Load all installations initially
+    loadSolarInstallations();
+
+    // Load other stats if needed
+    $.ajax({
+        url: 'back/stats.php',
+        method: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            for (const key in data) {
+                apiData[key] = data[key];
+            }
+        },
+        error: function () {
+            console.error('Error during stats retrieval from database');
+        }
+    });
+});
+
+
+
 
 // Sample solar installation data (matching your image)
-const solarInstallations = [
+const solarInstallationsSimulation = [
     // Northern France
     { lat: 50.6292, lng: 3.0573, city: "Lille", year: 2023, department: "59", power: "150 kW" },
     { lat: 49.4944, lng: 0.1079, city: "Le Havre", year: 2022, department: "76", power: "200 kW" },
@@ -86,7 +159,7 @@ function filterInstallations() {
     const selectedYear = document.getElementById('yearSelect').value;
     const selectedDepartment = document.getElementById('departmentSelect').value;
 
-    let filtered = solarInstallations;
+    let filtered = solarInstallationsSimulation;
 
     if (selectedYear) {
         filtered = filtered.filter(installation => installation.year.toString() === selectedYear);
@@ -104,7 +177,7 @@ document.getElementById('yearSelect').addEventListener('change', filterInstallat
 document.getElementById('departmentSelect').addEventListener('change', filterInstallations);
 
 // Initialize map with all markers
-addMarkers(solarInstallations);
+addMarkers(solarInstallationsSimulation);
 
 // Tab functionality
 document.querySelectorAll('.nav-link').forEach(link => {
@@ -120,3 +193,93 @@ document.querySelectorAll('.nav-link').forEach(link => {
         }
     });
 });
+
+
+
+// Global variable to store the installations data
+
+
+
+
+/*
+
+// Event handlers for filter changes
+$(document).on('change', '#department-select', function () {
+    const selectedDepartment = $(this).val();
+    const selectedRegion = $('#region-select').val();
+    const selectedYear = $('#year-select').val();
+
+    loadSolarInstallations({
+        department: selectedDepartment,
+        region: selectedRegion,
+        year: selectedYear
+    });
+});
+
+$(document).on('change', '#region-select', function () {
+    const selectedRegion = $(this).val();
+    const selectedDepartment = $('#department-select').val();
+    const selectedYear = $('#year-select').val();
+
+    loadSolarInstallations({
+        department: selectedDepartment,
+        region: selectedRegion,
+        year: selectedYear
+    });
+});
+
+$(document).on('change', '#year-select', function () {
+    const selectedYear = $(this).val();
+    const selectedDepartment = $('#department-select').val();
+    const selectedRegion = $('#region-select').val();
+
+    loadSolarInstallations({
+        department: selectedDepartment,
+        region: selectedRegion,
+        year: selectedYear
+    });
+});
+
+// Function to update the map (you'll need to implement this based on your mapping library)
+function updateMap(installations) {
+    // Clear existing markers
+    clearMapMarkers();
+
+    // Add new markers
+    installations.forEach(function (installation) {
+        addMapMarker({
+            lat: installation.lat,
+            lng: installation.lng,
+            city: installation.city,
+            year: installation.year,
+            department: installation.department_name,
+            region: installation.region_name,
+            power: installation.power
+        });
+    });
+
+    // Update map bounds if needed
+    if (installations.length > 0) {
+        fitMapBounds(installations);
+    }
+}
+
+// Helper functions (implement these based on your mapping library)
+function clearMapMarkers() {
+    // Implementation depends on your mapping library (Google Maps, Leaflet, etc.)
+    console.log('Clearing map markers...');
+}
+
+function addMapMarker(data) {
+    // Implementation depends on your mapping library
+    console.log('Adding marker:', data);
+}
+
+function fitMapBounds(installations) {
+    // Implementation depends on your mapping library
+    console.log('Fitting map bounds for', installations.length, 'installations');
+}
+
+
+
+*/
