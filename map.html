@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carte - Panneaux Solaires</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
+    <link rel="stylesheet" href="./css/map.css">
+</head>
+
+<body>
+    <header class="header-container">
+        <img class="logo" src="assets/logo.png">
+
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" href="#" data-tab="accueil">Accueil</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="search.php" data-tab="recherche">Recherche</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="map.php" data-tab="carte">Carte</a>
+            </li>
+        </ul>
+    </header>
+
+    <section class="map-container">
+        <div class="map-controls">
+            <div class="control-group">
+                <label for="yearSelect">Année d'installation</label>
+                <select id="yearSelect">
+                    <option value="">Toutes les années</option>
+                    <option value="2024">2024</option>
+                    <option value="2023">2023</option>
+                    <option value="2022">2022</option>
+                    <option value="2021">2021</option>
+                    <option value="2020">2020</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="departmentSelect">Département</label>
+                <select id="departmentSelect">
+                    <option value="">Tous les départements</option>
+                    <option value="75">Paris (75)</option>
+                    <option value="69">Rhône (69)</option>
+                    <option value="13">Bouches-du-Rhône (13)</option>
+                    <option value="31">Haute-Garonne (31)</option>
+                    <option value="59">Nord (59)</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="map"></div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 PanneauxPhotovoltaique.fr — Tous droits réservés.</p>
+        <p>
+            <a>Ibrahim SAOU</a> |
+            <a>Erwan LANGLAIS</a> |
+            <a>Achille WAGNER</a>
+        </p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+    <script src="./js/map.js"></script>
+</body>
+
+</html>
