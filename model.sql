@@ -7,6 +7,7 @@
 # Table: Installateur
 #------------------------------------------------------------
 
+DROP TABLE IF EXISTS Installateur;
 CREATE TABLE Installateur(
         id          Int NOT NULL ,
         install_nom Varchar (255) NOT NULL
@@ -18,6 +19,7 @@ CREATE TABLE Installateur(
 # Table: Marque Ondulateur
 #------------------------------------------------------------
 
+DROP TABLE IF EXISTS Marque_Ondulateur;
 CREATE TABLE Marque_Ondulateur(
         id  Int NOT NULL ,
         nom Varchar (255) NOT NULL
@@ -29,6 +31,7 @@ CREATE TABLE Marque_Ondulateur(
 # Table: Marque Panneau
 #------------------------------------------------------------
 
+DROP TABLE IF EXISTS Marque_Panneau;
 CREATE TABLE Marque_Panneau(
         id  Int NOT NULL ,
         nom Varchar (255) NOT NULL
@@ -40,6 +43,7 @@ CREATE TABLE Marque_Panneau(
 # Table: Modele Panneau
 #------------------------------------------------------------
 
+DROP TABLE IF EXISTS Modele_Panneau;
 CREATE TABLE Modele_Panneau(
         id  Int NOT NULL ,
         nom Varchar (255) NOT NULL
@@ -51,6 +55,7 @@ CREATE TABLE Modele_Panneau(
 # Table: Panneau
 #------------------------------------------------------------
 
+DROP TABLE IF EXISTS Panneau;
 CREATE TABLE Panneau(
         id                Int NOT NULL ,
         id_Marque_Panneau Int NOT NULL ,
@@ -66,6 +71,7 @@ CREATE TABLE Panneau(
 # Table: Modele Ondulateur
 #------------------------------------------------------------
 
+DROP TABLE IF EXISTS Modele_Ondulateur;
 CREATE TABLE Modele_Ondulateur(
         id  Int NOT NULL ,
         nom Varchar (255) NOT NULL
@@ -77,6 +83,7 @@ CREATE TABLE Modele_Ondulateur(
 # Table: Ondulateur
 #------------------------------------------------------------
 
+DROP TABLE IF EXISTS Ondulateur;
 CREATE TABLE Ondulateur(
         id                   Int NOT NULL ,
         id_Marque_Ondulateur Int NOT NULL ,
@@ -92,6 +99,7 @@ CREATE TABLE Ondulateur(
 # Table: Pays
 #------------------------------------------------------------
 
+DROP TABLE IF EXISTS Pays;
 CREATE TABLE Pays(
         id       Int NOT NULL ,
         pays_nom Varchar (255) NOT NULL
@@ -103,6 +111,7 @@ CREATE TABLE Pays(
 # Table: Region
 #------------------------------------------------------------
 
+DROP TABLE IF EXISTS Region;
 CREATE TABLE Region(
         id      Int NOT NULL ,
         dep_reg Varchar (255) NOT NULL ,
@@ -117,6 +126,7 @@ CREATE TABLE Region(
 # Table: Departement
 #------------------------------------------------------------
 
+DROP TABLE IF EXISTS Departement;
 CREATE TABLE Departement(
         id        Int NOT NULL ,
         dep_nom   Varchar (255) NOT NULL ,
@@ -131,6 +141,7 @@ CREATE TABLE Departement(
 # Table: Commune
 #------------------------------------------------------------
 
+DROP TABLE IF EXISTS Commune;
 CREATE TABLE Commune(
         code_insee Int NOT NULL ,
         com_nom    Varchar (255) NOT NULL ,
@@ -145,6 +156,7 @@ CREATE TABLE Commune(
 # Table: Installation
 #------------------------------------------------------------
 
+DROP TABLE IF EXISTS Installation;
 CREATE TABLE Installation(
         id                Int NOT NULL ,
         an_installation   Int ,
