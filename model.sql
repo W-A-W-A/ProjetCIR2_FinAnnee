@@ -55,7 +55,7 @@ population INT
 #------------------------------------------------------------
 
 CREATE TABLE Installateur(
-        id          Int NOT NULL ,
+        id          Int NOT NULL AUTO_INCREMENT,
         install_nom Varchar (255) NOT NULL
 	,CONSTRAINT Installateur_PK PRIMARY KEY (id)
 )ENGINE=InnoDB;
@@ -66,7 +66,7 @@ CREATE TABLE Installateur(
 #------------------------------------------------------------
 
 CREATE TABLE Marque_Ondulateur(
-        id  Int NOT NULL ,
+        id  Int NOT NULL AUTO_INCREMENT,
         nom Varchar (255) NOT NULL
 	,CONSTRAINT Marque_Ondulateur_PK PRIMARY KEY (id)
 )ENGINE=InnoDB;
@@ -77,7 +77,7 @@ CREATE TABLE Marque_Ondulateur(
 #------------------------------------------------------------
 
 CREATE TABLE Marque_Panneau(
-        id  Int NOT NULL ,
+        id  Int NOT NULL AUTO_INCREMENT,
         nom Varchar (255) NOT NULL
 	,CONSTRAINT Marque_Panneau_PK PRIMARY KEY (id)
 )ENGINE=InnoDB;
@@ -88,7 +88,7 @@ CREATE TABLE Marque_Panneau(
 #------------------------------------------------------------
 
 CREATE TABLE Modele_Panneau(
-        id  Int NOT NULL ,
+        id  Int NOT NULL AUTO_INCREMENT,
         nom Varchar (255) NOT NULL
 	,CONSTRAINT Modele_Panneau_PK PRIMARY KEY (id)
 )ENGINE=InnoDB;
@@ -99,7 +99,7 @@ CREATE TABLE Modele_Panneau(
 #------------------------------------------------------------
 
 CREATE TABLE Panneau(
-        id                Int NOT NULL ,
+        id                Int NOT NULL AUTO_INCREMENT,
         id_Marque_Panneau Int NOT NULL ,
         id_Modele_Panneau Int NOT NULL
 	,CONSTRAINT Panneau_PK PRIMARY KEY (id)
@@ -114,7 +114,7 @@ CREATE TABLE Panneau(
 #------------------------------------------------------------
 
 CREATE TABLE Modele_Ondulateur(
-        id  Int NOT NULL ,
+        id  Int NOT NULL AUTO_INCREMENT,
         nom Varchar (255) NOT NULL
 	,CONSTRAINT Modele_Ondulateur_PK PRIMARY KEY (id)
 )ENGINE=InnoDB;
@@ -125,7 +125,7 @@ CREATE TABLE Modele_Ondulateur(
 #------------------------------------------------------------
 
 CREATE TABLE Ondulateur(
-        id                   Int NOT NULL ,
+        id                   Int NOT NULL AUTO_INCREMENT,
         id_Marque_Ondulateur Int NOT NULL ,
         id_Modele_Ondulateur Int NOT NULL
 	,CONSTRAINT Ondulateur_PK PRIMARY KEY (id)
@@ -140,7 +140,7 @@ CREATE TABLE Ondulateur(
 #------------------------------------------------------------
 
 CREATE TABLE Pays(
-        id       Int NOT NULL ,
+        id       Int NOT NULL AUTO_INCREMENT,
         pays_nom Varchar (255) NOT NULL
 	,CONSTRAINT Pays_PK PRIMARY KEY (id)
 )ENGINE=InnoDB;
@@ -151,7 +151,7 @@ CREATE TABLE Pays(
 #------------------------------------------------------------
 
 CREATE TABLE Region(
-        id      Int NOT NULL ,
+        id      Int NOT NULL AUTO_INCREMENT,
         dep_reg Varchar (255) NOT NULL ,
         id_Pays Int NOT NULL
 	,CONSTRAINT Region_PK PRIMARY KEY (id)
@@ -165,7 +165,7 @@ CREATE TABLE Region(
 #------------------------------------------------------------
 
 CREATE TABLE Departement(
-        id        Int NOT NULL ,
+        id        Int NOT NULL AUTO_INCREMENT,
         dep_nom   Varchar (255) NOT NULL ,
         id_Region Int NOT NULL
 	,CONSTRAINT Departement_PK PRIMARY KEY (id)
@@ -179,7 +179,7 @@ CREATE TABLE Departement(
 #------------------------------------------------------------
 
 CREATE TABLE Commune(
-        id             Int NOT NULL ,
+        id             Int NOT NULL AUTO_INCREMENT,
         code_insee     Int ,
         com_nom        Varchar (255) NOT NULL ,
         id_Departement Int NOT NULL
@@ -194,7 +194,7 @@ CREATE TABLE Commune(
 #------------------------------------------------------------
 
 CREATE TABLE Installation(
-        id                Int NOT NULL ,
+        id                Int NOT NULL AUTO_INCREMENT,
         an_installation   Int ,
         nb_pann           Int ,
         nb_ond            Int ,
