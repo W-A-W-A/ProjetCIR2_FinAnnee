@@ -1,28 +1,23 @@
 
-const apiData = {
-    marqueOnduleur: "",
-    marquePanneau: "",
-    departement: "",
-    mois: 0,
-    annee: 0,
-    surface: 0,
-    nbPanneaux: 0,
-    puissanceCrete: 0,
-    commune: "",
-};
-
 $(document).ready(function () {
     $.ajax({
-        url: 'api/stats.php',
+        url: 'api/stats.php', // not sure it's the right php file to call, will see later
         method: 'GET',
         dataType: 'json',
-        success: function (data) {
-            for (const key in data) {
-                apiData[key] = data[key];
+        success: function (brands) {
+            const ondBrandSelect = document.getElementById('ondBrand');
+            if (ondBrandSelect && Array.isArray(brands)) { // if we found the HTML element and the brands exists
+                ondBrandSelect.innerHTML = ''; // flush placeholders down the skibidi
+                brands.forEach(brand => {
+                    const option = document.createElement('option');
+                    option.value = brand.id || brand.value || brand; // Adjust according to your data structure
+                    option.textContent = brand.name || brand.label || brand;
+                    ondBrandSelect.appendChild(option);
+                });
             }
         },
         error: function () {
-            console.error('Error during data retrival from database');
+            console.error('Error loading brands from database');
         }
     });
 });
