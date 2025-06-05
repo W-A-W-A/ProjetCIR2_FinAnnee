@@ -1,9 +1,9 @@
 <?php
 // db.php — connexion à la base de données distante
 
-$host = '10.10.51.130';
+$host = 'localhost';
 $db   = 'solaire';
-$user = 'admin';
+$user = 'monuser';
 $pass = 'isen44';
 
 $options = [
