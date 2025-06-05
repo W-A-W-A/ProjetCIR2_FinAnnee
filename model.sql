@@ -1,5 +1,5 @@
-DROP DATABASE IF EXISTS 'solaire';
-CREATE DATABASE 'solaire';
+DROP DATABASE IF EXISTS solaire;
+CREATE DATABASE solaire;
 
 #------------------------------------------------------------
 #        Script MySQL.
