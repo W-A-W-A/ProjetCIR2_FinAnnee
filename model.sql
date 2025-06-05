@@ -5,6 +5,50 @@ CREATE DATABASE 'solaire';
 #        Script MySQL.
 #------------------------------------------------------------
 
+ CREATE TABLE datafile(
+ id INT (32),
+ iddoc INT,
+ mois_installation INT (4),
+ an_installation INT (12),
+ nb_panneaux INT (32),
+ panneaux_marque VARCHAR (255),
+ panneaux_modele VARCHAR (255),
+ nb_onduleur INT,
+ onduleur_marque VARCHAR (255),
+ onduleur_modele VARCHAR (255),
+ puissance_crete INT,
+ surface INT,
+ pente INT,
+ pente_optimum INT,
+ orientation VARCHAR (10),
+ orientation_optimum VARCHAR (10),
+ installateur VARCHAR (255),
+ production_pvgis INT,
+ lat FLOAT,
+ lon FLOAT,
+ country VARCHAR (255),
+ postal_code INT,
+ postal_code_suffix INT,
+ postal_town VARCHAR (255),
+ locality VARCHAR (255),
+ administrative_area_level_1 VARCHAR (255),
+ administrative_area_level_2 VARCHAR (255),
+ administrative_area_level_3 VARCHAR (255),
+ administrative_area_level_4 VARCHAR (255),
+ political VARCHAR (255)
+ );
+
+ CREATE TABLE datacommunes(
+code_insee INT,
+nom_standard VARCHAR (255),
+reg_code INT,
+reg_nom VARCHAR (255),
+dep_code int,
+dep_nom VARCHAR (255),
+code_postal INT,
+population INT
+);
+
 
 #------------------------------------------------------------
 # Table: Installateur
