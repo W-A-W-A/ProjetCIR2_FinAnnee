@@ -1,0 +1,154 @@
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recherche - Panneaux Photovoltaïque</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/detail.css">
+</head>
+
+<body>
+  <header class="header-container">
+    <img class="logo" src="assets/logo.png">
+
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link" href="home.html" data-tab="accueil">Accueil</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="search.html" data-tab="recherche">Recherche</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="map.html" data-tab="carte">Carte</a>
+      </li>
+    </ul>
+  </header>
+
+  <section class="detail_content"> <!-- A modifier pour automatiser la recherche de données -->
+    <div class="mx-auto p-2" style="width:98%">
+      <div class="rounded-2 border border-dark d-grid gap-3 p-2">
+        <div class="rounded-2 d-flex flex-column resultElem">
+          <div class="rounded-top-2 d-flex flex-column text-light elementTop" >
+            <div class="d-grid flex-column topRow">
+              <p class="my-auto p-2 text-center">Installation</p>
+            </div>
+          </div>
+          <div class="rounded-bottom-2 d-flex justify-content-between elementBottom ">
+            <div class="d-grid flex-column leftCol" style="width: 50%;">
+              <p class="my-auto p-2 text-center">Installé par :</p>
+              <p class="my-auto p-2 text-center">Nombre de panneaux :</p>
+              <p class="my-auto p-2 text-center">Modèle des panneaux :</p>
+              <p class="my-auto p-2 text-center">Marque des panneaux :</p>
+              <p class="my-auto p-2 text-center">Nombre d'onduleurs :</p>
+              <p class="my-auto p-2 text-center">Modèle des onduleurs :</p>
+              <p class="my-auto p-2 text-center">Marque des onduleurs :</p>
+              <p class="my-auto p-2 text-center">Surface :</p>
+              <p class="my-auto p-2 text-center">Date d'installation :</p>
+            </div>
+            <div class="d-grid flex-column rightCol" style="width: 50%;">
+              <p class="my-auto p-2 text-center">[]</p>
+              <p class="my-auto p-2 text-center">[]</p>
+              <p class="my-auto p-2 text-center">[]</p>
+              <p class="my-auto p-2 text-center">[]</p>
+              <p class="my-auto p-2 text-center">[]</p>
+              <p class="my-auto p-2 text-center">[]</p>
+              <p class="my-auto p-2 text-center">[]</p>
+              <p class="my-auto p-2 text-center">[]</p>
+              <p class="my-auto p-2 text-center">[]</p>
+            </div>
+          </div>
+        </div>
+        <div name="second-row" class="d-flex justify-content-between">
+          <div class="rounded-2 d-grid flex-column resultElem" style="width: 49%;">
+            <div class="rounded-top-2 d-flex flex-column text-light elementTop" >
+                <div class="d-grid flex-column topRow">
+                    <p class="my-auto p-2 text-center">Localisation</p>
+                </div>
+            </div>
+            <div class="rounded-bottom-2 d-flex justify-content-between elementBottom ">
+              <div class="d-grid flex-column leftCol" style="width: 50%;">
+                <p class="my-auto p-2 text-center">Commune :</p>
+                <p class="my-auto p-2 text-center">Département :</p>
+                <p class="my-auto p-2 text-center">Code Postal :</p>
+                <p class="my-auto p-2 text-center">Région :</p>
+                <p class="my-auto p-2 text-center">Pays :</p>
+                <p class="my-auto p-2 text-center">Coordonnées GPS :</p>
+              </div>
+              <div class="d-grid flex-column rightCol" style="width: 50%;">
+                <p class="my-auto p-2 text-center">[]</p>
+                <p class="my-auto p-2 text-center">[]</p>
+                <p class="my-auto p-2 text-center">[]</p>
+                <p class="my-auto p-2 text-center">[]</p>
+                <p class="my-auto p-2 text-center">[]</p>
+                <p class="my-auto p-2 text-center">[]</p>
+              </div>
+            </div>
+          </div>
+          <div class="rounded-2 d-flex flex-column resultElem" style="width: 49%;">
+            <div class="rounded-top-2 d-flex flex-column text-light elementTop" >
+                <div class="d-grid flex-column topRow">
+                    <p class="my-auto p-2 text-center">Paramètres de l'installation</p>
+                </div>
+            </div>
+            <div class="rounded-bottom-2 d-flex justify-content-between elementBottom ">
+              <div class="d-grid flex-column leftCol" style="width: 50%;">
+                <p class="my-auto p-2 text-center">Puissance Crête :</p>
+                <p class="my-auto p-2 text-center">Production (PVGIS) :</p>
+                <p class="my-auto p-2 text-center">Pente :</p>
+                <p class="my-auto p-2 text-center">Pente Optimum :</p>
+                <p class="my-auto p-2 text-center">Orientation (0°=Sud) :</p>
+                <p class="my-auto p-2 text-center">Orientation Optimum :</p>
+              </div>
+              <div class="d-grid flex-column rightCol" style="width: 50%;">
+                <p class="my-auto p-2 text-center">[]</p>
+                <p class="my-auto p-2 text-center">[]</p>
+                <p class="my-auto p-2 text-center">[]</p>
+                <p class="my-auto p-2 text-center">[]</p>
+                <p class="my-auto p-2 text-center">[]</p>
+                <p class="my-auto p-2 text-center">[]</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="rounded-2 d-flex flex-column resultElem">
+          <div class="rounded-top-2 d-flex flex-column commentTop" >
+            <div class="d-grid flex-column topRow">
+              <p class="my-auto p-2 text-center">Commentaires</p>
+            </div>
+          </div>
+          <div class="rounded-bottom-2 d-flex flex-column commentBottom ">
+            <div class="d-grid flex-column leftCol m-4">
+              <p class="my-auto p-2 text-center">Contenu du commentaire</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="d-flex justify-content-between">
+      <div class="m-5" style="width:50%">
+        <form action="detail.html" method="get" class="my-auto p-2 text-center">
+          <button type="submit" name="alter" class="createBtn btn rounded-5 m-2 text-center">Modifier Installation</button>
+        </form>
+      </div>
+      <div class="m-5 " style="width:50%">
+        <form action="search.html" method="get" class="my-auto p-2 text-center">
+          <button type="submit" name="delete" class="createBtn btn rounded-5 m-2 text-center">Supprimer Installation</button>
+        </form>
+      </div>
+    </div>
+  </section>
+  <footer>
+    <p>&copy; 2025 PanneauxPhotovoltaique.fr — Tous droits réservés.</p>
+    <p>
+      <a>Ibrahim SAOU</a> |
+      <a>Erwan LANGLAIS</a> |
+      <a>Achille WAGNER</a>
+    </p>
+  </footer>
+  <script src="js/detail.js"></script>
+</body>
+</html>
