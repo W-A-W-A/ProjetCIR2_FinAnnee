@@ -1,27 +1,19 @@
 <?php
-$dsn = "mysql:host=localhost;dbname=solaire;charset=utf8mb4";
-$username = "admin";
-$password = "isen44";
-
+$host = 'localhost';      // ou l'adresse IP du serveur MySQL
+$dbname = 'solaire';
+$username = 'admin';
+$password = 'isen44';
+ 
 try {
-    $pdo = new PDO($dsn, $username, $password);
-    // Enable error mode for debugging
+    // Connexion à MySQL avec PDO
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
+   
+    // Configuration des attributs PDO pour afficher les erreurs
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    // Set charset explicitly for MariaDB compatibility
-    $pdo->exec("SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci");
+   
+    echo "Connexion réussie à la base de données.";
 } catch (PDOException $e) {
-    // Add debug information to see the actual error
-    error_log("Database connection error: " . $e->getMessage());
-    
-    // Only set response code if headers haven't been sent
-    if (!headers_sent()) {
-        http_response_code(500);
-    }
-    
-    echo json_encode([
-        "error" => "Database connection failed",
-        "details" => $e->getMessage()
-    ]);
-    exit;
+    echo "Erreur de connexion : " . $e->getMessage();
 }
+
 ?>
