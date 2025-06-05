@@ -218,6 +218,38 @@ footer a:hover {
     text-decoration: underline;
 }
 
+.elementTop{
+    background-color: #509080;
+}
+
+.elementBottom{
+    background-color: #A0D0C0;
+}
+
+.detailBtn{
+    border-color: #fff;
+    background-color: #509080;
+    color: #fff;
+}
+
+.detailBtn:hover{
+    border-color: #000;
+    background-color: #A0D0C0;
+    color: #000;
+}
+
+.createBtn{
+    border-color: #000;
+    background-color: #A0D0C0;
+    color: #000;
+}
+
+.createBtn:hover{
+    border-color: #000;
+    background-color: #509080;
+    color: #fff;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
     .header-container {
