@@ -64,7 +64,7 @@ DROP TABLE IF EXISTS datafile;
 
 DROP TABLE IF EXISTS Installateur;
 CREATE TABLE Installateur(
-        id          Int NOT NULL , # unique because prim. k.
+        id          Int NOT NULL AUTO_INCREMENT, # unique because prim. k.
         install_nom Varchar (255) NOT NULL
 	,CONSTRAINT Installateur_PK PRIMARY KEY (id)
 )ENGINE=InnoDB;
@@ -76,7 +76,7 @@ CREATE TABLE Installateur(
 
 DROP TABLE IF EXISTS Marque_Ondulateur;
 CREATE TABLE Marque_Ondulateur(
-        id  Int NOT NULL , # unique because prim. k.
+        id  Int NOT NULL AUTO_INCREMENT, # unique because prim. k.
         nom Varchar (255) NOT NULL
 	,CONSTRAINT Marque_Ondulateur_PK PRIMARY KEY (id)
 )ENGINE=InnoDB;
@@ -88,7 +88,7 @@ CREATE TABLE Marque_Ondulateur(
 
 DROP TABLE IF EXISTS Marque_Panneau;
 CREATE TABLE Marque_Panneau(
-        id  Int NOT NULL , # unique because prim. k.
+        id  Int NOT NULL AUTO_INCREMENT, # unique because prim. k.
         nom Varchar (255) NOT NULL
 	,CONSTRAINT Marque_Panneau_PK PRIMARY KEY (id)
 )ENGINE=InnoDB;
@@ -100,7 +100,7 @@ CREATE TABLE Marque_Panneau(
 
 DROP TABLE IF EXISTS Modele_Panneau;
 CREATE TABLE Modele_Panneau(
-        id  Int NOT NULL , # unique because prim. k.
+        id  Int NOT NULL AUTO_INCREMENT, # unique because prim. k.
         nom Varchar (255) NOT NULL
 	,CONSTRAINT Modele_Panneau_PK PRIMARY KEY (id)
 )ENGINE=InnoDB;
@@ -112,7 +112,7 @@ CREATE TABLE Modele_Panneau(
 
 DROP TABLE IF EXISTS Panneau;
 CREATE TABLE Panneau(
-        id                Int NOT NULL , # unique because prim. k.
+        id                Int NOT NULL AUTO_INCREMENT, # unique because prim. k.
         id_Marque_Panneau Int NOT NULL ,
         id_Modele_Panneau Int NOT NULL
 	,CONSTRAINT Panneau_PK PRIMARY KEY (id)
@@ -128,7 +128,7 @@ CREATE TABLE Panneau(
 
 DROP TABLE IF EXISTS Modele_Ondulateur;
 CREATE TABLE Modele_Ondulateur(
-        id  Int NOT NULL , # unique because prim. k.
+        id  Int NOT NULL AUTO_INCREMENT, # unique because prim. k.
         nom Varchar (255) NOT NULL
 	,CONSTRAINT Modele_Ondulateur_PK PRIMARY KEY (id)
 )ENGINE=InnoDB;
@@ -140,7 +140,7 @@ CREATE TABLE Modele_Ondulateur(
 
 DROP TABLE IF EXISTS Ondulateur;
 CREATE TABLE Ondulateur(
-        id                   Int NOT NULL , # unique because prim. k.
+        id                   Int NOT NULL AUTO_INCREMENT, # unique because prim. k.
         id_Marque_Ondulateur Int NOT NULL ,
         id_Modele_Ondulateur Int NOT NULL
 	,CONSTRAINT Ondulateur_PK PRIMARY KEY (id)
@@ -156,7 +156,7 @@ CREATE TABLE Ondulateur(
 
 DROP TABLE IF EXISTS Pays;
 CREATE TABLE Pays(
-        id       Int NOT NULL , # unique because prim. k.
+        id       Int NOT NULL AUTO_INCREMENT, # unique because prim. k.
         pays_nom Varchar (255) NOT NULL UNIQUE # unique because else lots of duplicates
 	,CONSTRAINT Pays_PK PRIMARY KEY (id)
 )ENGINE=InnoDB;
@@ -168,7 +168,7 @@ CREATE TABLE Pays(
 
 DROP TABLE IF EXISTS Region;
 CREATE TABLE Region(
-        id      Int NOT NULL , # unique because prim. k.
+        id      Int NOT NULL AUTO_INCREMENT, # unique because prim. k.
         dep_reg Varchar (255) NOT NULL ,
         id_Pays Int NOT NULL
 	,CONSTRAINT Region_PK PRIMARY KEY (id)
@@ -183,7 +183,7 @@ CREATE TABLE Region(
 
 DROP TABLE IF EXISTS Departement;
 CREATE TABLE Departement(
-        id        Int NOT NULL , # unique because prim. k.
+        id        Int NOT NULL AUTO_INCREMENT, # unique because prim. k.
         dep_nom   Varchar (255) NOT NULL ,
         id_Region Int NOT NULL
 	,CONSTRAINT Departement_PK PRIMARY KEY (id)
@@ -198,7 +198,7 @@ CREATE TABLE Departement(
 
 DROP TABLE IF EXISTS Commune;
 CREATE TABLE Commune(
-        code_insee Int NOT NULL , # unique because prim. k.
+        code_insee Int NOT NULL , # unique because prim. k., but no autogen because already in .csv file
         com_nom    Varchar (255) NOT NULL ,
         id         Int NOT NULL
 	,CONSTRAINT Commune_PK PRIMARY KEY (code_insee)
@@ -213,7 +213,7 @@ CREATE TABLE Commune(
 
 DROP TABLE IF EXISTS Installation;
 CREATE TABLE Installation(
-        id                Int NOT NULL , # unique because prim. k.
+        id                Int NOT NULL AUTO_INCREMENT, # unique because prim. k.
         an_installation   Int ,
         nb_pann           Int ,
         nb_ond            Int ,
