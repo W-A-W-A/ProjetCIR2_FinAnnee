@@ -1,0 +1,502 @@
+[
+  {
+    "code_insee": 1001,
+    "nom_standard": "L'Abergement-Clemenciat",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1400,
+    "population": 806
+  },
+  {
+    "code_insee": 1002,
+    "nom_standard": "L'Abergement-de-Varey",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1640,
+    "population": 262
+  },
+  {
+    "code_insee": 1004,
+    "nom_standard": "Amberieu-en-Bugey",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1500,
+    "population": 14288
+  },
+  {
+    "code_insee": 1005,
+    "nom_standard": "Amberieux-en-Dombes",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1330,
+    "population": 1782
+  },
+  {
+    "code_insee": 1006,
+    "nom_standard": "Ambleon",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1300,
+    "population": 113
+  },
+  {
+    "code_insee": 1007,
+    "nom_standard": "Ambronay",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1500,
+    "population": 2827
+  },
+  {
+    "code_insee": 1008,
+    "nom_standard": "Ambutrix",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1500,
+    "population": 768
+  },
+  {
+    "code_insee": 1009,
+    "nom_standard": "Andert-et-Condon",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1300,
+    "population": 324
+  },
+  {
+    "code_insee": 1010,
+    "nom_standard": "Anglefort",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1350,
+    "population": 1101
+  },
+  {
+    "code_insee": 1011,
+    "nom_standard": "Apremont",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1100,
+    "population": 368
+  },
+  {
+    "code_insee": 1012,
+    "nom_standard": "Aranc",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1110,
+    "population": 327
+  },
+  {
+    "code_insee": 1013,
+    "nom_standard": "Arandas",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1230,
+    "population": 143
+  },
+  {
+    "code_insee": 1014,
+    "nom_standard": "Arbent",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1100,
+    "population": 3336
+  },
+  {
+    "code_insee": 1015,
+    "nom_standard": "Arboys en Bugey",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1300,
+    "population": 663
+  },
+  {
+    "code_insee": 1016,
+    "nom_standard": "Arbigny",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1190,
+    "population": 458
+  },
+  {
+    "code_insee": 1017,
+    "nom_standard": "Argis",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1230,
+    "population": 445
+  },
+  {
+    "code_insee": 1019,
+    "nom_standard": "Armix",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1510,
+    "population": 26
+  },
+  {
+    "code_insee": 1021,
+    "nom_standard": "Ars-sur-Formans",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1480,
+    "population": 1490
+  },
+  {
+    "code_insee": 1022,
+    "nom_standard": "Artemare",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1510,
+    "population": 1213
+  },
+  {
+    "code_insee": 1023,
+    "nom_standard": "Asnieres-sur-Saone",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1570,
+    "population": 76
+  },
+  {
+    "code_insee": 1024,
+    "nom_standard": "Attignat",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1340,
+    "population": 3299
+  },
+  {
+    "code_insee": 1025,
+    "nom_standard": "Bage-Dommartin",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1380,
+    "population": 4068
+  },
+  {
+    "code_insee": 1026,
+    "nom_standard": "Bage-le-Chatel",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1380,
+    "population": 977
+  },
+  {
+    "code_insee": 1027,
+    "nom_standard": "Balan",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1360,
+    "population": 2647
+  },
+  {
+    "code_insee": 1028,
+    "nom_standard": "Baneins",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1990,
+    "population": 625
+  },
+  {
+    "code_insee": 1029,
+    "nom_standard": "Beaupont",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1270,
+    "population": 683
+  },
+  {
+    "code_insee": 1030,
+    "nom_standard": "Beauregard",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1480,
+    "population": 821
+  },
+  {
+    "code_insee": 1031,
+    "nom_standard": "Bellignat",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1100,
+    "population": 3671
+  },
+  {
+    "code_insee": 1032,
+    "nom_standard": "Beligneux",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1360,
+    "population": 3414
+  },
+  {
+    "code_insee": 1033,
+    "nom_standard": "Valserhone",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1200,
+    "population": 16434
+  },
+  {
+    "code_insee": 1034,
+    "nom_standard": "Belley",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1300,
+    "population": 9207
+  },
+  {
+    "code_insee": 1035,
+    "nom_standard": "Belleydoux",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1130,
+    "population": 308
+  },
+  {
+    "code_insee": 1036,
+    "nom_standard": "Valromey-sur-Seran",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1260,
+    "population": 1334
+  },
+  {
+    "code_insee": 1037,
+    "nom_standard": "Benonces",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1470,
+    "population": 309
+  },
+  {
+    "code_insee": 1038,
+    "nom_standard": "Beny",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1370,
+    "population": 759
+  },
+  {
+    "code_insee": 1040,
+    "nom_standard": "Bereziat",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1340,
+    "population": 480
+  },
+  {
+    "code_insee": 1041,
+    "nom_standard": "Bettant",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1500,
+    "population": 748
+  },
+  {
+    "code_insee": 1042,
+    "nom_standard": "Bey",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1290,
+    "population": 291
+  },
+  {
+    "code_insee": 1043,
+    "nom_standard": "Beynost",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1700,
+    "population": 4829
+  },
+  {
+    "code_insee": 1044,
+    "nom_standard": "Billiat",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1200,
+    "population": 628
+  },
+  {
+    "code_insee": 1045,
+    "nom_standard": "Birieux",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1330,
+    "population": 285
+  },
+  {
+    "code_insee": 1046,
+    "nom_standard": "Biziat",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1290,
+    "population": 912
+  },
+  {
+    "code_insee": 1047,
+    "nom_standard": "Blyes",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1150,
+    "population": 1269
+  },
+  {
+    "code_insee": 1049,
+    "nom_standard": "La Boisse",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1120,
+    "population": 3335
+  },
+  {
+    "code_insee": 1050,
+    "nom_standard": "Boissey",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1380,
+    "population": 380
+  },
+  {
+    "code_insee": 1051,
+    "nom_standard": "Bolozon",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1450,
+    "population": 91
+  },
+  {
+    "code_insee": 1052,
+    "nom_standard": "Bouligneux",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1330,
+    "population": 332
+  },
+  {
+    "code_insee": 1053,
+    "nom_standard": "Bourg-en-Bresse",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1000,
+    "population": 41681
+  },
+  {
+    "code_insee": 1054,
+    "nom_standard": "Bourg-Saint-Christophe",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1800,
+    "population": 1482
+  },
+  {
+    "code_insee": 1056,
+    "nom_standard": "Boyeux-Saint-Jerome",
+    "reg_code": 84,
+    "reg_nom": "Auvergne-Rhone-Alpes",
+    "dep_code": 1,
+    "dep_nom": "Ain",
+    "code_postal": 1640,
+    "population": 351
+  }
+]
