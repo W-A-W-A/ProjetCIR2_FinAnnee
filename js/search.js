@@ -10,17 +10,23 @@ $(document).ready(function () {
             console.log("response : ")
             console.log(response); // Debugging: log the brands data to console
             const ondBrandSelect = document.getElementById('ondBrand');
-            if (ondBrandSelect && Array.isArray(response["values"])) { // Use marques array from response
+            if (
+                ondBrandSelect &&
+                Array.isArray(response["brands"]) && // checks the brand array
+                Array.isArray(response["values"]) && // checks value array too for missing ids
+                response["brands"].length === response["values"].length
+            ) {
                 ondBrandSelect.innerHTML = ''; // Clear previous options
-                response.marques.forEach(brand => {
+                response["brands"].forEach((brand, idx) => {
                     const option = document.createElement('option');
-                    option.value = brand; // Use brand as value
-                    option.textContent = brand; // Use brand as display text
+                    option.value = response["values"][idx]; // Use ID as value
+                    option.textContent = brand; // Use brand name as display text
                     ondBrandSelect.appendChild(option);
                 });
             }
         },
         error: function (jqXHR, textStatus, errorThrown) {
+            // the most detailed error message on earth
             console.error('Error : Couldn\'t load brands from MySQL database');
             console.error('Status:', textStatus);
             console.error('Error Thrown:', errorThrown);

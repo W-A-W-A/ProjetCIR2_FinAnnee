@@ -1,7 +1,7 @@
 <?php
 // db.php — connexion à la base de données distante
 
-$host = '10.10.51.130';
+$host = 'localhost'; // Permet de faire des tests en local en laissant la prod fonctionner
 $db   = 'solaire';
 $user = 'admin';
 $pass = 'isen44';
