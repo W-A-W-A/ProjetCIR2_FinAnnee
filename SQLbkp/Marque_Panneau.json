@@ -1,0 +1,202 @@
+[
+  {
+    "id": 1,
+    "nom": "Sanyo"
+  },
+  {
+    "id": 2,
+    "nom": "Canadian Solar"
+  },
+  {
+    "id": 3,
+    "nom": "Mitsubishi"
+  },
+  {
+    "id": 4,
+    "nom": "Schuco"
+  },
+  {
+    "id": 5,
+    "nom": "Roto Frank"
+  },
+  {
+    "id": 6,
+    "nom": "Kyocera"
+  },
+  {
+    "id": 7,
+    "nom": "CONERGY"
+  },
+  {
+    "id": 8,
+    "nom": "Solar-Fabrik"
+  },
+  {
+    "id": 9,
+    "nom": "SHARP"
+  },
+  {
+    "id": 10,
+    "nom": "KIOTO"
+  },
+  {
+    "id": 11,
+    "nom": "Tenesol"
+  },
+  {
+    "id": 12,
+    "nom": "Imerys"
+  },
+  {
+    "id": 13,
+    "nom": "TRINA SOLAR"
+  },
+  {
+    "id": 14,
+    "nom": "SOLVIS"
+  },
+  {
+    "id": 15,
+    "nom": "Photowatt"
+  },
+  {
+    "id": 16,
+    "nom": "DAXTEC"
+  },
+  {
+    "id": 17,
+    "nom": "Istar Solar"
+  },
+  {
+    "id": 18,
+    "nom": "SUNTECH"
+  },
+  {
+    "id": 19,
+    "nom": "Solarfun"
+  },
+  {
+    "id": 20,
+    "nom": "BP Solar"
+  },
+  {
+    "id": 21,
+    "nom": "Solon AG"
+  },
+  {
+    "id": 22,
+    "nom": "Schott"
+  },
+  {
+    "id": 23,
+    "nom": "Solarwatt"
+  },
+  {
+    "id": 24,
+    "nom": "YOCASOL"
+  },
+  {
+    "id": 25,
+    "nom": "AlfaSolar"
+  },
+  {
+    "id": 26,
+    "nom": "Solara"
+  },
+  {
+    "id": 27,
+    "nom": "Biohaus"
+  },
+  {
+    "id": 28,
+    "nom": "Total Energie"
+  },
+  {
+    "id": 29,
+    "nom": "Solarcentury"
+  },
+  {
+    "id": 30,
+    "nom": "Siemens Solar"
+  },
+  {
+    "id": 31,
+    "nom": "Wurth Solar"
+  },
+  {
+    "id": 32,
+    "nom": "Solarstocc"
+  },
+  {
+    "id": 33,
+    "nom": "Viessmann"
+  },
+  {
+    "id": 34,
+    "nom": "Solarwood"
+  },
+  {
+    "id": 35,
+    "nom": "Solaris"
+  },
+  {
+    "id": 36,
+    "nom": "Shell Solar"
+  },
+  {
+    "id": 37,
+    "nom": "Pas_dans_la_liste_panneaux"
+  },
+  {
+    "id": 38,
+    "nom": "Helios Technology"
+  },
+  {
+    "id": 39,
+    "nom": "Ensol"
+  },
+  {
+    "id": 40,
+    "nom": "Energy Solutions"
+  },
+  {
+    "id": 41,
+    "nom": "Siliken"
+  },
+  {
+    "id": 42,
+    "nom": "SOLEOS"
+  },
+  {
+    "id": 43,
+    "nom": "Issol"
+  },
+  {
+    "id": 44,
+    "nom": "SolarWorld"
+  },
+  {
+    "id": 45,
+    "nom": "CEEG"
+  },
+  {
+    "id": 46,
+    "nom": "Auversun"
+  },
+  {
+    "id": 47,
+    "nom": "BIO ENERGY"
+  },
+  {
+    "id": 48,
+    "nom": "Sulfurcell"
+  },
+  {
+    "id": 49,
+    "nom": "SunPower"
+  },
+  {
+    "id": 50,
+    "nom": "ET Solar"
+  }
+]

@@ -28,26 +28,19 @@
   <section class="research-param">
     <select class="select-box" id="ondBrand">
       <h3>Marque de l'onduleur</h3>
-      <option id="ond1">1</option>
-      <option id="ond2">2</option>
-      <option id="ond3">3</option>
-      <option id="ond4">4</option>
-      <option id="ond5">5</option>
-      <option id="ond6">6</option>
-      <option id="ond7">7</option>
-      <option id="ond8">8</option>
-      <option id="ond9">9</option>
-      <option id="ond10">10</option>
-      <option id="ond11">11</option>
-      <option id="ond12">12</option>
-      <option id="ond13">13</option>
-      <option id="ond14">14</option>
-      <option id="ond15">15</option>
-      <option id="ond16">16</option>
-      <option id="ond17">17</option>
-      <option id="ond18">18</option>
-      <option id="ond19">19</option>
-      <option id="ond20">20</option>
+      <?php
+      require_once 'db.php'; // Assure you have a PDO $pdo object in db.php
+
+      try {
+        $stmt = $pdo->query("SELECT DISTINCT marque FROM onduleurs ORDER BY marque ASC LIMIT 21");
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+          $marque = htmlspecialchars($row['marque']);
+          echo "<option value=\"$marque\">$marque</option>";
+        }
+      } catch (Exception $e) {
+        echo '<option disabled>Erreur de chargement</option>';
+      }
+      ?>
       <!-- A modifier avec les 20 premiers résultats de la BDD -->
     </select>
     <select class="select-box" id="panelBrand">
