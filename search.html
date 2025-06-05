@@ -109,14 +109,28 @@
     </div>
   </section>
 
-  <section  class="research-result">
-    <table>
-      <thead>
-        
-      </thead>
-    </table>
-  </section>
-
+  <section class="research-result"> <!-- A modifier pour automatiser la recherche de données -->
+    <div class="mx-auto" style="width:98%">
+      <div class="d-flex justify-content-between m-3">
+          <h1>Résultats</h1>
+      </div>
+      <div class="rounded-2 border border-dark d-grid gap-3 p-2">
+        <div class="rounded-2 border border-dark d-flex flex-column">
+          <div class="d-flex justify-content-between text-light" style="background-color: #509080;">
+            <p class="my-auto p-2 text-center" style="width:20%;">Nombre de panneaux</p>
+            <p class="my-auto p-2 text-center" style="width:20%;">Surface</p>
+            <p class="my-auto p-2 text-center" style="width:20%;">Puissance crête</p>
+            <form action="details.html" method="get" class="my-auto p-2 text-center">
+              <button type="submit" name="detail" class="btn border-light rounded-5 text-light m-2 text-center">Voir détail</button>
+            </form>
+          </div>
+          <div class="d-flex justify-content-between" style="background-color: #A0D0C0;">
+            <p class="my-auto p-2 text-center" style="width:50%;">Date</p>
+            <p class="my-auto p-2 text-center" style="width:50%;">Localité</p>
+          </div>
+        </div>
+      </div>
+    </div>
   <footer>
     <p>&copy; 2025 PanneauxPhotovoltaique.fr — Tous droits réservés.</p>
     <p>

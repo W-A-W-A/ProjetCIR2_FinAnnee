@@ -69,7 +69,7 @@ body {
     display: flex;
     flex-direction: column;
     min-width: 200px;
-    min-height: calc(100vh - 160px);
+    min-height: 100px;
 }
 
 .research-select {
