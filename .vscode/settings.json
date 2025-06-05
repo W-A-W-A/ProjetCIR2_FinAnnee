@@ -11,7 +11,8 @@
             "driver": "MySQL",
             "name": "cir2_g10",
             "database": "solaire",
-            "username": "admin"
+            "username": "admin",
+            "password": "isen44"
         }
     ]
 }

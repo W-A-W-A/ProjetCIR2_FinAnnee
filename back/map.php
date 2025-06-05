@@ -79,6 +79,7 @@ try {
     $department_filter = isset($_GET['department']) ? $_GET['department'] : null;
     $region_filter = isset($_GET['region']) ? $_GET['region'] : null;
     $year_filter = isset($_GET['year']) ? $_GET['year'] : null;
+    $limit = isset($_GET['limit']) ? intval($_GET['limit']) : 1000;
 
     // Base SQL query with correct joins based on your schema
     $sql = "SELECT 
@@ -122,7 +123,7 @@ try {
     }
 
     // Order by year and power for consistent results
-    $sql .= " ORDER BY i.an_installation DESC, i.puissance_crete DESC LIMIT 1000";
+    $sql .= " ORDER BY i.an_installation DESC, i.puissance_crete DESC LIMIT " . $limit;
 
     // Prepare and execute the statement
     $stmt = $pdo->prepare($sql);

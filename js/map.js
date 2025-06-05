@@ -28,6 +28,9 @@ function initializeMap() {
 function loadSolarInstallations(filters = {}) {
     console.log("Loading solar installations with filters:", filters);
 
+    // Check if this is the initial load (no filters applied)
+    const isInitialLoad = !filters.year && !filters.department && !filters.region;
+
     // Build query parameters
     const params = new URLSearchParams();
     if (filters.year && filters.year !== '') {
@@ -38,6 +41,11 @@ function loadSolarInstallations(filters = {}) {
     }
     if (filters.region && filters.region !== '') {
         params.append('region', filters.region);
+    }
+
+    // Add limit parameter for initial load
+    if (isInitialLoad) {
+        params.append('limit', '500');
     }
 
     const url = `./back/map.php${params.toString() ? '?' + params.toString() : ''}`;
@@ -54,7 +62,7 @@ function loadSolarInstallations(filters = {}) {
             if (response.success && response.data) {
                 solarData = response.data;
                 updateMapMarkers();
-                updateDataInfo(response.count, filters);
+                updateDataInfo(response.count, response.total_in_db, filters, isInitialLoad);
             } else {
                 console.error('Invalid response format:', response);
                 showError('Format de réponse invalide');
@@ -206,10 +214,21 @@ function updateMapMarkers() {
         }
     });
 
-    // Fit map to markers if we have data
-    if (solarData.length > 0) {
+    // Fit map to markers if we have data and not too many markers
+    if (solarData.length > 0 && solarData.length <= 1000) {
         try {
-            map.fitBounds(markersLayer.getBounds(), { padding: [20, 20] });
+            // Get all marker positions
+            const markers = [];
+            markersLayer.eachLayer(function (layer) {
+                if (layer.getLatLng) {
+                    markers.push(layer.getLatLng());
+                }
+            });
+
+            if (markers.length > 0) {
+                const group = new L.featureGroup(markersLayer.getLayers());
+                map.fitBounds(group.getBounds(), { padding: [20, 20] });
+            }
         } catch (e) {
             console.warn('Could not fit bounds:', e);
         }
@@ -238,7 +257,7 @@ function getPowerIcon(power) {
 }
 
 // Update data information display
-function updateDataInfo(count, filters) {
+function updateDataInfo(count, total, filters, isInitialLoad = false) {
     console.log(`Displaying ${count} installations`);
 
     // Remove existing info panel
@@ -253,9 +272,18 @@ function updateDataInfo(count, filters) {
         filterText += ` • Département: ${filters.department}`;
     }
 
+    // Show different messages for initial load vs filtered results
+    let infoText = '';
+    if (isInitialLoad && count >= 500) {
+        infoText = `<strong>${count}</strong> installation${count > 1 ? 's' : ''} affichée${count > 1 ? 's' : ''} sur ${total} total${filterText}<br>
+                   <small class="text-muted">Sélectionnez une année ou un département pour voir tous les résultats</small>`;
+    } else {
+        infoText = `<strong>${count}</strong> installation${count > 1 ? 's' : ''} trouvée${count > 1 ? 's' : ''}${filterText}`;
+    }
+
     const infoPanel = `
         <div class="data-info alert alert-info">
-            <strong>${count}</strong> installation${count > 1 ? 's' : ''} trouvée${count > 1 ? 's' : ''}${filterText}
+            ${infoText}
         </div>
     `;
 
@@ -300,7 +328,7 @@ $(document).ready(function () {
     ]).then(() => {
         console.log('Filter options loaded successfully');
 
-        // Then load initial data
+        // Then load initial data (limited to 500 markers)
         return loadSolarInstallations();
     }).then(() => {
         console.log('Initial data loaded successfully');
