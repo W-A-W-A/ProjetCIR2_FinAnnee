@@ -1,8 +1,8 @@
+
 <?php
 $dsn = "mysql:host=localhost;dbname=solaire;charset=utf8";
 $username = "admin";
 $password = "isen44";
-
 
 try {
     $pdo = new PDO($dsn, $username, $password);

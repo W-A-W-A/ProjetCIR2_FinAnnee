@@ -1,285 +1,331 @@
-// Initialize map centered on France
-const map = L.map('map').setView([46.6034, 1.8883], 6);
+console.log("Map script loaded");
 
-// Add OpenStreetMap tiles
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-    //     , 
-    //     {
-    //     attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    // }
-).addTo(map);
+// Global variables
+let map;
+let markersLayer;
+let solarData = [];
 
-let solarInstallations = [];
-let apiData = {};
+// Initialize the map
+function initializeMap() {
+    console.log("Initializing map...");
 
-// Function to load solar installations data
+    // Create map centered on France
+    map = L.map('map').setView([46.603354, 1.888334], 6);
+
+    // Add tile layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors',
+        maxZoom: 18
+    }).addTo(map);
+
+    // Create markers layer group
+    markersLayer = L.layerGroup().addTo(map);
+
+    console.log("Map initialized successfully");
+}
+
+// Load solar installations data
 function loadSolarInstallations(filters = {}) {
+    console.log("Loading solar installations with filters:", filters);
+
     // Build query parameters
-    let queryParams = new URLSearchParams();
-
-    if (filters.department && filters.department !== 'all') {
-        queryParams.append('department', filters.department);
+    const params = new URLSearchParams();
+    if (filters.year && filters.year !== '') {
+        params.append('year', filters.year);
     }
-    if (filters.region && filters.region !== 'all') {
-        queryParams.append('region', filters.region);
+    if (filters.department && filters.department !== '') {
+        params.append('department', filters.department);
     }
-    if (filters.year && filters.year !== 'all') {
-        queryParams.append('year', filters.year);
+    if (filters.region && filters.region !== '') {
+        params.append('region', filters.region);
     }
 
-    const url = `back/solar_installations.php${queryParams.toString() ? '?' + queryParams.toString() : ''}`;
+    const url = `./back/map.php${params.toString() ? '?' + params.toString() : ''}`;
+    console.log("Requesting URL:", url);
 
-    $.ajax({
+    return $.ajax({
         url: url,
         method: 'GET',
         dataType: 'json',
+        timeout: 15000,
         success: function (response) {
-            if (response.success) {
-                solarInstallations = response.data;
-                apiData.solarInstallations = response.data;
+            console.log('Solar installations loaded:', response);
 
-                // Update map with new data
-                updateMap(solarInstallations);
-
-                console.log(`Loaded ${response.count} solar installations`);
+            if (response.success && response.data) {
+                solarData = response.data;
+                updateMapMarkers();
+                updateDataInfo(response.count, filters);
             } else {
-                console.error('API Error:', response.error);
+                console.error('Invalid response format:', response);
+                showError('Format de réponse invalide');
             }
         },
         error: function (xhr, status, error) {
-            console.error('Error during data retrieval from database:', error);
-            console.error('Status:', status);
-            console.error('Response:', xhr.responseText);
+            console.error('Error during data retrieval:', {
+                status: status,
+                error: error,
+                statusCode: xhr.status,
+                responseText: xhr.responseText
+            });
+
+            let errorMessage = 'Erreur lors du chargement des données';
+
+            if (xhr.status === 404) {
+                errorMessage = 'API introuvable - Vérifiez que map.php existe dans le dossier back/';
+            } else if (xhr.status === 500) {
+                try {
+                    const errorData = JSON.parse(xhr.responseText);
+                    errorMessage = errorData.error || 'Erreur serveur';
+                } catch (e) {
+                    errorMessage = 'Erreur serveur interne';
+                }
+            } else if (status === 'timeout') {
+                errorMessage = 'Délai d\'attente dépassé';
+            }
+
+            showError(errorMessage);
         }
     });
 }
 
+// Load years for dropdown
+function loadYears() {
+    console.log("Loading years...");
 
-// Initial load when document is ready
-$(document).ready(function () {
-    // Load all installations initially
-    loadSolarInstallations();
-
-    // Load other stats if needed
-    $.ajax({
-        url: 'back/stats.php',
+    return $.ajax({
+        url: './back/map.php?action=get_years',
         method: 'GET',
         dataType: 'json',
-        success: function (data) {
-            for (const key in data) {
-                apiData[key] = data[key];
+        timeout: 10000,
+        success: function (response) {
+            console.log('Years loaded:', response);
+
+            if (response.success && response.data) {
+                populateYearSelect(response.data);
+            } else {
+                console.error('Failed to load years:', response);
+                showError('Erreur lors du chargement des années');
             }
         },
-        error: function () {
-            console.error('Error during stats retrieval from database');
+        error: function (xhr, status, error) {
+            console.error('Error loading years:', error);
+            showError('Erreur lors du chargement des années');
         }
     });
-});
-
-
-
-
-// Sample solar installation data (matching your image)
-const solarInstallationsSimulation = [
-    // Northern France
-    { lat: 50.6292, lng: 3.0573, city: "Lille", year: 2023, department: "59", power: "150 kW" },
-    { lat: 49.4944, lng: 0.1079, city: "Le Havre", year: 2022, department: "76", power: "200 kW" },
-    { lat: 48.8566, lng: 2.3522, city: "Paris", year: 2024, department: "75", power: "80 kW" },
-    { lat: 49.2583, lng: 4.0317, city: "Reims", year: 2023, department: "51", power: "120 kW" },
-
-    // Central France
-    { lat: 47.9029, lng: 1.9093, city: "Orléans", year: 2022, department: "45", power: "180 kW" },
-    { lat: 47.3215, lng: 5.0415, city: "Dijon", year: 2023, department: "21", power: "160 kW" },
-    { lat: 45.7640, lng: 4.8357, city: "Lyon", year: 2024, department: "69", power: "250 kW" },
-    { lat: 46.3197, lng: 2.5730, city: "Bourges", year: 2021, department: "18", power: "90 kW" },
-
-    // Western France
-    { lat: 47.2184, lng: -1.5536, city: "Nantes", year: 2023, department: "44", power: "140 kW" },
-    { lat: 48.1173, lng: -1.6778, city: "Rennes", year: 2022, department: "35", power: "110 kW" },
-    { lat: 46.1603, lng: -1.1511, city: "La Rochelle", year: 2024, department: "17", power: "170 kW" },
-
-    // Eastern France
-    { lat: 48.5734, lng: 7.7521, city: "Strasbourg", year: 2023, department: "67", power: "190 kW" },
-    { lat: 47.7516, lng: 7.3358, city: "Mulhouse", year: 2022, department: "68", power: "130 kW" },
-    { lat: 48.6921, lng: 6.1844, city: "Nancy", year: 2024, department: "54", power: "100 kW" },
-
-    // Southern France
-    { lat: 43.6047, lng: 1.4442, city: "Toulouse", year: 2024, department: "31", power: "220 kW" },
-    { lat: 43.2965, lng: 5.3698, city: "Marseille", year: 2023, department: "13", power: "280 kW" },
-    { lat: 43.7102, lng: 7.2620, city: "Nice", year: 2022, department: "06", power: "150 kW" },
-    { lat: 43.8378, lng: 4.3601, city: "Nîmes", year: 2024, department: "30", power: "160 kW" },
-    { lat: 44.8378, lng: -0.5792, city: "Bordeaux", year: 2023, department: "33", power: "200 kW" },
-    { lat: 43.9493, lng: 4.8055, city: "Avignon", year: 2021, department: "84", power: "140 kW" },
-
-    // Additional installations
-    { lat: 45.1885, lng: 5.7245, city: "Grenoble", year: 2023, department: "38", power: "175 kW" },
-    { lat: 43.1102, lng: 5.9280, city: "Toulon", year: 2022, department: "83", power: "195 kW" },
-    { lat: 43.5263, lng: 5.4454, city: "Aix-en-Provence", year: 2024, department: "13", power: "165 kW" }
-];
-
-let markers = [];
-
-// Function to create custom icon
-function createSolarIcon() {
-    return L.divIcon({
-        className: 'solar-marker',
-        iconSize: [20, 20],
-        iconAnchor: [10, 10]
-    });
 }
 
-// Function to add markers to map
-function addMarkers(installations) {
-    // Clear existing markers
-    markers.forEach(marker => map.removeLayer(marker));
-    markers = [];
+// Load departments for dropdown
+function loadDepartments() {
+    console.log("Loading departments...");
 
-    installations.forEach(installation => {
-        const marker = L.marker([installation.lat, installation.lng], {
-            icon: createSolarIcon()
-        });
+    return $.ajax({
+        url: './back/map.php?action=get_departments',
+        method: 'GET',
+        dataType: 'json',
+        timeout: 10000,
+        success: function (response) {
+            console.log('Departments loaded:', response);
 
-        const popupContent = `
-          <div class="popup-title">${installation.city}</div>
-          <div class="popup-details">
-            <strong>Année:</strong> ${installation.year}<br>
-            <strong>Département:</strong> ${installation.department}<br>
-            <strong>Puissance:</strong> ${installation.power}
-          </div>
-        `;
-
-        marker.bindPopup(popupContent);
-        marker.addTo(map);
-        markers.push(marker);
-    });
-}
-
-// Function to filter installations
-function filterInstallations() {
-    const selectedYear = document.getElementById('yearSelect').value;
-    const selectedDepartment = document.getElementById('departmentSelect').value;
-
-    let filtered = solarInstallationsSimulation;
-
-    if (selectedYear) {
-        filtered = filtered.filter(installation => installation.year.toString() === selectedYear);
-    }
-
-    if (selectedDepartment) {
-        filtered = filtered.filter(installation => installation.department === selectedDepartment);
-    }
-
-    addMarkers(filtered);
-}
-
-// Event listeners for filters
-document.getElementById('yearSelect').addEventListener('change', filterInstallations);
-document.getElementById('departmentSelect').addEventListener('change', filterInstallations);
-
-// Initialize map with all markers
-addMarkers(solarInstallationsSimulation);
-
-// Tab functionality
-document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', function (e) {
-        if (this.getAttribute('href').startsWith('#')) {
-            e.preventDefault();
-
-            // Remove active class from all tabs
-            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-
-            // Add active class to clicked tab
-            this.classList.add('active');
+            if (response.success && response.data) {
+                populateDepartmentSelect(response.data);
+            } else {
+                console.error('Failed to load departments:', response);
+                showError('Erreur lors du chargement des départements');
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error('Error loading departments:', error);
+            showError('Erreur lors du chargement des départements');
         }
     });
-});
+}
 
+// Populate year select dropdown
+function populateYearSelect(years) {
+    const $select = $('#yearSelect');
 
+    // Keep the default "Toutes les années" option
+    $select.find('option:not(:first)').remove();
 
-// Global variable to store the installations data
-
-
-
-
-/*
-
-// Event handlers for filter changes
-$(document).on('change', '#department-select', function () {
-    const selectedDepartment = $(this).val();
-    const selectedRegion = $('#region-select').val();
-    const selectedYear = $('#year-select').val();
-
-    loadSolarInstallations({
-        department: selectedDepartment,
-        region: selectedRegion,
-        year: selectedYear
+    // Add year options
+    years.forEach(function (year) {
+        $select.append(`<option value="${year}">${year}</option>`);
     });
-});
 
-$(document).on('change', '#region-select', function () {
-    const selectedRegion = $(this).val();
-    const selectedDepartment = $('#department-select').val();
-    const selectedYear = $('#year-select').val();
+    console.log(`Added ${years.length} year options`);
+}
 
-    loadSolarInstallations({
-        department: selectedDepartment,
-        region: selectedRegion,
-        year: selectedYear
+// Populate department select dropdown
+function populateDepartmentSelect(departments) {
+    const $select = $('#departmentSelect');
+
+    // Keep the default "Tous les départements" option
+    $select.find('option:not(:first)').remove();
+
+    // Add department options
+    departments.forEach(function (dept) {
+        $select.append(`<option value="${dept.id}">${dept.name} (${dept.code})</option>`);
     });
-});
 
-$(document).on('change', '#year-select', function () {
-    const selectedYear = $(this).val();
-    const selectedDepartment = $('#department-select').val();
-    const selectedRegion = $('#region-select').val();
+    console.log(`Added ${departments.length} department options`);
+}
 
-    loadSolarInstallations({
-        department: selectedDepartment,
-        region: selectedRegion,
-        year: selectedYear
-    });
-});
+// Update map markers
+function updateMapMarkers() {
+    console.log(`Updating map with ${solarData.length} installations`);
 
-// Function to update the map (you'll need to implement this based on your mapping library)
-function updateMap(installations) {
     // Clear existing markers
-    clearMapMarkers();
+    markersLayer.clearLayers();
 
     // Add new markers
-    installations.forEach(function (installation) {
-        addMapMarker({
-            lat: installation.lat,
-            lng: installation.lng,
-            city: installation.city,
-            year: installation.year,
-            department: installation.department_name,
-            region: installation.region_name,
-            power: installation.power
-        });
+    solarData.forEach(function (installation, index) {
+        if (installation.lat && installation.lng) {
+            // Create custom icon based on power
+            const powerIcon = getPowerIcon(installation.power_numeric);
+
+            // Create marker
+            const marker = L.marker([installation.lat, installation.lng], {
+                icon: powerIcon
+            });
+
+            // Create popup content
+            const popupContent = `
+                <div class="installation-popup">
+                    <h6><strong>${installation.city || 'Localisation inconnue'}</strong></h6>
+                    <p><strong>Année:</strong> ${installation.year || 'N/A'}</p>
+                    <p><strong>Puissance:</strong> ${installation.power || 'N/A'}</p>
+                    <p><strong>Département:</strong> ${installation.department_name || 'N/A'}</p>
+                    <p><strong>Région:</strong> ${installation.region_name || 'N/A'}</p>
+                </div>
+            `;
+
+            marker.bindPopup(popupContent);
+            markersLayer.addLayer(marker);
+        } else {
+            console.warn(`Installation ${index} has invalid coordinates:`, installation);
+        }
     });
 
-    // Update map bounds if needed
-    if (installations.length > 0) {
-        fitMapBounds(installations);
+    // Fit map to markers if we have data
+    if (solarData.length > 0) {
+        try {
+            map.fitBounds(markersLayer.getBounds(), { padding: [20, 20] });
+        } catch (e) {
+            console.warn('Could not fit bounds:', e);
+        }
     }
 }
 
-// Helper functions (implement these based on your mapping library)
-function clearMapMarkers() {
-    // Implementation depends on your mapping library (Google Maps, Leaflet, etc.)
-    console.log('Clearing map markers...');
+// Get icon based on power rating
+function getPowerIcon(power) {
+    let color = '#28a745'; // green for small installations
+    let size = [20, 20];
+
+    if (power > 100) {
+        color = '#dc3545'; // red for large installations
+        size = [30, 30];
+    } else if (power > 50) {
+        color = '#ffc107'; // yellow for medium installations
+        size = [25, 25];
+    }
+
+    return L.divIcon({
+        html: `<div style="background-color: ${color}; width: ${size[0]}px; height: ${size[1]}px; border-radius: 50%; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>`,
+        className: 'custom-marker',
+        iconSize: size,
+        iconAnchor: [size[0] / 2, size[1] / 2]
+    });
 }
 
-function addMapMarker(data) {
-    // Implementation depends on your mapping library
-    console.log('Adding marker:', data);
+// Update data information display
+function updateDataInfo(count, filters) {
+    console.log(`Displaying ${count} installations`);
+
+    // Remove existing info panel
+    $('.data-info').remove();
+
+    // Create info panel
+    let filterText = '';
+    if (filters.year) {
+        filterText += ` • Année: ${filters.year}`;
+    }
+    if (filters.department) {
+        filterText += ` • Département: ${filters.department}`;
+    }
+
+    const infoPanel = `
+        <div class="data-info alert alert-info">
+            <strong>${count}</strong> installation${count > 1 ? 's' : ''} trouvée${count > 1 ? 's' : ''}${filterText}
+        </div>
+    `;
+
+    $('.map-controls').after(infoPanel);
 }
 
-function fitMapBounds(installations) {
-    // Implementation depends on your mapping library
-    console.log('Fitting map bounds for', installations.length, 'installations');
+// Show error message
+function showError(message) {
+    $('.error-message').remove();
+
+    const errorPanel = `
+        <div class="error-message alert alert-danger">
+            <strong>Erreur:</strong> ${message}
+        </div>
+    `;
+
+    $('.map-controls').after(errorPanel);
 }
 
+// Handle filter changes
+function handleFilterChange() {
+    const filters = {
+        year: $('#yearSelect').val(),
+        department: $('#departmentSelect').val()
+    };
 
+    console.log('Filters changed:', filters);
+    loadSolarInstallations(filters);
+}
 
-*/
+// Initialize everything when document is ready
+$(document).ready(function () {
+    console.log('Document ready, initializing map application...');
+
+    // Initialize map
+    initializeMap();
+
+    // Load filter options first
+    Promise.all([
+        loadYears(),
+        loadDepartments()
+    ]).then(() => {
+        console.log('Filter options loaded successfully');
+
+        // Then load initial data
+        return loadSolarInstallations();
+    }).then(() => {
+        console.log('Initial data loaded successfully');
+    }).catch((error) => {
+        console.error('Failed to initialize application:', error);
+    });
+
+    // Set up event listeners for filters
+    $('#yearSelect, #departmentSelect').on('change', handleFilterChange);
+
+    console.log('Map application initialized');
+});
+
+// Handle map resize (useful if the map container size changes)
+function resizeMap() {
+    if (map) {
+        map.invalidateSize();
+    }
+}
+
+// Export functions for potential external use
+window.mapApp = {
+    resizeMap: resizeMap,
+    loadSolarInstallations: loadSolarInstallations,
+    handleFilterChange: handleFilterChange,
+    loadYears: loadYears,
+    loadDepartments: loadDepartments
+};

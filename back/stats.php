@@ -2,70 +2,86 @@
 // Set header to return JSON
 header('Content-Type: application/json');
 
-// Include the database connection (reuse it across all APIs)
-require_once __DIR__ . '/../back/db.php';
+// Include the database connection
+require_once __DIR__ . '/db.php';
 
-// fetch dynamic stats from a table named `installations`
 try {
-    // Total installations
-    $stmt = $pdo->query("SELECT COUNT(*) AS total FROM installations");
-    $totalInstallations = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
-
-    // Enregistrements en base total
-    $stmt = $pdo->query("SELECT COUNT(*) AS total FROM etc");
-    $totalInputs;
-
-    //Installations par region 
-    $stmt = $pdo->query("SELECT COUNT(*) FROM installations WHERE region = 'Occitanie'");
-    $totalRegion = $stmt->fetchColumn();
-
-    //installateurs en total
-    // $stmt;
-    // $totalinstallateurs
-
-    //installations par année
-    // $stmt ;
-    // $totalInstallationsByYear
-
-    //installation en total
-    // $stmt ;
-    // $totalInstallations;
-
-    //installationsn d'une region quelconque par année
-    // $stmt ;
-    // $totalInstallationsFromRegionByYear
-
-    //marques de panneaux total
-    // $stmt ;
-    // $totalBrandsPann
-
-    //marques de onduleurs total
-    // $stmt ;
-    // $totalBrandsOnd
-
-    //enregistrements en base total par année
-    // $stmt ;
-    // $totalInputsByYear
-
-
-    // Installations by region (simplified example)
-    
-
-    // Create response
+    // Initialize response array
     $response = [
-        "enregistrements" => $totalInputs,
-        "regions" => $totalRegiion,
-        "installations" => $totalInstallations,
-        "installateurs" => $totalinstallateurs,
-        "annee" => $totalInstallationsByYear,
-        "regionsAnnee" => $totalInstallationsFromRegionByYear,
-        "marques" => $totalBrandsPann,
-        "onduleurs" => $totalBrandsOnd,
-        "baseAnnee" => $totalInputsByYear
+        "enregistrements" => 0,
+        "regions" => 0,
+        "installateurs" => 0,
+        "regionsAnnee" => 0,
+        "annee" => 0,
+        "marques" => 0,
+        "onduleurs" => 0,
+        "baseAnnee" => 0,
+        "installations" => 0
     ];
 
+    // Total installations
+    $stmt = $pdo->query("SELECT COUNT(*) AS total FROM Installation");
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $response["installations"] = (int)$result['total'];
+
+    // Total enregistrements en base (assuming it's the same as installations for now)
+    // You can change this to count from a different table if needed
+    $response["enregistrements"] = $response["installations"];
+
+    // Installations par région (count distinct regions from Installation via Commune)
+    $stmt = $pdo->query("
+        SELECT COUNT(DISTINCT r.id) as total 
+        FROM Installation i 
+        JOIN Commune c ON i.id_Commune = c.id 
+        JOIN Departement d ON c.id_Departement = d.id 
+        JOIN Region r ON d.id_Region = r.id
+    ");
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $response["regions"] = (int)$result['total'];
+
+    // Total installateurs
+    $stmt = $pdo->query("SELECT COUNT(DISTINCT id_Installateur) AS total FROM Installation WHERE id_Installateur IS NOT NULL");
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $response["installateurs"] = (int)$result['total'];
+
+    // Installations par année (count installations for current year)
+    // $currentYear = date('Y');
+    $targetYear = 2016;
+    $stmt = $pdo->prepare("SELECT COUNT(*) AS total FROM Installation WHERE an_installation = ?");
+    // $stmt->execute([$currentYear]);
+    $stmt->execute([$targetYear]);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $response["annee"] = (int)$result['total'];
+
+    // Installations d'une région par année (example for a specific region)
+    $stmt = $pdo->prepare("
+        SELECT COUNT(*) as total 
+        FROM Installation i 
+        JOIN Commune c ON i.id_Commune = c.id 
+        JOIN Departement d ON c.id_Departement = d.id 
+        JOIN Region r ON d.id_Region = r.id 
+        WHERE i.an_installation = ? 
+        LIMIT 1
+    ");
+    $stmt->execute([$currentYear]);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $response["regionsAnnee"] = (int)$result['total'];
+
+    // Marques de panneaux total
+    $stmt = $pdo->query("SELECT COUNT(*) AS total FROM Marque_Panneau");
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $response["marques"] = (int)$result['total'];
+
+    // Marques d'onduleurs total
+    $stmt = $pdo->query("SELECT COUNT(*) AS total FROM Marque_Ondulateur");
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $response["onduleurs"] = (int)$result['total'];
+
+    // Enregistrements en base par année (installations for current year)
+    $response["baseAnnee"] = $response["annee"];
 
     echo json_encode($response);
+
 } catch (PDOException $e) {
     http_response_code(500);
     echo json_encode(["error" => "Erreur API : " . $e->getMessage()]);
