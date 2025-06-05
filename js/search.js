@@ -1,10 +1,12 @@
 
 $(document).ready(function () {
     $.ajax({
-        url: 'api/stats.php', // not sure it's the right php file to call, will see later
+        url: 'back/search.php', // not sure it's the right php file to call, will see later
         method: 'GET',
         dataType: 'json',
         success: function (brands) {
+            // "<option value=\"$marque\">$marque</option>";
+            console.log(brands); // Debugging: log the brands data to console
             const ondBrandSelect = document.getElementById('ondBrand');
             if (ondBrandSelect && Array.isArray(brands)) { // if we found the HTML element and the brands exists
                 ondBrandSelect.innerHTML = ''; // flush placeholders down the skibidi
@@ -17,12 +19,38 @@ $(document).ready(function () {
             }
         },
         error: function () {
-            console.error('Error loading brands from database');
+            console.error('Error : Couldn\'t load brands from MySQL database');
         }
     });
 });
 
+/*
+$(document).ready(function () {
+    $.ajax({
+        url: 'back/search.php', // not sure it's the right php file to call, will see later
+        method: 'GET',
+        dataType: 'json',
+        success: function (brands) {
+            // "<option value=\"$marque\">$marque</option>";
+            console.log(brands); // Debugging: log the brands data to console
+            const ondBrandSelect = document.getElementById('ondBrand');
+            if (ondBrandSelect && Array.isArray(brands)) { // if we found the HTML element and the brands exists
+                ondBrandSelect.innerHTML = ''; // flush placeholders down the skibidi
+                brands.forEach(brand => {
+                    const option = document.createElement('option');
+                    option.value = brand.id || brand.value || brand; // Adjust according to your data structure
+                    option.textContent = brand.name || brand.label || brand;
+                    ondBrandSelect.appendChild(option);
+                });
+            }
+        },
+        error: function () {
+            console.error('Error : Couldn\'t load brands from MySQL database');
+        }
+    });
+});*/
 
+/*
 // Animate counters
 function animateCounter(element, finalValue) {
     let currentValue = 0;
@@ -65,3 +93,4 @@ document.querySelectorAll('.nav-link').forEach(link => {
         console.log(`Loading ${tab} content...`);
     });
 });
+*/
