@@ -23,28 +23,24 @@ try {
             i.puissance_crete, 
             CONCAT(LPAD(i.mois_installation, 2, '0'), '/', i.an_installation) AS date_installation, 
             c.com_nom AS localite,
-            o.id_Marque_Onduleur,
-            p.id_Marque_Panneau,
             c.id_Departement
             FROM Installation i
             JOIN Commune c ON i.id_Commune = c.id
             JOIN Onduleur o ON i.id_Onduleur = o.id
             JOIN Panneau p ON i.id_Panneau = p.id
             WHERE 1=1"; // placeholder jusst to start the WHERE statement
-            // may remove o.id_Marque_Ondulateur and p.id_Marque_Panneau from selection
+            // may remove o.id_Marque_Onduleur and p.id_Marque_Panneau from selection
         
-        // TODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO ajouter des champs de recherche FACULATIFS, parce que 3 champs de recherche
-        // à la fois ont 99% de chance de retourner 0 résultats
-        if ($selIdBrand) {
+        if ($selIdBrand != null && $selIdBrand != "" && $selIdBrand != "null") {
             $sql .= " AND o.id_Marque_Onduleur = $selIdBrand";
         }
-        if ($selIdPanel) {
+        if ($selIdPanel != null && $selIdPanel != "" && $selIdPanel != "null") {
             $sql .= " AND p.id_Marque_Panneau = $selIdPanel";
         }
-        if ($selIdDep) {
+        if ($selIdDep != null && $selIdDep != "" && $selIdDep != "null") {
             $sql .= " AND c.id_Departement = $selIdDep";
         }
-        $sql .= ";";
+        $sql .= " LIMIT 100;";
 
         $returnJson = [
             "sql" => $sql // testing

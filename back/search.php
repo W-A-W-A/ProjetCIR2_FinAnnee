@@ -17,8 +17,8 @@ function getOndBrands($limit = 20) {
   $stmt = $pdo->prepare($sql);
   $stmt->execute();
   $resp = [
-    "values" => [],
-    "names" => []
+    "values" => [null],
+    "names" => [" "]
   ];
   $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
   foreach ($data as $row) {
@@ -38,8 +38,8 @@ function getPanelBrands($limit = 20) {
   $stmt = $pdo->prepare($sql);
   $stmt->execute();
   $resp = [
-    "values" => [],
-    "names" => []
+    "values" => [null],
+    "names" => [" "]
   ];
   $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
   foreach ($data as $row) {
@@ -59,8 +59,8 @@ function getDeps($limit = 20) {
   $stmt = $pdo->prepare($sql);
   $stmt->execute();
   $resp = [
-    "values" => [],
-    "names" => []
+    "values" => [null],
+    "names" => [" "]
   ];
   $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
   foreach ($data as $row) {

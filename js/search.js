@@ -40,30 +40,28 @@ function updateFieldSelection(event) {
             $('.research-result').empty();
 
             // Loop through results and create result blocks
-            console.log(response);
             response["results"].forEach(result => {
-                console.log(result); // TODO remove me
                 // formats result block with data from MySQL db
                 const resultBlock = `
                 <div class="rounded-2 border border-dark d-grid gap-3 p-2">
                     <div class="rounded-2 border border-dark d-flex flex-column resultElem">
                         <div class="d-flex justify-content-between text-light elementTop">
-                            <p class="my-auto p-2 text-center" style="width:20%;">${result.nb_panneaux}</p>
-                            <p class="my-auto p-2 text-center" style="width:20%;">${result.surface}</p>
-                            <p class="my-auto p-2 text-center" style="width:20%;">${result.puissance_crete}</p>
+                            <p class="my-auto p-2 text-center" style="width:20%;">${result["nb_panneaux"]} panneaux</p>
+                            <p class="my-auto p-2 text-center" style="width:20%;">${result["surface"]} m²</p>
+                            <p class="my-auto p-2 text-center" style="width:20%;">${result["puissance_crete"]} kW/h</p>
                             <form action="detail.html" method="get" class="my-auto p-2 text-center">
-                                <button type="submit" name="detail" value="${result.id}" class="detailBtn btn rounded-5 m-2 text-center">Voir détail</button>
+                                <button type="submit" name="detail" value="${result["id"]}" class="detailBtn btn rounded-5 m-2 text-center">Voir détail</button>
                             </form>
                         </div>
                         <div class="d-flex justify-content-between elementBottom">
-                            <p class="my-auto p-2 text-center" style="width:50%;">${result.date_installation}</p>
-                            <p class="my-auto p-2 text-center" style="width:50%;">${result.localite}</p>
+                            <p class="my-auto p-2 text-center" style="width:50%;">${result["date_installation"]} </p>
+                            <p class="my-auto p-2 text-center" style="width:50%;">${result["localite"]}</p>
                         </div>
                     </div>
                 </div>`;
                 
                 // best way i found to insert into HTML code because other methods throw weird errors here
-                //document.getElementsByClassName('research-result')[0].insertAdjacentHTML('beforeend', resultBlock);
+                document.getElementsByClassName('research-result')[0].insertAdjacentHTML('beforeend', resultBlock);
             });
         },
         error: function() {
