@@ -1,30 +1,13 @@
 
 // launched when a field selection is changed
 function updateFieldSelection(event) {
-    // we don't use the event's data because we need ALL infos, even the ones already selected beforehand
+    // we don't use the event's data because we need ALL infos, even the ones already selected (or not) beforehand
     const selIdBrand = document.getElementById('ondBrand').value;
     const selIdPanel = document.getElementById('panelBrand').value;
     const selIdDep = document.getElementById('department').value;
 
     console.log("current selection : ", selIdBrand, selIdPanel,selIdDep);
 
-    resultBlock = `<div class="rounded-2 border border-dark d-grid gap-3 p-2">
-        <div class="rounded-2 border border-dark d-flex flex-column resultElem">
-          <div class="d-flex justify-content-between text-light elementTop">
-            <p class="my-auto p-2 text-center" style="width:20%;">Nombre de panneaux</p>
-            <p class="my-auto p-2 text-center" style="width:20%;">Surface</p>
-            <p class="my-auto p-2 text-center" style="width:20%;">Puissance crête</p>
-            <form action="details.html" method="get" class="my-auto p-2 text-center">
-              <button type="submit" name="detail" class="detailBtn btn rounded-5 m-2 text-center">Voir détail</button>
-            </form>
-          </div>
-          <div class="d-flex justify-content-between elementBottom">
-            <p class="my-auto p-2 text-center" style="width:50%;">Date</p>
-            <p class="my-auto p-2 text-center" style="width:50%;">Localité</p>
-          </div>
-        </div>
-      </div>`;
-    
     // creates the results blocks with data pulled from the MySQL db
     $.ajax({
         url: './back/panels.php',
@@ -60,7 +43,7 @@ function updateFieldSelection(event) {
                     </div>
                 </div>`;
                 
-                // best way i found to insert into HTML code because other methods throw weird errors here
+                // best way i found to insert into HTML code because other methods throw weird access errors here
                 document.getElementsByClassName('research-result')[0].insertAdjacentHTML('beforeend', resultBlock);
             });
         },
@@ -73,6 +56,7 @@ function updateFieldSelection(event) {
 // launched when page is loaded
 $(document).ready(function () {
     console.log("Script ready")
+    // classes of the selection menus
     const menuIds = ["ondBrand", "panelBrand", "department"];
 
     // loading the available fields from MySQL db
