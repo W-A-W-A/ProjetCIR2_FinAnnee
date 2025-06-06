@@ -88,9 +88,9 @@ try {
   exit;
 }
 catch (Exception $e) {
-  // parce que le JS veux du json
+  // because the js wants json
   $resp = [
-    "error" => "Erreur de chargement des marques",
+    "error" => "Error loading brands and departments",
     "message" => $e->getMessage()
   ];
 

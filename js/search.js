@@ -1,13 +1,89 @@
 
+// launched when a field selection is changed
+function updateFieldSelection(event) {
+    // we don't use the event's data because we need ALL infos, even the ones already selected beforehand
+    const selIdBrand = document.getElementById('ondBrand').value;
+    const selIdPanel = document.getElementById('panelBrand').value;
+    const selIdDep = document.getElementById('department').value;
+
+    console.log("current selection : ", selIdBrand, selIdPanel,selIdDep);
+
+    resultBlock = `<div class="rounded-2 border border-dark d-grid gap-3 p-2">
+        <div class="rounded-2 border border-dark d-flex flex-column resultElem">
+          <div class="d-flex justify-content-between text-light elementTop">
+            <p class="my-auto p-2 text-center" style="width:20%;">Nombre de panneaux</p>
+            <p class="my-auto p-2 text-center" style="width:20%;">Surface</p>
+            <p class="my-auto p-2 text-center" style="width:20%;">Puissance crête</p>
+            <form action="details.html" method="get" class="my-auto p-2 text-center">
+              <button type="submit" name="detail" class="detailBtn btn rounded-5 m-2 text-center">Voir détail</button>
+            </form>
+          </div>
+          <div class="d-flex justify-content-between elementBottom">
+            <p class="my-auto p-2 text-center" style="width:50%;">Date</p>
+            <p class="my-auto p-2 text-center" style="width:50%;">Localité</p>
+          </div>
+        </div>
+      </div>`;
+    
+    // creates the results blocks with data pulled from the MySQL db
+    $.ajax({
+        url: './back/panels.php',
+        method: 'GET',
+        dataType: 'json',
+        data: {
+            selIdBrand: selIdBrand,
+            selIdPanel: selIdPanel,
+            selIdDep: selIdDep
+        },
+        success: function(response) {
+            // Clear previous results
+            $('.research-result').empty();
+
+            // Loop through results and create result blocks
+            console.log(response);
+            response["results"].forEach(result => {
+                console.log(result); // TODO remove me
+                // formats result block with data from MySQL db
+                const resultBlock = `
+                <div class="rounded-2 border border-dark d-grid gap-3 p-2">
+                    <div class="rounded-2 border border-dark d-flex flex-column resultElem">
+                        <div class="d-flex justify-content-between text-light elementTop">
+                            <p class="my-auto p-2 text-center" style="width:20%;">${result.nb_panneaux}</p>
+                            <p class="my-auto p-2 text-center" style="width:20%;">${result.surface}</p>
+                            <p class="my-auto p-2 text-center" style="width:20%;">${result.puissance_crete}</p>
+                            <form action="detail.html" method="get" class="my-auto p-2 text-center">
+                                <button type="submit" name="detail" value="${result.id}" class="detailBtn btn rounded-5 m-2 text-center">Voir détail</button>
+                            </form>
+                        </div>
+                        <div class="d-flex justify-content-between elementBottom">
+                            <p class="my-auto p-2 text-center" style="width:50%;">${result.date_installation}</p>
+                            <p class="my-auto p-2 text-center" style="width:50%;">${result.localite}</p>
+                        </div>
+                    </div>
+                </div>`;
+                
+                // best way i found to insert into HTML code because other methods throw weird errors here
+                //document.getElementsByClassName('research-result')[0].insertAdjacentHTML('beforeend', resultBlock);
+            });
+        },
+        error: function() {
+            console.error('Erreur lors de la récupération des résultats');
+        }
+    });
+}
+
+// launched when page is loaded
 $(document).ready(function () {
-    console.log("search script loaded")
+    console.log("Script ready")
+    const menuIds = ["ondBrand", "panelBrand", "department"];
+
+    // loading the available fields from MySQL db
     $.ajax({
         url: './back/search.php', // not sure it's the right php file to call, will see later
         method: 'GET',
         dataType: 'json',
         timeout: 15000,
         success: function (response) {
-            const menuIds = ["ondBrand", "panelBrand", "department"];
             console.log(response); // Debugging: log the name data to console
             menuIds.forEach(menuId => { // for each selection menu
                 const ondBrandSelect = document.getElementById(menuId); // Get the menu element by ID
@@ -17,11 +93,11 @@ $(document).ready(function () {
                     Array.isArray(response[menuId]["values"]) && // checks value array too for missing ids
                     response[menuId]["names"].length === response[menuId]["values"].length
                 ) {
-                    ondBrandSelect.innerHTML = ''; // Clear previous options
+                    ondBrandSelect.innerHTML = ''; // clears placeholder options
                     response[menuId]["names"].forEach((brand, idx) => {
                         const option = document.createElement('option');
-                        option.value = response[menuId]["values"][idx]; // Use ID as value
-                        option.textContent = brand; // Use brand name as display text
+                        option.value = response[menuId]["values"][idx]; // uses ID as value
+                        option.textContent = brand; // uses brand name as display text
                         ondBrandSelect.appendChild(option);
                     });
                 }
@@ -35,7 +111,19 @@ $(document).ready(function () {
             console.error('Response:', jqXHR.responseText);
         }
     });
+
+    // event listener for field selection change
+    menuIds.forEach(menuId => {
+        const selectElem = document.getElementById(menuId);
+        if (selectElem) { // ensures we don't crash if the element is not found
+            selectElem.addEventListener('change', updateFieldSelection);
+        }
+    });
 });
+
+
+
+
 
 /*
 $(document).ready(function () {
