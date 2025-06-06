@@ -1,25 +1,36 @@
 
 $(document).ready(function () {
+    console.log("search script loaded")
     $.ajax({
-        url: 'back/search.php', // not sure it's the right php file to call, will see later
+        url: './back/search.php', // not sure it's the right php file to call, will see later
         method: 'GET',
         dataType: 'json',
-        success: function (brands) {
-            // "<option value=\"$marque\">$marque</option>";
-            console.log(brands); // Debugging: log the brands data to console
+        timeout: 15000,
+        success: function (response) {
+            console.log("response : ")
+            console.log(response); // Debugging: log the brands data to console
             const ondBrandSelect = document.getElementById('ondBrand');
-            if (ondBrandSelect && Array.isArray(brands)) { // if we found the HTML element and the brands exists
-                ondBrandSelect.innerHTML = ''; // flush placeholders down the skibidi
-                brands.forEach(brand => {
+            if (
+                ondBrandSelect &&
+                Array.isArray(response["brands"]) && // checks the brand array
+                Array.isArray(response["values"]) && // checks value array too for missing ids
+                response["brands"].length === response["values"].length
+            ) {
+                ondBrandSelect.innerHTML = ''; // Clear previous options
+                response["brands"].forEach((brand, idx) => {
                     const option = document.createElement('option');
-                    option.value = brand.id || brand.value || brand; // Adjust according to your data structure
-                    option.textContent = brand.name || brand.label || brand;
+                    option.value = response["values"][idx]; // Use ID as value
+                    option.textContent = brand; // Use brand name as display text
                     ondBrandSelect.appendChild(option);
                 });
             }
         },
-        error: function () {
+        error: function (jqXHR, textStatus, errorThrown) {
+            // the most detailed error message on earth
             console.error('Error : Couldn\'t load brands from MySQL database');
+            console.error('Status:', textStatus);
+            console.error('Error Thrown:', errorThrown);
+            console.error('Response:', jqXHR.responseText);
         }
     });
 });

@@ -1,14 +1,13 @@
 <?php
-// db.php — connexion à la base de données distante
 
-$host = 'localhost';
+$host = 'localhost'; // Permet de faire des tests en local en laissant la prod fonctionner
 $db   = 'solaire';
 $user = 'monuser';
 $pass = 'isen44';
 
 $options = [
     PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC // ✅ plus de clés 0,1,2...
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC // 
 ];
 
 try {
