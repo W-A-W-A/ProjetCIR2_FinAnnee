@@ -14,7 +14,29 @@ try {
 
     $installId = intval($_GET["id"]);
     $sql = 
-    "SELECT i.id, i.nb_pann, i.nb_ond, CONCAT(LPAD(i.mois_installation, 2, '0'), '/', i.an_installation) AS date_installation, i.surface, i.puissance_crete, i.lat, i.lon, i.ori, i.ori_opti, i.pente, i.pente_opti, i.prod_pvgis, i.code_postal, c.com_nom, d.dep_nom, r.dep_reg, p.pays_nom, mqo.nom, mdo.nom, mqpn.nom, mdpn.nom, inst.install_nom
+    "SELECT i.id as id,
+    i.nb_pann as nb_pann,
+    i.nb_ond as nb_ond,
+    CONCAT(LPAD(i.mois_installation, 2, '0'), '/', i.an_installation) as date_installation,
+    i.surface as surface,
+    i.puissance_crete as puissance_crete,
+    i.lat as lat,
+    i.lon as lon,
+    i.ori as ori,
+    i.ori_opti as ori_opti,
+    i.pente as pente,
+    i.pente_opti as pente_opti,
+    i.prod_pvgis as prod_pvgis,
+    i.code_postal as code_postal,
+    c.com_nom as com_nom,
+    d.dep_nom as dep_nom,
+    r.dep_reg as reg_nom,
+    p.pays_nom as pays_nom,
+    mqo.nom as marque_ond,
+    mdo.nom as modele_ond,
+    mqpn.nom as marque_pan,
+    mdpn.nom as modele_pan,
+    inst.install_nom as install_nom
     FROM Installation i
     LEFT JOIN Commune c ON i.id_Commune = c.id
     LEFT JOIN Departement d ON c.id_Departement = d.id
@@ -68,29 +90,29 @@ try {
         throw new Exception("Installation non trouvée");
     }
     $resp = [
-        "id" => (int)$row['i.id'],
+        "id" => (int)$row['id'],
         "date_install" => $row['date_installation'],
-        "nb_pann" => (int)$row['i.nb_pann'],
-        "nb_ond" => (int)$row['i.nb_ond'],
-        "surface" => (float)$row['i.surface'],
-        "puissance_crete" => (float)$row['i.puissance_crete'],
-        "lat" => (float)$row['i.lat'],
-        "lon" => (float)$row['i.lon'],
-        "ori" => (float)$row['i.ori'],
-        "ori_opti" => (float)$row['i.ori_opti'],
-        "pente" => (float)$row['i.pente'],
-        "pente_opti" => (float)$row['i.pente_opti'],
-        "prod_pvgis" => (float)$row['i.prod_pvgis'],
-        "code_postal" => $row['i.code_postal'],
-        "com_nom" => $row['c.com_nom'],
-        "dep_nom" => $row['d.dep_nom'],
-        "reg_nom" => $row['r.dep_reg'],
-        "pays_nom" => $row['p.pays_nom'],
-        "marque_ond" => $row['mqo.nom'],
-        "modele_ond" => $row['mdo.nom'],
-        "marque_pn" => $row['mqpn.nom'],
-        "modele_pn" => $row['mdpn.nom'],
-        "nom_installateur" => $row['inst.install_nom']
+        "nb_pann" => (int)$row['nb_pann'],
+        "nb_ond" => (int)$row['nb_ond'],
+        "surface" => (float)$row['surface'],
+        "puissance_crete" => (float)$row['puissance_crete'],
+        "lat" => (float)$row['lat'],
+        "lon" => (float)$row['lon'],
+        "ori" => (float)$row['ori'],
+        "ori_opti" => (float)$row['ori_opti'],
+        "pente" => (float)$row['pente'],
+        "pente_opti" => (float)$row['pente_opti'],
+        "prod_pvgis" => (float)$row['prod_pvgis'],
+        "code_postal" => $row['code_postal'],
+        "com_nom" => $row['com_nom'],
+        "dep_nom" => $row['dep_nom'],
+        "reg_nom" => $row['reg_nom'],
+        "pays_nom" => $row['pays_nom'],
+        "marque_ond" => $row['marque_ond'],
+        "modele_ond" => $row['modele_ond'],
+        "marque_pn" => $row['marque_pan'],
+        "modele_pn" => $row['modele_pan'],
+        "nom_installateur" => $row['install_nom']
     ];
     
     echo json_encode($resp);
