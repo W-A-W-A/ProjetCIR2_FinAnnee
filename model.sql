@@ -55,12 +55,12 @@ CREATE TABLE Installateur(
         CONSTRAINT Installateur_PK PRIMARY KEY (id)
 ) ENGINE = InnoDB;
 #------------------------------------------------------------
-# Table: Marque Ondulateur
+# Table: Marque Onduleur
 #------------------------------------------------------------
-CREATE TABLE Marque_Ondulateur(
+CREATE TABLE Marque_Onduleur(
         id Int NOT NULL AUTO_INCREMENT,
         nom Varchar (255) NOT NULL,
-        CONSTRAINT Marque_Ondulateur_PK PRIMARY KEY (id)
+        CONSTRAINT Marque_Onduleur_PK PRIMARY KEY (id)
 ) ENGINE = InnoDB;
 #------------------------------------------------------------
 # Table: Marque Panneau
@@ -90,23 +90,23 @@ CREATE TABLE Panneau(
         CONSTRAINT Panneau_Modele_Panneau0_FK FOREIGN KEY (id_Modele_Panneau) REFERENCES Modele_Panneau(id)
 ) ENGINE = InnoDB;
 #------------------------------------------------------------
-# Table: Modele Ondulateur
+# Table: Modele Onduleur
 #------------------------------------------------------------
-CREATE TABLE Modele_Ondulateur(
+CREATE TABLE Modele_Onduleur(
         id Int NOT NULL AUTO_INCREMENT,
         nom Varchar (255) NOT NULL,
-        CONSTRAINT Modele_Ondulateur_PK PRIMARY KEY (id)
+        CONSTRAINT Modele_Onduleur_PK PRIMARY KEY (id)
 ) ENGINE = InnoDB;
 #------------------------------------------------------------
-# Table: Ondulateur
+# Table: Onduleur
 #------------------------------------------------------------
-CREATE TABLE Ondulateur(
+CREATE TABLE Onduleur(
         id Int NOT NULL AUTO_INCREMENT,
-        id_Marque_Ondulateur Int NOT NULL,
-        id_Modele_Ondulateur Int NOT NULL,
-        CONSTRAINT Ondulateur_PK PRIMARY KEY (id),
-        CONSTRAINT Ondulateur_Marque_Ondulateur_FK FOREIGN KEY (id_Marque_Ondulateur) REFERENCES Marque_Ondulateur(id),
-        CONSTRAINT Ondulateur_Modele_Ondulateur0_FK FOREIGN KEY (id_Modele_Ondulateur) REFERENCES Modele_Ondulateur(id)
+        id_Marque_Onduleur Int NOT NULL,
+        id_Modele_Onduleur Int NOT NULL,
+        CONSTRAINT Onduleur_PK PRIMARY KEY (id),
+        CONSTRAINT Onduleur_Marque_Onduleur_FK FOREIGN KEY (id_Marque_Onduleur) REFERENCES Marque_Onduleur(id),
+        CONSTRAINT Onduleur_Modele_Onduleur0_FK FOREIGN KEY (id_Modele_Onduleur) REFERENCES Modele_Onduleur(id)
 ) ENGINE = InnoDB;
 #------------------------------------------------------------
 # Table: Pays
@@ -167,12 +167,12 @@ CREATE TABLE Installation(
         prod_pvgis Int,
         code_postal Int,
         id_Panneau Int,
-        id_Ondulateur Int,
+        id_Onduleur Int,
         id_Installateur Int,
         id_Commune Int,
         CONSTRAINT Installation_PK PRIMARY KEY (id),
         CONSTRAINT Installation_Panneau_FK FOREIGN KEY (id_Panneau) REFERENCES Panneau(id),
-        CONSTRAINT Installation_Ondulateur0_FK FOREIGN KEY (id_Ondulateur) REFERENCES Ondulateur(id),
+        CONSTRAINT Installation_Onduleur0_FK FOREIGN KEY (id_Onduleur) REFERENCES Onduleur(id),
         CONSTRAINT Installation_Installateur1_FK FOREIGN KEY (id_Installateur) REFERENCES Installateur(id),
         CONSTRAINT Installation_Commune2_FK FOREIGN KEY (id_Commune) REFERENCES Commune(id)
 ) ENGINE = InnoDB;

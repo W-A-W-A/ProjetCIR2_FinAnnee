@@ -1,13 +1,13 @@
 <?php
 
-$host = 'localhost'; // Permet de faire des tests en local en laissant la prod fonctionner
+$host = 'localhost'; // connection a la mariadb 
 $db   = 'solaire';
 $user = 'monuser';
 $pass = 'isen44';
 
 $options = [
     PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC // 
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC 
 ];
 
 try {
