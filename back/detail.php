@@ -1,18 +1,21 @@
 <?php
-/*
+
 header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type');
-*/
+
+
 
 // Include the database connection
 require_once __DIR__ . '/db.php';
 
 try {
-    $instId = $_GET["id"];
+  if (!isset($_GET["id"]) || !is_numeric($_GET["id"])) {
+    throw new Exception("ID d'installation invalide");
+  }
+
+    $installId = (int)$_GET["id"];
     $sql = 
-    "SELECT i.id, i.an_installation, i.nb_pann, i.nb_ond, i.mois_installation, i.surface, i.puissance_crete, i.lat, i.lon, i.ori, i.ori_opti, i.pente, i.pente_opti, i.prod_pvgis, i.code_postal, c.com_nom, d.dep_nom, r.dep_reg, p.pays_nom, mqo.nom, mdo.nom, mqpn.nom, mdpn.nom, inst.install_nom FROM Installation i WHERE i.id = \"$instId\"
+    "SELECT i.id, i.an_installation, i.nb_pann, i.nb_ond, i.mois_installation, i.surface, i.puissance_crete, i.lat, i.lon, i.ori, i.ori_opti, i.pente, i.pente_opti, i.prod_pvgis, i.code_postal, c.com_nom, d.dep_nom, r.dep_reg, p.pays_nom, mqo.nom, mdo.nom, mqpn.nom, mdpn.nom, inst.install_nom
+    FROM Installation i
     JOIN Commune c ON i.id_Commune = c.id
     JOIN Departement d ON = c.id_Departement = d.id
     JOIN Region r ON d.id_Region = r.id
@@ -23,10 +26,17 @@ try {
     JOIN Panneau pn ON i.id_Panneau = pn.id
     JOIN Marque_Panneau mqpn ON pn.id_Marque_Panneau = mqpn.id
     JOIN Modele_Panneau mdpn ON pn.id_Modele_Panneau = mdpn.id
-    JOIN Installateur inst ON i.id_Installateur = inst.id;";
+    JOIN Installateur inst ON i.id_Installateur = inst.id
+    WHERE i.id = ?;";
     
     $stmt = $pdo->prepare($sql);
-    $stmt->execute();
+    $stmt->execute([$installId]);
+
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if (!$row) {
+        throw new Exception("Installation non trouvée");
+    }
     $resp = [
         "id" => [],
         "an_installation" => [],
@@ -53,62 +63,42 @@ try {
         "modele_pn" => [],
         "nom_installateur" => []
     ];
-    $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    foreach ($data as $row) {
-        $id = htmlspecialchars($row['i.id']);
-        $anInst = htmlspecialchars($row['i.an_installation']);
-        $nbPann = htmlspecialchars($row['i.nb_pann']);
-        $nbOnd = htmlspecialchars($row['i.nb_ond']);
-        $moInst = htmlspecialchars($row['i.mois_installation']);
-        $surface = htmlspecialchars($row['i.surface']);
-        $pCrete = htmlspecialchars($row['i.puissance_crete']);
-        $prodPvgis = htmlspecialchars($row['i.prod_pvgis']);
-        $lat = htmlspecialchars($row['i.lat']);
-        $lon = htmlspecialchars($row['i.lon']);
-        $ori = htmlspecialchars($row['i.ori']);
-        $oriOpti = htmlspecialchars($row['i.ori_opti']);
-        $pente = htmlspecialchars($row['i.pente']);
-        $penteOpti = htmlspecialchars($row['i.pente_opti']);
-        $marquePan = htmlspecialchars($row['mqpn.nom']);
-        $modelePan = htmlspecialchars($row['mdpn.nom']);
-        $marqueOnd = htmlspecialchars($row['mqo.nom']);
-        $modeleOnd = htmlspecialchars($row['mdo.nom']);
-        $instNom = htmlspecialchars($row['inst.install_nom']);
-        $comNom = htmlspecialchars($row['c.com_nom']);
-        $depNom = htmlspecialchars($row['d.dep_nom']);
-        $regNom = htmlspecialchars($row['r.dep_reg']);
-        $paysNom = htmlspecialchars($row['p.pays_nom']);
-        $cp = htmlspecialchars($row['i.code_postal']);
-
-        $resp["id"][] = $id;
-        $resp["an_installation"][] = $anInst;
-        $resp["nb_pann"][] = $nbPann;
-        $resp["nb_ond"][] = $nbOnd;
-        $resp["mois_installation"][] = $moInst;
-        $resp["surface"][] = $surface;
-        $resp["puissance_crete"][] = $pCrete;
-        $resp["prod_pvgis"][] = $prodPvgis;
-        $resp["lat"][] = $lat;
-        $resp["lon"][] = $lon;
-        $resp["ori"][] = $ori;
-        $resp["ori_opti"][] = $oriOpti;
-        $resp["pente"][] = $pente;
-        $resp["pente_opti"][] = $penteOpti;
-        $resp["marque_pan"][] = $marquePan;
-        $resp["modele_pan"][] = $modelePan;
-        $resp["marque_ond"][] = $marqueOnd;
-        $resp["modele_ond"][] = $modeleOnd;
-        $resp["nom_installateur"][] = $instNom;
-        $resp["com_nom"][] = $comNom;
-        $resp["dep_nom"][] = $depNom;
-        $resp["reg_nom"][] = $regNom;
-        $resp["pays_nom"][] = $paysNom;
-        $resp["code_postal"][] = $cp;
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if (!$row) {
+        throw new Exception("Installation non trouvée");
     }
-  echo json_encode($resp);
-  exit;
+    $resp = [
+        "id" => (int)$row['id'],
+        "an_installation" => (int)$row['an_installation'],
+        "nb_pann" => (int)$row['nb_pann'],
+        "nb_ond" => (int)$row['nb_ond'],
+        "mois_installation" => (int)$row['mois_installation'],
+        "surface" => (float)$row['surface'],
+        "puissance_crete" => (float)$row['puissance_crete'],
+        "lat" => (float)$row['lat'],
+        "lon" => (float)$row['lon'],
+        "ori" => (float)$row['ori'],
+        "ori_opti" => (float)$row['ori_opti'],
+        "pente" => (float)$row['pente'],
+        "pente_opti" => (float)$row['pente_opti'],
+        "prod_pvgis" => (float)$row['prod_pvgis'],
+        "code_postal" => $row['code_postal'],
+        "com_nom" => $row['com_nom'],
+        "dep_nom" => $row['dep_nom'],
+        "reg_nom" => $row['dep_reg'],
+        "pays_nom" => $row['pays_nom'],
+        "marque_ond" => $row['marque_onduleur'],
+        "modele_ond" => $row['modele_onduleur'],
+        "marque_pan" => $row['marque_panneau'],
+        "modele_pan" => $row['modele_panneau'],
+        "nom_installateur" => $row['install_nom']
+    ];
+    
+    echo json_encode($resp);
 }
 catch (Exception $e) {
+  http_response_code(500);
   // parce que le JS veux du json
   $resp = [
     "error" => "Erreur de chargement des données",

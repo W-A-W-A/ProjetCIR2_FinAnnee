@@ -1,19 +1,34 @@
 
 const apiData = {
-    marqueOnduleur: "",
-    marquePanneau: "",
-    departement: "",
-    mois: 0,
-    annee: 0,
-    surface: 0,
-    nbPanneaux: 0,
-    puissanceCrete: 0,
-    commune: "",
+    id: ""
+    // an_installation: "",
+    // nb_pann: "",
+    // nb_ond: "",
+    // mois_installation: "",
+    // surface: "",
+    // puissance_crete: "",
+    // lat: "",
+    // lon: "",
+    // ori: "",
+    // ori_opti: "",
+    // pente: "",
+    // pente_opti: "",
+    // prod_pvgis: "",
+    // code_postal: "",
+    // com_nom: "",
+    // dep_nom: "",
+    // reg_nom: "",
+    // pays_nom: "",
+    // marque_pan: "",
+    // modele_pan: "",
+    // marque_ond: "",
+    // modele_ond: "",
+    // nom_installateur: ""
 };
 
 $(document).ready(function () {
     $.ajax({
-        url: 'back/detail.php',
+        url: './back/detail.php',
         method: 'GET',
         dataType: 'json',
         success: function (data) {
