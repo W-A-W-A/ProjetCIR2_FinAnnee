@@ -15,7 +15,7 @@ try {
         "annee" => 0,
         "marques" => 0,
         "onduleurs" => 0,
-        "baseAnnee" => 0,
+        "modelePanneau" => 0,
         "onduleursTotal" => 0
     ];
 
@@ -74,9 +74,11 @@ try {
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $response["onduleurs"] = (int)$result['total'];
 
-    // Enregistrements en base par année (installations for current year)
-    $response["baseAnnee"] = $response["annee"];
-
+    // Nombre total de Modele de Panneau
+    $stmt = $pdo->query("SELECT COUNT(*) AS total FROM Modele_Panneau");
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $response["modelePanneau"] = (int)$result['total'];
+    
     // Nombre d'onduleurs total
     $stmt = $pdo->query("SELECT COUNT(*) AS total FROM Onduleur");
     $result = $stmt->fetch(PDO::FETCH_ASSOC);

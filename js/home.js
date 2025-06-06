@@ -8,7 +8,7 @@ const apiData = {
     annee: 0,
     marques: 0,
     onduleurs: 0,
-    baseAnnee: 0,
+    modelePanneau: 0,
     onduleursTotal: 0
 };
 
