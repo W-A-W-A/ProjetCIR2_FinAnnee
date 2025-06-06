@@ -3,7 +3,7 @@
 
 $host = 'localhost'; // Permet de faire des tests en local en laissant la prod fonctionner
 $db   = 'solaire';
-$user = 'admin';
+$user = 'monuser';
 $pass = 'isen44';
 
 $options = [
