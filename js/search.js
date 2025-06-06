@@ -50,7 +50,7 @@ function updateFieldSelection(event) {
                             <p class="my-auto p-2 text-center" style="width:20%;">${result["surface"]} m²</p>
                             <p class="my-auto p-2 text-center" style="width:20%;">${result["puissance_crete"]} kW/h</p>
                             <form action="detail.html" method="get" class="my-auto p-2 text-center">
-                                <button type="submit" name="detail" value="${result["id"]}" class="detailBtn btn rounded-5 m-2 text-center">Voir détail</button>
+                                <button type="submit" name="detail" value=${result["id"]} class="detailBtn btn rounded-5 m-2 text-center">Voir détail</button>
                             </form>
                         </div>
                         <div class="d-flex justify-content-between elementBottom">

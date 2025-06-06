@@ -12,21 +12,22 @@ try {
     throw new Exception("ID d'installation invalide");
   }
 
-    $installId = (int)$_GET["id"];
+    $installId = intval($_GET["id"]);
     $sql = 
-    "SELECT i.id, i.an_installation, i.nb_pann, i.nb_ond, i.mois_installation, i.surface, i.puissance_crete, i.lat, i.lon, i.ori, i.ori_opti, i.pente, i.pente_opti, i.prod_pvgis, i.code_postal, c.com_nom, d.dep_nom, r.dep_reg, p.pays_nom, mqo.nom, mdo.nom, mqpn.nom, mdpn.nom, inst.install_nom
+    "SELECT i.id, i.nb_pann, i.nb_ond, CONCAT(LPAD(i.mois_installation, 2, '0'), '/', i.an_installation) AS date_installation, i.surface, i.puissance_crete, i.lat, i.lon, i.ori, i.ori_opti, i.pente, i.pente_opti, i.prod_pvgis, i.code_postal, c.com_nom, d.dep_nom, r.dep_reg, p.pays_nom, mqo.nom, mdo.nom, mqpn.nom, mdpn.nom, inst.install_nom
     FROM Installation i
-    JOIN Commune c ON i.id_Commune = c.id
-    JOIN Departement d ON = c.id_Departement = d.id
-    JOIN Region r ON d.id_Region = r.id
-    JOIN Pays p ON r.id_Pays = p.id
-    JOIN Onduleur o ON i.id_Onduleur = o.id
-    JOIN Marque_Onduleur mqo ON o.id_Marque_Onduleur = mqo.id
-    JOIN Modele_Onduleur mdo ON o.id_Modele_Onduleur = mdo.id
-    JOIN Panneau pn ON i.id_Panneau = pn.id
-    JOIN Marque_Panneau mqpn ON pn.id_Marque_Panneau = mqpn.id
-    JOIN Modele_Panneau mdpn ON pn.id_Modele_Panneau = mdpn.id
-    JOIN Installateur inst ON i.id_Installateur = inst.id
+    LEFT JOIN Commune c ON i.id_Commune = c.id
+    LEFT JOIN Departement d ON c.id_Departement = d.id
+    LEFT JOIN Region r ON d.id_Region = r.id
+    LEFT JOIN Pays p ON r.id_Pays = p.id
+    LEFT JOIN Onduleur o ON i.id_Onduleur = o.id
+    LEFT JOIN Marque_Onduleur mqo ON o.id_Marque_Onduleur = mqo.id
+    LEFT JOIN Modele_Onduleur mdo ON o.id_Modele_Onduleur = mdo.id
+    LEFT JOIN Panneau pn ON i.id_Panneau = pn.id
+    LEFT JOIN Marque_Panneau mqpn ON pn.id_Marque_Panneau = mqpn.id
+    LEFT JOIN Modele_Panneau mdpn ON pn.id_Modele_Panneau = mdpn.id
+    LEFT JOIN Installateur inst ON i.id_Installateur = inst.id
+    
     WHERE i.id = ?;";
     
     $stmt = $pdo->prepare($sql);
@@ -35,14 +36,13 @@ try {
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     
     if (!$row) {
-        throw new Exception("Installation non trouvée");
+        throw new Exception("Installation non trouvée v1S");
     }
     $resp = [
         "id" => [],
-        "an_installation" => [],
         "nb_pann" => [],
         "nb_ond" => [],
-        "mois_installation" => [],
+        "date_install" => [],
         "surface" => [],
         "puissance_crete" => [],
         "lat" => [],
@@ -63,36 +63,34 @@ try {
         "modele_pn" => [],
         "nom_installateur" => []
     ];
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
     
     if (!$row) {
         throw new Exception("Installation non trouvée");
     }
     $resp = [
-        "id" => (int)$row['id'],
-        "an_installation" => (int)$row['an_installation'],
-        "nb_pann" => (int)$row['nb_pann'],
-        "nb_ond" => (int)$row['nb_ond'],
-        "mois_installation" => (int)$row['mois_installation'],
-        "surface" => (float)$row['surface'],
-        "puissance_crete" => (float)$row['puissance_crete'],
-        "lat" => (float)$row['lat'],
-        "lon" => (float)$row['lon'],
-        "ori" => (float)$row['ori'],
-        "ori_opti" => (float)$row['ori_opti'],
-        "pente" => (float)$row['pente'],
-        "pente_opti" => (float)$row['pente_opti'],
-        "prod_pvgis" => (float)$row['prod_pvgis'],
-        "code_postal" => $row['code_postal'],
-        "com_nom" => $row['com_nom'],
-        "dep_nom" => $row['dep_nom'],
-        "reg_nom" => $row['dep_reg'],
-        "pays_nom" => $row['pays_nom'],
-        "marque_ond" => $row['marque_onduleur'],
-        "modele_ond" => $row['modele_onduleur'],
-        "marque_pan" => $row['marque_panneau'],
-        "modele_pan" => $row['modele_panneau'],
-        "nom_installateur" => $row['install_nom']
+        "id" => (int)$row['i.id'],
+        "date_install" => $row['date_installation'],
+        "nb_pann" => (int)$row['i.nb_pann'],
+        "nb_ond" => (int)$row['i.nb_ond'],
+        "surface" => (float)$row['i.surface'],
+        "puissance_crete" => (float)$row['i.puissance_crete'],
+        "lat" => (float)$row['i.lat'],
+        "lon" => (float)$row['i.lon'],
+        "ori" => (float)$row['i.ori'],
+        "ori_opti" => (float)$row['i.ori_opti'],
+        "pente" => (float)$row['i.pente'],
+        "pente_opti" => (float)$row['i.pente_opti'],
+        "prod_pvgis" => (float)$row['i.prod_pvgis'],
+        "code_postal" => $row['i.code_postal'],
+        "com_nom" => $row['c.com_nom'],
+        "dep_nom" => $row['d.dep_nom'],
+        "reg_nom" => $row['r.dep_reg'],
+        "pays_nom" => $row['p.pays_nom'],
+        "marque_ond" => $row['mqo.nom'],
+        "modele_ond" => $row['mdo.nom'],
+        "marque_pn" => $row['mqpn.nom'],
+        "modele_pn" => $row['mdpn.nom'],
+        "nom_installateur" => $row['inst.install_nom']
     ];
     
     echo json_encode($resp);
