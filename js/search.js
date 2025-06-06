@@ -7,27 +7,29 @@ $(document).ready(function () {
         dataType: 'json',
         timeout: 15000,
         success: function (response) {
-            console.log("response : ")
-            console.log(response); // Debugging: log the brands data to console
-            const ondBrandSelect = document.getElementById('ondBrand');
-            if (
-                ondBrandSelect &&
-                Array.isArray(response["brands"]) && // checks the brand array
-                Array.isArray(response["values"]) && // checks value array too for missing ids
-                response["brands"].length === response["values"].length
-            ) {
-                ondBrandSelect.innerHTML = ''; // Clear previous options
-                response["brands"].forEach((brand, idx) => {
-                    const option = document.createElement('option');
-                    option.value = response["values"][idx]; // Use ID as value
-                    option.textContent = brand; // Use brand name as display text
-                    ondBrandSelect.appendChild(option);
-                });
-            }
+            const menuIds = ["ondBrand", "panelBrand", "department"];
+            console.log(response); // Debugging: log the name data to console
+            menuIds.forEach(menuId => { // for each selection menu
+                const ondBrandSelect = document.getElementById(menuId); // Get the menu element by ID
+                if (
+                    ondBrandSelect &&
+                    Array.isArray(response[menuId]["names"]) && // checks the brand array
+                    Array.isArray(response[menuId]["values"]) && // checks value array too for missing ids
+                    response[menuId]["names"].length === response[menuId]["values"].length
+                ) {
+                    ondBrandSelect.innerHTML = ''; // Clear previous options
+                    response[menuId]["names"].forEach((brand, idx) => {
+                        const option = document.createElement('option');
+                        option.value = response[menuId]["values"][idx]; // Use ID as value
+                        option.textContent = brand; // Use brand name as display text
+                        ondBrandSelect.appendChild(option);
+                    });
+                }
+            });
         },
         error: function (jqXHR, textStatus, errorThrown) {
             // the most detailed error message on earth
-            console.error('Error : Couldn\'t load brands from MySQL database');
+            console.error('Error : Couldn\'t load name from MySQL database');
             console.error('Status:', textStatus);
             console.error('Error Thrown:', errorThrown);
             console.error('Response:', jqXHR.responseText);
