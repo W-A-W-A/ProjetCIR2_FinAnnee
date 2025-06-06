@@ -9,7 +9,7 @@ const apiData = {
     marques: 0,
     onduleurs: 0,
     baseAnnee: 0,
-    installations: 0
+    onduleursTotal: 0
 };
 
 // Animate counters

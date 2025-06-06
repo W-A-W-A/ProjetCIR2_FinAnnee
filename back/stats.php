@@ -16,17 +16,14 @@ try {
         "marques" => 0,
         "onduleurs" => 0,
         "baseAnnee" => 0,
-        "installations" => 0
+        "onduleursTotal" => 0
     ];
 
-    // Total installations
+    // Total enregistrements en base
     $stmt = $pdo->query("SELECT COUNT(*) AS total FROM Installation");
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    $response["installations"] = (int)$result['total'];
+    $response["enregistrements"] = (int)$result['total'];
 
-    // Total enregistrements en base (assuming it's the same as installations for now)
-    // You can change this to count from a different table if needed
-    $response["enregistrements"] = $response["installations"];
 
     // Installations par région (count distinct regions from Installation via Commune)
     $stmt = $pdo->query("
@@ -63,7 +60,7 @@ try {
         WHERE i.an_installation = ? 
         LIMIT 1
     ");
-    $stmt->execute([$currentYear]);
+    $stmt->execute([$targetYear]);
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $response["regionsAnnee"] = (int)$result['total'];
 
@@ -73,12 +70,17 @@ try {
     $response["marques"] = (int)$result['total'];
 
     // Marques d'onduleurs total
-    $stmt = $pdo->query("SELECT COUNT(*) AS total FROM Marque_Ondulateur");
+    $stmt = $pdo->query("SELECT COUNT(*) AS total FROM Marque_Onduleur");
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $response["onduleurs"] = (int)$result['total'];
 
     // Enregistrements en base par année (installations for current year)
     $response["baseAnnee"] = $response["annee"];
+
+    // Nombre d'onduleurs total
+    $stmt = $pdo->query("SELECT COUNT(*) AS total FROM Onduleur");
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $response["onduleursTotal"] = (int)$result['total'];
 
     echo json_encode($response);
 
