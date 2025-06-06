@@ -12,7 +12,7 @@ require_once __DIR__ . '/db.php';
 
 function getOndBrands($limit = 20) {
   global $pdo;
-  $sql = "SELECT DISTINCT id, nom FROM Marque_Ondulateur ORDER BY nom ASC LIMIT $limit";
+  $sql = "SELECT DISTINCT id, nom FROM Marque_Onduleur ORDER BY nom ASC LIMIT $limit";
   
   $stmt = $pdo->prepare($sql);
   $stmt->execute();

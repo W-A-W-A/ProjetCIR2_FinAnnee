@@ -23,12 +23,12 @@ try {
             i.puissance_crete, 
             CONCAT(LPAD(i.mois_installation, 2, '0'), '/', i.an_installation) AS date_installation, 
             c.com_nom AS localite,
-            o.id_Marque_Ondulateur,
+            o.id_Marque_Onduleur,
             p.id_Marque_Panneau,
             c.id_Departement
             FROM Installation i
             JOIN Commune c ON i.id_Commune = c.id
-            JOIN Ondulateur o ON i.id_Ondulateur = o.id
+            JOIN Onduleur o ON i.id_Onduleur = o.id
             JOIN Panneau p ON i.id_Panneau = p.id
             WHERE 1=1"; // placeholder jusst to start the WHERE statement
             // may remove o.id_Marque_Ondulateur and p.id_Marque_Panneau from selection
@@ -36,7 +36,7 @@ try {
         // TODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO ajouter des champs de recherche FACULATIFS, parce que 3 champs de recherche
         // à la fois ont 99% de chance de retourner 0 résultats
         if ($selIdBrand) {
-            $sql .= " AND o.id_Marque_Ondulateur = $selIdBrand";
+            $sql .= " AND o.id_Marque_Onduleur = $selIdBrand";
         }
         if ($selIdPanel) {
             $sql .= " AND p.id_Marque_Panneau = $selIdPanel";
