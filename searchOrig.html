@@ -1,0 +1,158 @@
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recherche - Panneaux Photovoltaïque</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/search.css">
+</head>
+
+<body>
+  <header class="header-container">
+    <img class="logo" src="assets/logo.png">
+
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link" href="home.html" data-tab="accueil">Accueil</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="#" data-tab="recherche">Recherche</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="map.html" data-tab="carte">Carte</a>
+      </li>
+    </ul>
+  </header>
+
+  <section class="research-param">
+    <div class="research-select">
+      <div class="select-box">
+        <label for="ondBrand">Marque de l'onduleur</label>
+        <select id="ondBrand">
+          <option id="ond1">1</option>
+          <option id="ond2">2</option>
+          <option id="ond3">3</option>
+          <option id="ond4">4</option>
+          <option id="ond5">5</option>
+          <option id="ond6">6</option>
+          <option id="ond7">7</option>
+          <option id="ond8">8</option>
+          <option id="ond9">9</option>
+          <option id="ond10">10</option>
+          <option id="ond11">11</option>
+          <option id="ond12">12</option>
+          <option id="ond13">13</option>
+          <option id="ond14">14</option>
+          <option id="ond15">15</option>
+          <option id="ond16">16</option>
+          <option id="ond17">17</option>
+          <option id="ond18">18</option>
+          <option id="ond19">19</option>
+          <option id="ond20">20</option>
+          <!-- A modifier avec les 20 premiers résultats de la BDD -->
+        </select>
+      </div>
+
+      <div class="select-box">
+        <label for="panelBrand">Marque du panneau</label>
+        <select id="panelBrand">
+          <option id="pan1">1</option>
+          <option id="pan2">2</option>
+          <option id="pan3">3</option>
+          <option id="pan4">4</option>
+          <option id="pan5">5</option>
+          <option id="pan6">6</option>
+          <option id="pan7">7</option>
+          <option id="pan8">8</option>
+          <option id="pan9">9</option>
+          <option id="pan10">10</option>
+          <option id="pan11">11</option>
+          <option id="pan12">12</option>
+          <option id="pan13">13</option>
+          <option id="pan14">14</option>
+          <option id="pan15">15</option>
+          <option id="pan16">16</option>
+          <option id="pan17">17</option>
+          <option id="pan18">18</option>
+          <option id="pan19">19</option>
+          <option id="pan20">20</option>
+          <!-- A modifier avec les 20 premiers résultats de la BDD -->
+        </select>
+      </div>
+      <div class="select-box">
+        <label for="department">Département</label>
+        <select id="department">
+          <option id="dep1">1</option>
+          <option id="dep2">2</option>
+          <option id="dep3">3</option>
+          <option id="dep4">4</option>
+          <option id="dep5">5</option>
+          <option id="dep6">6</option>
+          <option id="dep7">7</option>
+          <option id="dep8">8</option>
+          <option id="dep9">9</option>
+          <option id="dep10">10</option>
+          <option id="dep11">11</option>
+          <option id="dep12">12</option>
+          <option id="dep13">13</option>
+          <option id="dep14">14</option>
+          <option id="dep15">15</option>
+          <option id="dep16">16</option>
+          <option id="dep17">17</option>
+          <option id="dep18">18</option>
+          <option id="dep19">19</option>
+          <option id="dep20">20</option>
+          <!-- A modifier avec 20 résultats aléatoires de la BDD -->
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <section class="research-result"> <!-- A modifier pour automatiser la recherche de données -->
+    <div class="mx-auto" style="width:98%">
+      <div class="d-flex justify-content-between m-3">
+        <h1>Résultats</h1>
+      </div>
+      <div class="rounded-2 border border-dark d-grid gap-3 p-2">
+        <div class="rounded-2 border border-dark d-flex flex-column resultElem">
+          <div class="d-flex justify-content-between text-light elementTop">
+            <p class="my-auto p-2 text-center" style="width:20%;">Nombre de panneaux</p>
+            <p class="my-auto p-2 text-center" style="width:20%;">Surface</p>
+            <p class="my-auto p-2 text-center" style="width:20%;">Puissance crête</p>
+            <form action="detail.html" method="get" class="my-auto p-2 text-center">
+              <button type="submit" name="detail" class="detailBtn btn rounded-5 m-2 text-center">Voir détail</button>
+            </form>
+          </div>
+          <div class="d-flex justify-content-between elementBottom">
+            <p class="my-auto p-2 text-center" style="width:50%;">Date</p>
+            <p class="my-auto p-2 text-center" style="width:50%;">Localité</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="m-5">
+      <form action="create.html" method="post" class="my-auto p-2 text-center">
+        <button type="submit" name="create" class="createBtn btn rounded-5 m-2 text-center">Nouvelle
+          Installation</button>
+      </form>
+    </div>
+  </section>
+  <footer>
+    <p>&copy; 2025 PanneauxPhotovoltaique.fr — Tous droits réservés.</p>
+    <p>
+      <a>Groupe 10</a> |
+      <a>CIR en Année 2</a> |
+      <a>Ibrahim SAOU</a> |
+      <a>Erwan LANGLAIS</a> |
+      <a>Achille WAGNER</a>
+    </p>
+  </footer>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Necessary for Jquery-->
+  <script src="js/search.js"></script>
+</body>
+
+</html>
