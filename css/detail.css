@@ -195,6 +195,96 @@ body {
     box-shadow: 0 4px 12px rgba(93, 115, 126, 0.3);
 }
 
+/* Modal Styles */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: #5D737E;
+    border-radius: 8px;
+    padding: 1.5rem;
+    width: 280px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    border: 2px solid #4a6167;
+}
+
+.modal-title {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: normal;
+    margin: 0 0 1rem 0;
+    text-align: left;
+}
+
+.password-input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    box-sizing: border-box;
+}
+
+.password-input:focus {
+    outline: none;
+    border-color: #64B6AC;
+}
+
+.remember-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.remember-checkbox {
+    margin-right: 8px;
+    transform: scale(1.1);
+}
+
+.remember-label {
+    color: white;
+    font-size: 0.85rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+.validate-btn {
+    background: #64B6AC;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 24px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    width: 100%;
+}
+
+.validate-btn:hover {
+    background: #58a49a;
+}
+
+.error-message {
+    color: #ff6b6b;
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+    display: none;
+}
+
 /* Footer */
 footer {
     background: linear-gradient(135deg, #5D737E 0%, #64B6AC 100%);

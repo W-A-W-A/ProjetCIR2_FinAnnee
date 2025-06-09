@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recherche - Panneaux Photovoltaïque</title>
+    <link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./css/search.css">
 </head>
@@ -51,7 +52,7 @@
     <section class="results-section">
         <div class="results-header">
             <h2>Résultats</h2>
-            <button class="new-installation-btn" onclick="showKeyModal()">
+            <button class="new-installation-btn" id="newInst" onclick="showKeyModal()">
                 Nouvelle Installation
             </button>
         </div>
@@ -62,17 +63,15 @@
 
     <!-- Key Validation Modal -->
     <div class="modal-overlay" id="keyModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Secret Key :</h3>
-                <p class="modal-subtitle">Souviens-toi de moi pendant 1 heure</p>
-            </div>
+        <div class="modal-content" id="contentModal">
+            <h3 class="modal-title">Secret Key :</h3>
             <input type="password" class="password-input" id="passwordInput" placeholder="Mot de passe">
-            <div class="error-message" id="errorMessage">Clé incorrecte</div>
-            <div class="modal-buttons">
-                <button class="modal-btn validate-btn" onclick="validateKey()">Valider</button>
-                <button class="modal-btn cancel-btn" onclick="hideKeyModal()">Annuler</button>
+            <div class="remember-section">
+                <input type="checkbox" id="rememberCheckbox" class="remember-checkbox">
+                <label for="rememberCheckbox" class="remember-label">Souviens-toi de moi pendant 1 heure</label>
             </div>
+            <div class="error-message" id="errorMessage">Clé incorrecte</div>
+            <button class="validate-btn" onclick="validateKey()">Valider</button>
         </div>
     </div>
 

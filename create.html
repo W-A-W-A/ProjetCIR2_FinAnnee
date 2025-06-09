@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Recherche - Panneaux Photovoltaïque</title>
+  <link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/create.css">
 </head>
@@ -25,99 +26,115 @@
     </ul>
   </header>
 
-  <section class="detail_content">
-    <div class="mx-auto p-2" style="width:98%">
-      <div class="rounded-2 border border-dark d-grid gap-3 p-2">
-        <div class="rounded-2 d-flex flex-column resultElem">
-          <div class="rounded-top-2 d-flex flex-column text-light elementTop">
-            <div class="d-grid flex-column topRow">
-              <p class="my-auto p-2 text-center">Installation</p>
+  <!-- Wrap everything in a single form -->
+  <form action="search.html" method="post">
+    <section class="detail_content">
+      <div class="mx-auto p-2" style="width:98%">
+        <div class="rounded-2 border border-dark d-grid gap-3 p-2">
+          <div class="rounded-2 d-flex flex-column resultElem">
+            <div class="rounded-top-2 d-flex flex-column text-light elementTop">
+              <div class="d-grid flex-column topRow">
+                <p class="my-auto p-2 text-center">Installation</p>
+              </div>
+            </div>
+            <div class="rounded-bottom-2 d-flex justify-content-between elementBottom ">
+              <div class="d-grid flex-column leftCol" style="width: 50%;">
+                <p class="my-auto p-2 text-center">Installé par :</p>
+                <p class="my-auto p-2 text-center">Nombre de panneaux :</p>
+                <p class="my-auto p-2 text-center">Modèle des panneaux :</p>
+                <p class="my-auto p-2 text-center">Marque des panneaux :</p>
+                <p class="my-auto p-2 text-center">Nombre d'onduleurs :</p>
+                <p class="my-auto p-2 text-center">Modèle des onduleurs :</p>
+                <p class="my-auto p-2 text-center">Marque des onduleurs :</p>
+                <p class="my-auto p-2 text-center">Surface :</p>
+                <p class="my-auto p-2 text-center">Date d'installation :</p>
+                <p class="my-auto p-2 text-center">Commune :</p>
+                <p class="my-auto p-2 text-center">Département :</p>
+                <p class="my-auto p-2 text-center">Code Postal :</p>
+                <p class="my-auto p-2 text-center">Région :</p>
+                <p class="my-auto p-2 text-center">Pays :</p>
+                <p class="my-auto p-2 text-center">Coordonnées GPS :</p>
+                <p class="my-auto p-2 text-center">Puissance Crête :</p>
+                <p class="my-auto p-2 text-center">Production (PVGIS) :</p>
+                <p class="my-auto p-2 text-center">Pente :</p>
+                <p class="my-auto p-2 text-center">Pente Optimum :</p>
+                <p class="my-auto p-2 text-center">Orientation (0°=Sud) :</p>
+                <p class="my-auto p-2 text-center">Orientation Optimum :</p>
+              </div>
+              <div class="d-grid flex-column rightCol" style="width: 50%;">
+                <input type="text" name="installateur" class="form-control my-1 p-2 text-center"
+                  placeholder="Nom de l'installateur" required>
+                <input type="number" name="nb_panneaux" class="form-control my-1 p-2 text-center" placeholder="Nombre"
+                  required>
+                <input type="text" name="modele_panneaux" class="form-control my-1 p-2 text-center" placeholder="Modèle"
+                  required>
+                <input type="text" name="marque_panneaux" class="form-control my-1 p-2 text-center" placeholder="Marque"
+                  required>
+                <input type="number" name="nb_onduleurs" class="form-control my-1 p-2 text-center" placeholder="Nombre"
+                  required>
+                <input type="text" name="modele_onduleurs" class="form-control my-1 p-2 text-center"
+                  placeholder="Modèle" required>
+                <input type="text" name="marque_onduleurs" class="form-control my-1 p-2 text-center"
+                  placeholder="Marque" required>
+                <input type="number" step="0.01" name="surface" class="form-control my-1 p-2 text-center"
+                  placeholder="Surface (m²)" required>
+                <input type="date" name="date_installation" class="form-control my-1 p-2 text-center" placeholder="Date"
+                  required>
+                <input type="text" name="commune" class="form-control my-1 p-2 text-center" placeholder="Commune"
+                  required>
+                <input type="text" name="departement" class="form-control my-1 p-2 text-center"
+                  placeholder="Département" required>
+                <input type="text" name="code_postal" class="form-control my-1 p-2 text-center"
+                  placeholder="Code postal" required>
+                <input type="text" name="region" class="form-control my-1 p-2 text-center" placeholder="Région"
+                  required>
+                <input type="text" name="pays" class="form-control my-1 p-2 text-center" placeholder="Pays" required>
+                <input type="text" name="coordonnees_gps" class="form-control my-1 p-2 text-center"
+                  placeholder="Latitude, longitude" required>
+                <input type="number" step="0.01" name="puissance_crete" class="form-control my-1 p-2 text-center"
+                  placeholder="kWc" required>
+                <input type="number" step="0.01" name="production_pvgis" class="form-control my-1 p-2 text-center"
+                  placeholder="kWh/an" required>
+                <input type="number" step="0.1" name="pente" class="form-control my-1 p-2 text-center"
+                  placeholder="Degrés" required>
+                <input type="number" step="0.1" name="pente_optimum" class="form-control my-1 p-2 text-center"
+                  placeholder="Degrés" required>
+                <input type="number" step="0.1" name="orientation" class="form-control my-1 p-2 text-center"
+                  placeholder="Degrés" required>
+                <input type="number" step="0.1" name="orientation_optimum" class="form-control my-1 p-2 text-center"
+                  placeholder="Degrés" required>
+              </div>
             </div>
           </div>
-          <div class="rounded-bottom-2 d-flex justify-content-between elementBottom ">
-            <div class="d-grid flex-column leftCol" style="width: 50%;">
-              <p class="my-auto p-2 text-center">Installé par :</p>
-              <p class="my-auto p-2 text-center">Nombre de panneaux :</p>
-              <p class="my-auto p-2 text-center">Modèle des panneaux :</p>
-              <p class="my-auto p-2 text-center">Marque des panneaux :</p>
-              <p class="my-auto p-2 text-center">Nombre d'onduleurs :</p>
-              <p class="my-auto p-2 text-center">Modèle des onduleurs :</p>
-              <p class="my-auto p-2 text-center">Marque des onduleurs :</p>
-              <p class="my-auto p-2 text-center">Surface :</p>
-              <p class="my-auto p-2 text-center">Date d'installation :</p>
-              <p class="my-auto p-2 text-center">Commune :</p>
-              <p class="my-auto p-2 text-center">Département :</p>
-              <p class="my-auto p-2 text-center">Code Postal :</p>
-              <p class="my-auto p-2 text-center">Région :</p>
-              <p class="my-auto p-2 text-center">Pays :</p>
-              <p class="my-auto p-2 text-center">Coordonnées GPS :</p>
-              <p class="my-auto p-2 text-center">Puissance Crête :</p>
-              <p class="my-auto p-2 text-center">Production (PVGIS) :</p>
-              <p class="my-auto p-2 text-center">Pente :</p>
-              <p class="my-auto p-2 text-center">Pente Optimum :</p>
-              <p class="my-auto p-2 text-center">Orientation (0°=Sud) :</p>
-              <p class="my-auto p-2 text-center">Orientation Optimum :</p>
+          <div class="rounded-2 d-flex flex-column resultElem">
+            <div class="rounded-top-2 d-flex flex-column commentTop">
+              <div class="d-grid flex-column topRow">
+                <p class="my-auto p-2 text-center">Commentaires</p>
+              </div>
             </div>
-            <div class="d-grid flex-column rightCol" style="width: 50%;">
-              <input type="text" name="installateur" class="form-control my-1 p-2 text-center"
-                placeholder="Nom de l'installateur">
-              <input type="number" name="nb_panneaux" class="form-control my-1 p-2 text-center" placeholder="Nombre">
-              <input type="text" name="modele_panneaux" class="form-control my-1 p-2 text-center" placeholder="Modèle">
-              <input type="text" name="marque_panneaux" class="form-control my-1 p-2 text-center" placeholder="Marque">
-              <input type="number" name="nb_onduleurs" class="form-control my-1 p-2 text-center" placeholder="Nombre">
-              <input type="text" name="modele_onduleurs" class="form-control my-1 p-2 text-center" placeholder="Modèle">
-              <input type="text" name="marque_onduleurs" class="form-control my-1 p-2 text-center" placeholder="Marque">
-              <input type="number" step="0.01" name="surface" class="form-control my-1 p-2 text-center"
-                placeholder="Surface (m²)">
-              <input type="date" name="date_installation" class="form-control my-1 p-2 text-center" placeholder="Date">
-              <input type="text" name="commune" class="form-control my-1 p-2 text-center" placeholder="Commune">
-              <input type="text" name="departement" class="form-control my-1 p-2 text-center" placeholder="Département">
-              <input type="text" name="code_postal" class="form-control my-1 p-2 text-center" placeholder="Code postal">
-              <input type="text" name="region" class="form-control my-1 p-2 text-center" placeholder="Région">
-              <input type="text" name="pays" class="form-control my-1 p-2 text-center" placeholder="Pays">
-              <input type="text" name="coordonnees_gps" class="form-control my-1 p-2 text-center"
-                placeholder="Latitude, longitude">
-              <input type="number" step="0.01" name="puissance_crete" class="form-control my-1 p-2 text-center"
-                placeholder="kWc">
-              <input type="number" step="0.01" name="production_pvgis" class="form-control my-1 p-2 text-center"
-                placeholder="kWh/an">
-              <input type="number" step="0.1" name="pente" class="form-control my-1 p-2 text-center"
-                placeholder="Degrés">
-              <input type="number" step="0.1" name="pente_optimum" class="form-control my-1 p-2 text-center"
-                placeholder="Degrés">
-              <input type="number" step="0.1" name="orientation" class="form-control my-1 p-2 text-center"
-                placeholder="Degrés">
-              <input type="number" step="0.1" name="orientation_optimum" class="form-control my-1 p-2 text-center"
-                placeholder="Degrés">
-            </div>
-          </div>
-        </div>
-        <div class="rounded-2 d-flex flex-column resultElem">
-          <div class="rounded-top-2 d-flex flex-column commentTop">
-            <div class="d-grid flex-column topRow">
-              <p class="my-auto p-2 text-center">Commentaires</p>
-            </div>
-          </div>
-          <div class="rounded-bottom-2 d-flex flex-column commentBottom ">
-            <div class="d-grid flex-column leftCol m-4">
-              <p class="my-auto p-2 text-center">Contenu du commentaire</p>
+            <div class="rounded-bottom-2 d-flex flex-column commentBottom ">
+              <div class="d-grid flex-column leftCol m-4">
+                <textarea name="commentaire" class="form-control my-1 p-2" placeholder="Contenu du commentaire"
+                  rows="4"></textarea>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section>
-    <div class="d-flex justify-content-between">
-      <div class="m-5" style="width:98%">
-        <form action="search.html" method="post" class="my-auto p-2 text-center">
-          <button type="submit" name="create" class="createBtn btn rounded-5 m-2 text-center">Créer
-            Installation</button>
-        </form>
+    <section>
+      <div class="d-flex justify-content-between">
+        <div class="m-5" style="width:98%">
+          <div class="my-auto p-2 text-center">
+            <button type="submit" name="create" class="createBtn btn rounded-5 m-2 text-center">Créer
+              Installation</button>
+          </div>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </form>
+
   <footer>
     <p>&copy; 2025 PanneauxPhotovoltaique.fr — Tous droits réservés.</p>
     <p>
@@ -128,6 +145,8 @@
       <a>Achille WAGNER</a>
     </p>
   </footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="js/create.js"></script>
 </body>
 
