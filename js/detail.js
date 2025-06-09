@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // 2) Appel au PHP qui renvoie le JSON
-    const response = await fetch(`../back/detail.php?id=${installId}`);
+    const response = await fetch(`./back/detail.php?id=${installId}`);
     if (!response.ok) {
       // Tenter de parser un message d'erreur éventuel
       let errMessage = `Erreur HTTP ${response.status}`;

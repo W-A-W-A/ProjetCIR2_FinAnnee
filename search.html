@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recherche - Panneaux Photovoltaïque</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/search.css">
+</head>
+
+<body>
+    <header class="header-container">
+        <img class="logo" src="assets/logo.png" alt="Logo">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link" href="home.html">Accueil</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="#">Recherche</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="map.html">Carte</a>
+            </li>
+        </ul>
+    </header>
+
+    <section class="search-section">
+        <div class="search-controls">
+            <div class="select-group">
+                <label for="ondBrand">Marque de l'onduleur</label>
+                <select id="ondBrand">
+                    <option value="">Sélectionner...</option>
+                </select>
+            </div>
+            <div class="select-group">
+                <label for="panelBrand">Marque du panneau</label>
+                <select id="panelBrand">
+                    <option value="">Sélectionner...</option>
+                </select>
+            </div>
+            <div class="select-group">
+                <label for="department">Département</label>
+                <select id="department">
+                    <option value="">Sélectionner...</option>
+                </select>
+            </div>
+        </div>
+    </section>
+
+    <section class="results-section">
+        <div class="results-header">
+            <h2>Résultats</h2>
+            <button class="new-installation-btn" onclick="showKeyModal()">
+                Nouvelle Installation
+            </button>
+        </div>
+        <div class="results-container" id="resultsContainer">
+            <!-- Results will be populated here -->
+        </div>
+    </section>
+
+    <!-- Key Validation Modal -->
+    <div class="modal-overlay" id="keyModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Secret Key :</h3>
+                <p class="modal-subtitle">Souviens-toi de moi pendant 1 heure</p>
+            </div>
+            <input type="password" class="password-input" id="passwordInput" placeholder="Mot de passe">
+            <div class="error-message" id="errorMessage">Clé incorrecte</div>
+            <div class="modal-buttons">
+                <button class="modal-btn validate-btn" onclick="validateKey()">Valider</button>
+                <button class="modal-btn cancel-btn" onclick="hideKeyModal()">Annuler</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 PanneauxPhotovoltaique.fr — Tous droits réservés.</p>
+        <p>
+            <a>Ibrahim SAOU</a> |
+            <a>Erwan LANGLAIS</a> |
+            <a>Achille WAGNER</a>
+        </p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script src="./js/search.js"></script>
+</body>
+
+</html>
