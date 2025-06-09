@@ -111,7 +111,7 @@ function validateKey() {
 
     if (remember) {
       // Set cookie for 1 hour
-      setCookie('secretKeyAuth', 'authentification', 1);
+      setCookie('secretKeyAuth', 'authenticated', 1);
       console.log('Authentication cookie set for 1 hour');
     }
     // Correct key
