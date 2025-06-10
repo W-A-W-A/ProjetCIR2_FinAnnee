@@ -149,7 +149,8 @@ document.addEventListener('click', function (event) {
 document.addEventListener('DOMContentLoaded', async () => {
   const changeBtn = document.getElementById('changeInst');
   if (changeBtn) {
-    changeBtn.onclick = function () {
+    changeBtn.addEventListener('click', function (event) {
+      event.preventDefault();
       const params = new URLSearchParams(window.location.search);
       const installId = params.get('detail');
       if (!installId) {
@@ -157,7 +158,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
       }
       window.location.href = `create.html?id=${installId}`;
-    }
+    });
   }
   const deleteBtn = document.getElementById('delInst');
   if (deleteBtn) {
