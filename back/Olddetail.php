@@ -2,42 +2,15 @@
 
 header('Content-Type: application/json');
 
+
+
 // Include the database connection
 require_once __DIR__ . '/db.php';
 
-// Handle DELETE request first
-if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
-    try {
-        // Get ID from URL
-        $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
-        if (!$id) {
-            http_response_code(400);
-            echo json_encode(['error' => true, 'success' => false, 'message' => "ID manquant pour suppression"]);
-            exit;
-        }
-
-        // Delete the installation
-        $stmt = $pdo->prepare("DELETE FROM Installation WHERE id = ?");
-        $result = $stmt->execute([$id]);
-        
-        if ($result && $stmt->rowCount() > 0) {
-            echo json_encode(['success' => true, 'message' => 'Installation supprimée avec succès']);
-        } else {
-            echo json_encode(['success' => false, 'message' => 'Installation non trouvée ou déjà supprimée']);
-        }
-        exit;
-    } catch (Exception $e) {
-        http_response_code(500);
-        echo json_encode(['error' => true, 'success' => false, 'message' => $e->getMessage()]);
-        exit;
-    }
-}
-
-// Handle GET request (fetch installation details)
 try {
-    if (!isset($_GET["id"]) || !is_numeric($_GET["id"])) {
-        throw new Exception("ID d'installation invalide");
-    }
+  if (!isset($_GET["id"]) || !is_numeric($_GET["id"])) {
+    throw new Exception("ID d'installation invalide");
+  }
 
     $installId = intval($_GET["id"]);
     $sql = 
@@ -85,9 +58,37 @@ try {
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     
     if (!$row) {
+        throw new Exception("Installation non trouvée v1S");
+    }
+    $resp = [
+        "id" => [],
+        "nb_pann" => [],
+        "nb_ond" => [],
+        "date_install" => [],
+        "surface" => [],
+        "puissance_crete" => [],
+        "lat" => [],
+        "lon" => [],
+        "ori" => [],
+        "ori_opti" => [],
+        "pente" => [],
+        "pente_opti" => [],
+        "prod_pvgis" => [],
+        "code_postal" => [],
+        "com_nom" => [],
+        "dep_nom" => [],
+        "reg_nom" => [],
+        "pays_nom" => [],
+        "marque_ond" => [],
+        "modele_ond" => [],
+        "marque_pn" => [],
+        "modele_pn" => [],
+        "nom_installateur" => []
+    ];
+    
+    if (!$row) {
         throw new Exception("Installation non trouvée");
     }
-    
     $resp = [
         "id" => (int)$row['id'],
         "date_install" => $row['date_installation'],
@@ -117,13 +118,28 @@ try {
     echo json_encode($resp);
 }
 catch (Exception $e) {
-    http_response_code(500);
-    // Return JSON error response
-    $resp = [
-        "error" => true,
-        "message" => $e->getMessage()
-    ];
+  http_response_code(500);
+  // parce que le JS veux du json
+  $resp = [
+    "error" => "Erreur de chargement des données",
+    "message" => $e->getMessage()
+  ];
 
-    echo json_encode($resp);
+  echo json_encode($resp);
+}
+if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+    // Récupérer l'ID depuis l'URL'
+    $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+    if (!$id) {
+        http_response_code(400);
+        echo json_encode(['error' => true, 'message' => "ID manquant pour suppression"]);
+        exit;
+    }
+    $stmt = $pdo->prepare("DELETE FROM Installation WHERE id = ?");
+    $stmt->execute([$id]);
+    echo json_encode(['success' => true]);
+    // Return to the search page
+    header('Location: search.html');
+    exit;
 }
 ?>

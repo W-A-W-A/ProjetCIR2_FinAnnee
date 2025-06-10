@@ -16,17 +16,11 @@ $response = [
 $isEdit = false;
 $installation = null;
 
-// Vérification si c'est une modification (ID passé en paramètre GET ou POST)
-$id = null;
+// Vérification si c'est une modification (ID passé en paramètre)
 if (isset($_GET['id']) && !empty($_GET['id'])) {
     $id = intval($_GET['id']);
     $isEdit = true;
-} elseif (isset($_POST['id']) && !empty($_POST['id'])) {
-    $id = intval($_POST['id']);
-    $isEdit = true;
-}
-
-if ($isEdit && $id) {
+    
     // Récupération des données existantes avec jointures
     try {
         $sql = "SELECT i.id, i.an_installation, i.nb_pann, i.nb_ond, i.mois_installation, i.surface, 
@@ -74,7 +68,6 @@ if ($isEdit && $id) {
 }
 
 // Traitement du formulaire (création ou modification)
-// FIXED: Check for both 'create' and 'update' parameters
 if ($_POST && (isset($_POST['create']) || isset($_POST['update']))) {
     try {
         // Récupération des données du formulaire
@@ -137,7 +130,7 @@ if ($_POST && (isset($_POST['create']) || isset($_POST['update']))) {
         $mois_installation = null;
         if (!empty($date_installation)) {
             $date_parts = explode('-', $date_installation);
-            if (count($date_parts) >= 2) {
+            if (count($date_parts) == 3) {
                 $an_installation = intval($date_parts[0]);
                 $mois_installation = intval($date_parts[1]);
                 
@@ -166,12 +159,10 @@ if ($_POST && (isset($_POST['create']) || isset($_POST['update']))) {
         // Début de la transaction
         $pdo->beginTransaction();
 
-        // [... rest of the original code for handling installateur, pays, region, departement, commune, panneaux, onduleurs ...]
-        // I'll include the key parts:
-
         // Gestion de l'installateur
         $id_installateur = null;
         if (!empty($installateur)) {
+            // Vérifier si l'installateur existe
             $stmt = $pdo->prepare("SELECT id FROM Installateur WHERE install_nom = :nom");
             $stmt->execute([':nom' => $installateur]);
             $inst = $stmt->fetch();
@@ -179,18 +170,164 @@ if ($_POST && (isset($_POST['create']) || isset($_POST['update']))) {
             if ($inst) {
                 $id_installateur = $inst['id'];
             } else {
+                // Créer un nouvel installateur
                 $stmt = $pdo->prepare("INSERT INTO Installateur (install_nom) VALUES (:nom)");
                 $stmt->execute([':nom' => $installateur]);
                 $id_installateur = $pdo->lastInsertId();
             }
         }
 
-        // ... [similar code for other entities] ...
+        // Gestion du pays
+        $id_pays = null;
+        if (!empty($pays)) {
+            $stmt = $pdo->prepare("SELECT id FROM Pays WHERE pays_nom = :nom");
+            $stmt->execute([':nom' => $pays]);
+            $p = $stmt->fetch();
+            
+            if ($p) {
+                $id_pays = $p['id'];
+            } else {
+                $stmt = $pdo->prepare("INSERT INTO Pays (pays_nom) VALUES (:nom)");
+                $stmt->execute([':nom' => $pays]);
+                $id_pays = $pdo->lastInsertId();
+            }
+        }
 
-        // FIXED: Determine if this is an update or create operation
-        $isUpdate = isset($_POST['update']) || ($isEdit && $id);
+        // Gestion de la région
+        $id_region = null;
+        if (!empty($region) && $id_pays) {
+            $stmt = $pdo->prepare("SELECT id FROM Region WHERE dep_reg = :nom AND id_Pays = :id_pays");
+            $stmt->execute([':nom' => $region, ':id_pays' => $id_pays]);
+            $r = $stmt->fetch();
+            
+            if ($r) {
+                $id_region = $r['id'];
+            } else {
+                $stmt = $pdo->prepare("INSERT INTO Region (dep_reg, id_Pays) VALUES (:nom, :id_pays)");
+                $stmt->execute([':nom' => $region, ':id_pays' => $id_pays]);
+                $id_region = $pdo->lastInsertId();
+            }
+        }
 
-        if ($isUpdate) {
+        // Gestion du département
+        $id_departement = null;
+        if (!empty($departement) && $id_region) {
+            $stmt = $pdo->prepare("SELECT id FROM Departement WHERE dep_nom = :nom AND id_Region = :id_region");
+            $stmt->execute([':nom' => $departement, ':id_region' => $id_region]);
+            $d = $stmt->fetch();
+            
+            if ($d) {
+                $id_departement = $d['id'];
+            } else {
+                $stmt = $pdo->prepare("INSERT INTO Departement (dep_nom, id_Region) VALUES (:nom, :id_region)");
+                $stmt->execute([':nom' => $departement, ':id_region' => $id_region]);
+                $id_departement = $pdo->lastInsertId();
+            }
+        }
+
+        // Gestion de la commune
+        $id_commune = null;
+        if (!empty($commune) && $id_departement) {
+            $stmt = $pdo->prepare("SELECT id FROM Commune WHERE com_nom = :nom AND id_Departement = :id_dep");
+            $stmt->execute([':nom' => $commune, ':id_dep' => $id_departement]);
+            $c = $stmt->fetch();
+            
+            if ($c) {
+                $id_commune = $c['id'];
+            } else {
+                $stmt = $pdo->prepare("INSERT INTO Commune (com_nom, id_Departement, code_insee) VALUES (:nom, :id_dep, :code)");
+                $stmt->execute([':nom' => $commune, ':id_dep' => $id_departement, ':code' => $code_postal]);
+                $id_commune = $pdo->lastInsertId();
+            }
+        }
+
+        // Gestion des marques et modèles de panneaux
+        $id_panneau = null;
+        if (!empty($marque_panneaux) && !empty($modele_panneaux)) {
+            // Marque panneau
+            $stmt = $pdo->prepare("SELECT id FROM Marque_Panneau WHERE nom = :nom");
+            $stmt->execute([':nom' => $marque_panneaux]);
+            $mp = $stmt->fetch();
+            
+            if (!$mp) {
+                $stmt = $pdo->prepare("INSERT INTO Marque_Panneau (nom) VALUES (:nom)");
+                $stmt->execute([':nom' => $marque_panneaux]);
+                $id_marque_panneau = $pdo->lastInsertId();
+            } else {
+                $id_marque_panneau = $mp['id'];
+            }
+
+            // Modèle panneau
+            $stmt = $pdo->prepare("SELECT id FROM Modele_Panneau WHERE nom = :nom");
+            $stmt->execute([':nom' => $modele_panneaux]);
+            $mdp = $stmt->fetch();
+            
+            if (!$mdp) {
+                $stmt = $pdo->prepare("INSERT INTO Modele_Panneau (nom) VALUES (:nom)");
+                $stmt->execute([':nom' => $modele_panneaux]);
+                $id_modele_panneau = $pdo->lastInsertId();
+            } else {
+                $id_modele_panneau = $mdp['id'];
+            }
+
+            // Panneau
+            $stmt = $pdo->prepare("SELECT id FROM Panneau WHERE id_Marque_Panneau = :marque AND id_Modele_Panneau = :modele");
+            $stmt->execute([':marque' => $id_marque_panneau, ':modele' => $id_modele_panneau]);
+            $pn = $stmt->fetch();
+            
+            if (!$pn) {
+                $stmt = $pdo->prepare("INSERT INTO Panneau (id_Marque_Panneau, id_Modele_Panneau) VALUES (:marque, :modele)");
+                $stmt->execute([':marque' => $id_marque_panneau, ':modele' => $id_modele_panneau]);
+                $id_panneau = $pdo->lastInsertId();
+            } else {
+                $id_panneau = $pn['id'];
+            }
+        }
+
+        // Gestion des marques et modèles d'onduleurs
+        $id_onduleur = null;
+        if (!empty($marque_onduleurs) && !empty($modele_onduleurs)) {
+            // Marque onduleur
+            $stmt = $pdo->prepare("SELECT id FROM Marque_Onduleur WHERE nom = :nom");
+            $stmt->execute([':nom' => $marque_onduleurs]);
+            $mo = $stmt->fetch();
+            
+            if (!$mo) {
+                $stmt = $pdo->prepare("INSERT INTO Marque_Onduleur (nom) VALUES (:nom)");
+                $stmt->execute([':nom' => $marque_onduleurs]);
+                $id_marque_onduleur = $pdo->lastInsertId();
+            } else {
+                $id_marque_onduleur = $mo['id'];
+            }
+
+            // Modèle onduleur
+            $stmt = $pdo->prepare("SELECT id FROM Modele_Onduleur WHERE nom = :nom");
+            $stmt->execute([':nom' => $modele_onduleurs]);
+            $mdo = $stmt->fetch();
+            
+            if (!$mdo) {
+                $stmt = $pdo->prepare("INSERT INTO Modele_Onduleur (nom) VALUES (:nom)");
+                $stmt->execute([':nom' => $modele_onduleurs]);
+                $id_modele_onduleur = $pdo->lastInsertId();
+            } else {
+                $id_modele_onduleur = $mdo['id'];
+            }
+
+            // Onduleur
+            $stmt = $pdo->prepare("SELECT id FROM Onduleur WHERE id_Marque_Onduleur = :marque AND id_Modele_Onduleur = :modele");
+            $stmt->execute([':marque' => $id_marque_onduleur, ':modele' => $id_modele_onduleur]);
+            $ond = $stmt->fetch();
+            
+            if (!$ond) {
+                $stmt = $pdo->prepare("INSERT INTO Onduleur (id_Marque_Onduleur, id_Modele_Onduleur) VALUES (:marque, :modele)");
+                $stmt->execute([':marque' => $id_marque_onduleur, ':modele' => $id_modele_onduleur]);
+                $id_onduleur = $pdo->lastInsertId();
+            } else {
+                $id_onduleur = $ond['id'];
+            }
+        }
+
+        if ($isEdit && isset($_POST['update'])) {
             // Modification d'une installation existante
             $sql = "UPDATE Installation SET 
                 id_Installateur = :id_installateur, nb_pann = :nb_panneaux, 
@@ -270,7 +407,7 @@ if ($_POST && (isset($_POST['create']) || isset($_POST['update']))) {
 
         $response['success'] = true;
         
-        if (!$isUpdate) {
+        if (!$isEdit) {
             $response['data'] = ['installation_id' => $pdo->lastInsertId()];
         }
         
@@ -284,8 +421,16 @@ if ($_POST && (isset($_POST['create']) || isset($_POST['update']))) {
     }
     
     // Return JSON response for AJAX requests
-    echo json_encode($response, JSON_UNESCAPED_UNICODE);
-    exit;
+    if ($isAjax) {
+        echo json_encode($response, JSON_UNESCAPED_UNICODE);
+        exit;
+    }
+    
+    // For non-AJAX requests, redirect or show HTML response
+    if ($response['success']) {
+        header('Location: search.html?success=' . urlencode($response['message']));
+        exit;
+    }
 }
 
 // If it's an AJAX request asking for installation data (for editing)
@@ -296,13 +441,15 @@ if ($isAjax && $isEdit && $installation) {
     exit;
 }
 
-// For non-AJAX requests, redirect to the form page
+// For non-AJAX requests, you can include your HTML form here or redirect
 if (!$isAjax) {
+    // Include HTML form or redirect to the form page
     if ($isEdit && !$installation) {
         header('Location: create.html?error=' . urlencode('Installation not found'));
         exit;
     }
     
+    // You can include your HTML form here or redirect to create.html
     header('Location: create.html');
     exit;
 }

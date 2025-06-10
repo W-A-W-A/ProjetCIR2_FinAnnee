@@ -1,256 +1,304 @@
-
-// $(document).ready(function () {
-//     $.ajax({
-//         url: './back/detail.php',
-//         method: 'GET',
-//         dataType: 'json',
-//         success: function (data) {
-//             for (const key in data) {
-//                 apiData[key] = data[key];
-//             }
-//         },
-//         error: function () {
-//             console.error('Error during data retrival from database');
-//         }
-//     });
-// });
-
-
 // Global variables
 let correctKeyHash = '';
+let apiData = {};
 
 // Load correct key hash from keyCheck.txt
 function loadKeyHash() {
-  $.ajax({
-    url: './keyCheck.txt',
-    method: 'GET',
-    success: function (response) {
-      correctKeyHash = response.trim().split('\n')[0];
-      console.log('Key hash loaded');
-    },
-    error: function () {
-      console.error('Could not load key hash file');
-    }
-  });
+    $.ajax({
+        url: './keyCheck.txt',
+        method: 'GET',
+        success: function (response) {
+            correctKeyHash = response.trim().split('\n')[0];
+            console.log('Key hash loaded');
+        },
+        error: function () {
+            console.error('Could not load key hash file');
+        }
+    });
 }
 
 // Cookie management functions
 function setCookie(name, value, hours) {
-  const date = new Date();
-  date.setTime(date.getTime() + (hours * 60 * 60 * 1000));
-  const expires = "expires=" + date.toUTCString();
-  document.cookie = name + "=" + value + ";" + expires + ";path=/";
+    const date = new Date();
+    date.setTime(date.getTime() + (hours * 60 * 60 * 1000));
+    const expires = "expires=" + date.toUTCString();
+    document.cookie = name + "=" + value + ";" + expires + ";path=/";
 }
 
 function getCookie(name) {
-  const nameEQ = name + "=";
-  const ca = document.cookie.split(';');
-  for (let i = 0; i < ca.length; i++) {
-    let c = ca[i];
-    while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-    if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
-  }
-  return null;
+    const nameEQ = name + "=";
+    const ca = document.cookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
 }
 
 function deleteAllCookies() {
-  const cookies = document.cookie.split(";");
-
-  for (const cookie of cookies) {
-    const name = cookie.split("=")[0].trim();
-    document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-  }
+    const cookies = document.cookie.split(";");
+    for (const cookie of cookies) {
+        const name = cookie.split("=")[0].trim();
+        document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    }
 }
-
 
 // Check if user is already authenticated
 function checkAuthentication() {
-  const authToken = getCookie('secretKeyAuth');
-  if (authToken === 'authenticated') {
-    // User is authenticated, hide modal and show content
-    console.log('User already authenticated - skipping modal');
-    return true;
-  }
-  return false;
+    const authToken = getCookie('secretKeyAuth');
+    if (authToken === 'authenticated') {
+        console.log('User already authenticated - skipping modal');
+        return true;
+    }
+    return false;
 }
 
-
-// MD5 hash function
+// MD5 hash function (requires CryptoJS library)
 function hashMD5(input) {
-  return CryptoJS.MD5(input).toString();
+    return CryptoJS.MD5(input).toString();
 }
 
 // Show key modal
 function showKeyModal() {
-  console.log("new installation has been clicked");
-  isAuthenticated = checkAuthentication();
-  if (isAuthenticated) {
-    // If already authenticated, go directly to create page
-    window.location.href = 'search.html';
-    return;
-  }
-  document.getElementById('keyModal').style.display = 'flex';
-  document.getElementById('passwordInput').focus();
-  document.getElementById('errorMessage').style.display = 'none';
+    console.log("Authentication modal triggered");
+    const isAuthenticated = checkAuthentication();
+    if (isAuthenticated) {
+        // If already authenticated, proceed with the action
+        return true;
+    }
+    document.getElementById('keyModal').style.display = 'flex';
+    document.getElementById('passwordInput').focus();
+    document.getElementById('errorMessage').style.display = 'none';
+    return false;
 }
 
 // Hide key modal
 function hideKeyModal() {
-  document.getElementById('keyModal').style.display = 'none';
-  document.getElementById('passwordInput').value = '';
-  document.getElementById('errorMessage').style.display = 'none';
+    document.getElementById('keyModal').style.display = 'none';
+    document.getElementById('passwordInput').value = '';
+    document.getElementById('errorMessage').style.display = 'none';
 }
 
 // Validate key
-function validateKey() {
-  const inputKey = document.getElementById('passwordInput').value;
-  const remember = document.getElementById('rememberCheckbox').checked;
-  const inputHash = hashMD5(inputKey);
+async function validateKey() {
+    const inputKey = document.getElementById('passwordInput').value;
+    const remember = document.getElementById('rememberCheckbox').checked;
+    const inputHash = hashMD5(inputKey);
 
-  if (inputHash === correctKeyHash) {
+    if (inputHash === correctKeyHash) {
+        if (remember) {
+            setCookie('secretKeyAuth', 'authenticated', 1);
+            console.log('Authentication cookie set for 1 hour');
+        }
+        hideKeyModal();
 
-    if (remember) {
-      // Set cookie for 1 hour
-      setCookie('secretKeyAuth', 'authenticated', 1);
-      console.log('Authentication cookie set for 1 hour');
+        // Execute the pending action
+        const pendingAction = document.getElementById('keyModal').getAttribute('data-pending-action');
+        if (pendingAction === 'modify') {
+            executeModifyAction();
+        } else if (pendingAction === 'delete') {
+            await executeDeleteAction();
+        }
+    } else {
+        document.getElementById('errorMessage').style.display = 'block';
+        document.getElementById('passwordInput').value = '';
+        document.getElementById('passwordInput').focus();
     }
-    // Correct key
-    hideKeyModal();
-
-    // Redirect to create page
-    window.location.href = 'search.html';
-  } else {
-    // Incorrect key
-    document.getElementById('errorMessage').style.display = 'block';
-    document.getElementById('passwordInput').value = '';
-    document.getElementById('passwordInput').focus();
-  }
 }
 
-
-// Handle Enter key in password input
-document.addEventListener('keydown', function (event) {
-  if (event.key === 'Enter' && document.getElementById('keyModal').style.display === 'flex') {
-    validateKey();
-  }
-  if (event.key === 'Escape') {
-    hideKeyModal();
-  }
-});
-
-document.addEventListener('click', function (event) {
-  const openBtn1 = document.getElementById('changeInst');
-  const openBtn2 = document.getElementById('delInst')
-  if (document.getElementById('keyModal').style.display === 'flex' && !document.getElementById('contentModal').contains(event.target) && event.target !== openBtn1 && event.target !== openBtn2) {
-    hideKeyModal();
-  }
-});
-
-document.addEventListener('DOMContentLoaded', async () => {
-  const changeBtn = document.getElementById('changeInst');
-  if (changeBtn) {
-    changeBtn.onclick = function () {
-      const params = new URLSearchParams(window.location.search);
-      const installId = params.get('detail');
-      if (!installId) {
-        alert("Impossible de récupérer l'identifiant de l'installation.");
-        return;
-      }
-      window.location.href = `create.html?id=${installId}`;
-    }
-  }
-  const deleteBtn = document.getElementById('delInst');
-  if (deleteBtn) {
-    deleteBtn.onclick = async function () {
-      if (!confirm("Voulez-vous vraiment supprimer cette installation ?")) return;
-      try {
-        const params = new URLSearchParams(window.location.search);
-        const installId = params.get('detail');
-        const response = await fetch(`./back/detail.php?id=${installId}`, {
-          method: 'DELETE'
-        });
-        const result = await response.json();
-        if (result.success) {
-          alert("Installation supprimée !");
-          window.location.href = "search.html";
-        } else {
-          alert(result.message || "Erreur lors de la suppression.");
-        }
-      } catch (e) {
-        alert("Erreur lors de la suppression.");
-      }
-    }
-  }
-  try {
-
-    // Load key hash
-    loadKeyHash();
-
-
-    // 1) Récupérer l'ID d'installation depuis la query string
+// Execute modify action after authentication
+function executeModifyAction() {
     const params = new URLSearchParams(window.location.search);
     const installId = params.get('detail');
     if (!installId) {
-      throw new Error("Paramètre 'id' manquant dans l'URL");
+        alert("Impossible de récupérer l'identifiant de l'installation.");
+        return;
     }
+    window.location.href = `create.html?id=${installId}`;
+}
 
-    // 2) Appel au PHP qui renvoie le JSON
-    const response = await fetch(`./back/detail.php?id=${installId}`);
-    if (!response.ok) {
-      // Tenter de parser un message d'erreur éventuel
-      let errMessage = `Erreur HTTP ${response.status}`;
-      try {
-        const errJson = await response.json();
-        errMessage = errJson.message || errMessage;
-      } catch { /* ignore */ }
-      throw new Error(errMessage);
+// Execute delete action after authentication
+async function executeDeleteAction() {
+    if (!confirm("Voulez-vous vraiment supprimer cette installation ?")) return;
+
+    try {
+        const params = new URLSearchParams(window.location.search);
+        const installId = params.get('detail');
+
+        if (!installId) {
+            throw new Error("ID d'installation manquant");
+        }
+
+        // Fixed: Use the correct PHP backend URL, not search.html
+        const response = await $.ajax({
+            url: `./back/detail.php?id=${installId}`,
+            method: 'DELETE',
+            dataType: 'json'
+        });
+
+        if (response.success) {
+            alert("Installation supprimée !");
+            window.location.href = "search.html";
+        } else {
+            alert(response.message || "Erreur lors de la suppression.");
+        }
+    } catch (error) {
+        console.error('Delete error:', error);
+
+        // More detailed error handling
+        if (error.status === 405) {
+            alert("Erreur: Méthode non autorisée. Vérifiez la configuration du serveur.");
+        } else if (error.status === 404) {
+            alert("Erreur: Fichier PHP non trouvé.");
+        } else {
+            alert("Erreur lors de la suppression: " + (error.responseText || error.message || "Erreur inconnue"));
+        }
     }
+}
 
-    const data = await response.json();
-    if (data.error) {
-      throw new Error(data.message);
-    }
+// Load installation data using AJAX
+function loadInstallationData(installId) {
+    return $.ajax({
+        url: `./back/detail.php?id=${installId}`,
+        method: 'GET',
+        dataType: 'json'
+    });
+}
 
-    // 3) Injection dans le DOM
-    // On récupère les 3 colonnes de droite (installation / localisation / paramètres)
+// Populate the DOM with installation data
+function populateInstallationData(data) {
+    // Store data globally for potential future use
+    apiData = data;
+
+    // Get the three columns (installation / localisation / paramètres)
     const inst = document.getElementById('installation').children;
     const loc = document.getElementById('localisation').children;
     const param = document.getElementById('parametres').children;
 
     // --- Installation ---
-    inst[0].textContent = data.nom_installateur;
-    inst[1].textContent = data.nb_pann;
-    inst[2].textContent = data.modele_pn;
-    inst[3].textContent = data.marque_pn;
-    inst[4].textContent = data.nb_ond;
-    inst[5].textContent = data.modele_ond;
-    inst[6].textContent = data.marque_ond;
-    inst[7].textContent = `${data.surface} m²`;
-    inst[8].textContent = data.date_install;
+    inst[0].textContent = data.nom_installateur || 'N/A';
+    inst[1].textContent = data.nb_pann || 'N/A';
+    inst[2].textContent = data.modele_pn || 'N/A';
+    inst[3].textContent = data.marque_pn || 'N/A';
+    inst[4].textContent = data.nb_ond || 'N/A';
+    inst[5].textContent = data.modele_ond || 'N/A';
+    inst[6].textContent = data.marque_ond || 'N/A';
+    inst[7].textContent = data.surface ? `${data.surface} m²` : 'N/A';
+    inst[8].textContent = data.date_install || 'N/A';
 
     // --- Localisation ---
-    loc[0].textContent = data.com_nom;
-    loc[1].textContent = data.dep_nom;
-    loc[2].textContent = data.code_postal;
-    loc[3].textContent = data.reg_nom;
-    loc[4].textContent = data.pays_nom;
-    loc[5].textContent = `${data.lat.toFixed(5)}, ${data.lon.toFixed(5)}`;
+    loc[0].textContent = data.com_nom || 'N/A';
+    loc[1].textContent = data.dep_nom || 'N/A';
+    loc[2].textContent = data.code_postal || 'N/A';
+    loc[3].textContent = data.reg_nom || 'N/A';
+    loc[4].textContent = data.pays_nom || 'N/A';
+    loc[5].textContent = (data.lat && data.lon) ? `${data.lat.toFixed(5)}, ${data.lon.toFixed(5)}` : 'N/A';
 
     // --- Paramètres de l'installation ---
-    param[0].textContent = `${data.puissance_crete} kWc`;
-    param[1].textContent = `${data.prod_pvgis} kWh/an`;
-    param[2].textContent = `${data.pente}°`;
-    param[3].textContent = `${data.pente_opti}°`;
-    param[4].textContent = `${data.ori}°`;
-    param[5].textContent = `${data.ori_opti}°`;
+    param[0].textContent = data.puissance_crete ? `${data.puissance_crete} kWc` : 'N/A';
+    param[1].textContent = data.prod_pvgis ? `${data.prod_pvgis} kWh/an` : 'N/A';
+    param[2].textContent = data.pente ? `${data.pente}°` : 'N/A';
+    param[3].textContent = data.pente_opti ? `${data.pente_opti}°` : 'N/A';
+    param[4].textContent = data.ori ? `${data.ori}°` : 'N/A';
+    param[5].textContent = data.ori_opti ? `${data.ori_opti}°` : 'N/A';
+}
 
-  } catch (err) {
-    console.error("detail.js :", err);
-    // Afficher l'erreur à l'utilisateur
-    const container = document.querySelector('.detail_content');
-    container.innerHTML = `
-      <div class="alert alert-danger text-center">
-        ${err.message}
-      </div>`;
-  }
+// Handle keyboard events
+document.addEventListener('keydown', function (event) {
+    if (event.key === 'Enter' && document.getElementById('keyModal').style.display === 'flex') {
+        validateKey();
+    }
+    if (event.key === 'Escape') {
+        hideKeyModal();
+    }
+});
+
+// Handle click outside modal
+document.addEventListener('click', function (event) {
+    const modal = document.getElementById('keyModal');
+    const contentModal = document.getElementById('contentModal');
+    const openBtn1 = document.getElementById('delInst');
+    const openBtn2 = document.getElementById('changeInst');
+
+    if (modal && modal.style.display === 'flex' &&
+        contentModal && !contentModal.contains(event.target) &&
+        event.target !== openBtn1 && event.target !== openBtn2) {
+        hideKeyModal();
+    }
+});
+
+// Initialize everything when DOM is loaded
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        // Load key hash
+        loadKeyHash();
+
+        // Get installation ID from URL
+        const params = new URLSearchParams(window.location.search);
+        const installId = params.get('detail');
+
+        if (!installId) {
+            throw new Error("Paramètre 'detail' manquant dans l'URL");
+        }
+
+        // Load installation data using AJAX
+        const data = await loadInstallationData(installId);
+
+        if (data.error) {
+            throw new Error(data.message);
+        }
+
+        // Populate the DOM with the data
+        populateInstallationData(data);
+
+        // Set up button event handlers with improved performance
+        const changeBtn = document.getElementById('changeInst');
+        if (changeBtn) {
+            changeBtn.addEventListener('click', function (event) {
+                event.preventDefault();
+
+                // Immediate response for better UX
+                const isAuth = checkAuthentication();
+
+                if (isAuth) {
+                    executeModifyAction();
+                } else {
+                    document.getElementById('keyModal').setAttribute('data-pending-action', 'modify');
+                    showKeyModal();
+                }
+            });
+        }
+
+        const deleteBtn = document.getElementById('delInst');
+        if (deleteBtn) {
+            deleteBtn.addEventListener('click', function (event) {
+                event.preventDefault();
+
+                // Immediate response for better UX
+                const isAuth = checkAuthentication();
+
+                if (isAuth) {
+                    executeDeleteAction();
+                } else {
+                    document.getElementById('keyModal').setAttribute('data-pending-action', 'delete');
+                    showKeyModal();
+                }
+            });
+        }
+
+    } catch (error) {
+        console.error("detail.js error:", error);
+
+        // Display error to user
+        const container = document.querySelector('.detail_content');
+        if (container) {
+            container.innerHTML = `
+        <div class="alert alert-danger text-center">
+          <h4>Erreur de chargement</h4>
+          <p>${error.message}</p>
+          <a href="search.html" class="btn btn-primary">Retour à la recherche</a>
+        </div>`;
+        }
+    }
 });
