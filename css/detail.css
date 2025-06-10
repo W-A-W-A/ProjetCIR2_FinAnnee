@@ -493,3 +493,21 @@ footer a:hover {
         font-size: 0.85rem;
     }
 }
+
+#second-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+/*
+#bigcontainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+    */
