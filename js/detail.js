@@ -149,35 +149,22 @@ document.addEventListener('click', function (event) {
 document.addEventListener('DOMContentLoaded', async () => {
   const changeBtn = document.getElementById('changeInst');
   if (changeBtn) {
-    changeBtn.onclick = function () {
+    changeBtn.onclick = async function () {
       const params = new URLSearchParams(window.location.search);
       const installId = params.get('detail');
       if (!installId) {
         alert("Impossible de récupérer l'identifiant de l'installation.");
         return;
       }
-      window.location.href = `create.html?id=${installId}`;
-    }
-  }
-  const deleteBtn = document.getElementById('delInst');
-  if (deleteBtn) {
-    deleteBtn.onclick = async function () {
-      if (!confirm("Voulez-vous vraiment supprimer cette installation ?")) return;
-      try {
-        const params = new URLSearchParams(window.location.search);
-        const installId = params.get('detail');
-        const response = await fetch(`./back/detail.php?id=${installId}`, {
-          method: 'DELETE'
+      const response = await fetch(`./back/create.php?id=${installId}`, {
+          method: 'PUT'
         });
-        const result = await response.json();
-        if (result.success) {
-          alert("Installation supprimée !");
-          window.location.href = "search.html";
-        } else {
-          alert(result.message || "Erreur lors de la suppression.");
-        }
-      } catch (e) {
-        alert("Erreur lors de la suppression.");
+      const result = await response.json();
+      if (result.success) {
+        // Redirection vers la page de création avec l'ID de l'installation
+        window.location.href = `create.html?id=${installId}`;
+      } else {
+        alert(result.message || "Erreur lors de la modification de l'installation.");
       }
     }
   }
@@ -188,23 +175,32 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
     // 1) Récupérer l'ID d'installation depuis la query string
-    const params = new URLSearchParams(window.location.search);
-    const installId = params.get('detail');
-    if (!installId) {
-      throw new Error("Paramètre 'id' manquant dans l'URL");
+    const changeBtn = document.getElementById('changeInst');
+    if (changeBtn) {
+      changeBtn.onclick = function () {
+        const params = new URLSearchParams(window.location.search);
+        const installId = params.get('detail');
+        if (!installId) {
+          alert("Impossible de récupérer l'identifiant de l'installation.");
+          return;
+        }
+        $.ajax({
+          url: `./back/create.php?id=${installId}`,
+          type: 'PUT',
+          dataType: 'json',
+          success: function(result) {
+            if (result.success) {
+              window.location.href = `create.html?id=${installId}`;
+            } else {
+              alert(result.message || "Erreur lors de la modification de l'installation.");
+            }
+          },
+          error: function() {
+            alert("Erreur lors de la modification de l'installation.");
+          }
+      });
     }
-
-    // 2) Appel au PHP qui renvoie le JSON
-    const response = await fetch(`./back/detail.php?id=${installId}`);
-    if (!response.ok) {
-      // Tenter de parser un message d'erreur éventuel
-      let errMessage = `Erreur HTTP ${response.status}`;
-      try {
-        const errJson = await response.json();
-        errMessage = errJson.message || errMessage;
-      } catch { /* ignore */ }
-      throw new Error(errMessage);
-    }
+  }
 
     const data = await response.json();
     if (data.error) {
@@ -252,5 +248,31 @@ document.addEventListener('DOMContentLoaded', async () => {
       <div class="alert alert-danger text-center">
         ${err.message}
       </div>`;
+  }
+});
+document.addEventListener('DOMContentLoaded', async () => {
+  const deleteBtn = document.getElementById('delInst');
+  if (deleteBtn) {
+    deleteBtn.onclick = function () {
+      if (!confirm("Voulez-vous vraiment supprimer cette installation ?")) return;
+      const params = new URLSearchParams(window.location.search);
+      const installId = params.get('detail');
+      $.ajax({
+        url: `./back/detail.php?id=${installId}`,
+        type: 'DELETE',
+        dataType: 'json',
+        success: function(result) {
+          if (result.success) {
+            alert("Installation supprimée !");
+            window.location.href = "search.html";
+          } else {
+            alert(result.message || "Erreur lors de la suppression.");
+          }
+        },
+        error: function() {
+          alert("Erreur lors de la suppression.");
+        }
+      });
+    }
   }
 });
