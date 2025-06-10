@@ -19,13 +19,13 @@ try {
         "onduleursTotal" => 0
     ];
 
-    // Total enregistrements en base
+    // Total number of rows
     $stmt = $pdo->query("SELECT COUNT(*) AS total FROM Installation");
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $response["enregistrements"] = (int)$result['total'];
 
 
-    // Installations par région (count distinct regions from Installation via Commune)
+    // Installations per region (count distinct regions from Installation trought Commune)
     $stmt = $pdo->query("
         SELECT COUNT(DISTINCT r.id) as total 
         FROM Installation i 
@@ -36,21 +36,19 @@ try {
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $response["regions"] = (int)$result['total'];
 
-    // Total installateurs
+    // Total installers
     $stmt = $pdo->query("SELECT COUNT(DISTINCT id_Installateur) AS total FROM Installation WHERE id_Installateur IS NOT NULL");
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $response["installateurs"] = (int)$result['total'];
 
-    // Installations par année (count installations for current year)
-    // $currentYear = date('Y');
+    // Installations per year (count installations for current year)
     $targetYear = 2016;
     $stmt = $pdo->prepare("SELECT COUNT(*) AS total FROM Installation WHERE an_installation = ?");
-    // $stmt->execute([$currentYear]);
     $stmt->execute([$targetYear]);
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $response["annee"] = (int)$result['total'];
 
-    // Installations d'une région par année (example for a specific region)
+    // Regional installations for a given year (example for a specific region)
     $stmt = $pdo->prepare("
         SELECT COUNT(*) as total 
         FROM Installation i 
@@ -64,22 +62,22 @@ try {
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $response["regionsAnnee"] = (int)$result['total'];
 
-    // Marques de panneaux total
+    // Counting panels brands
     $stmt = $pdo->query("SELECT COUNT(*) AS total FROM Marque_Panneau");
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $response["marques"] = (int)$result['total'];
 
-    // Marques d'onduleurs total
+    // Counting ondulators brands
     $stmt = $pdo->query("SELECT COUNT(*) AS total FROM Marque_Onduleur");
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $response["onduleurs"] = (int)$result['total'];
 
-    // Nombre total de Modele de Panneau
+    // Counting panel models
     $stmt = $pdo->query("SELECT COUNT(*) AS total FROM Modele_Panneau");
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $response["modelePanneau"] = (int)$result['total'];
     
-    // Nombre d'onduleurs total
+    // Counting total number of ondulators
     $stmt = $pdo->query("SELECT COUNT(*) AS total FROM Onduleur");
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $response["onduleursTotal"] = (int)$result['total'];

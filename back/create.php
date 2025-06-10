@@ -3,10 +3,10 @@ header('Content-Type: application/json; charset=UTF-8');
 
 require_once __DIR__ . '/db.php';
 
-// Check if this is an AJAX request
+// Checks if this is an AJAX request
 $isAjax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
 
-// Variables d'initialisation
+// Default response
 $response = [
     'success' => false,
     'message' => '',
@@ -16,7 +16,7 @@ $response = [
 $isEdit = false;
 $installation = null;
 
-// Vérification si c'est une modification (ID passé en paramètre GET ou POST)
+// Checks if we are editing data (data ID passed through GET or POST)
 $id = null;
 if (isset($_GET['id']) && !empty($_GET['id'])) {
     $id = intval($_GET['id']);
@@ -27,7 +27,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
 }
 
 if ($isEdit && $id) {
-    // Récupération des données existantes avec jointures
+    // Gather data using join SQL requests
     try {
         $sql = "SELECT i.id, i.an_installation, i.nb_pann, i.nb_ond, i.mois_installation, i.surface, 
                        i.puissance_crete, i.lat, i.lon, i.ori, i.ori_opti, i.pente, i.pente_opti, 
@@ -73,11 +73,9 @@ if ($isEdit && $id) {
     }
 }
 
-// Traitement du formulaire (création ou modification)
-// FIXED: Check for both 'create' and 'update' parameters
+// Gets form data (creation or update)
 if ($_POST && (isset($_POST['create']) || isset($_POST['update']))) {
     try {
-        // Récupération des données du formulaire
         $installateur = trim($_POST['installateur'] ?? '');
         $nb_panneaux = intval($_POST['nb_panneaux'] ?? 0);
         $modele_panneaux = trim($_POST['modele_panneaux'] ?? '');
@@ -100,21 +98,20 @@ if ($_POST && (isset($_POST['create']) || isset($_POST['update']))) {
         $orientation = floatval($_POST['orientation'] ?? 0);
         $orientation_optimum = floatval($_POST['orientation_optimum'] ?? 0);
 
-        // Validation des données obligatoires
+        // Checks if required fields are filled
         if (empty($installateur) || empty($commune) || $nb_panneaux <= 0) {
             throw new Exception("Les champs installateur, commune et nombre de panneaux sont obligatoires.");
         }
 
-        // Validation du nombre de panneaux et onduleurs
+        // Checks validity of panels and ondulators amounts
         if ($nb_panneaux <= 0) {
             throw new Exception("Le nombre de panneaux doit être supérieur à 0.");
         }
-        
         if ($nb_onduleurs <= 0) {
             throw new Exception("Le nombre d'onduleurs doit être supérieur à 0.");
         }
 
-        // Parse des coordonnées GPS
+        // GPS data parsing
         $lat = null;
         $lon = null;
         if (!empty($coordonnees_gps)) {
@@ -123,7 +120,7 @@ if ($_POST && (isset($_POST['create']) || isset($_POST['update']))) {
                 $lat = floatval(trim($coords[0]));
                 $lon = floatval(trim($coords[1]));
                 
-                // Validation des coordonnées GPS
+                // Checks if GPS data is valid
                 if ($lat < -90 || $lat > 90 || $lon < -180 || $lon > 180) {
                     throw new Exception("Coordonnées GPS invalides. Latitude: -90 à 90, Longitude: -180 à 180.");
                 }
@@ -132,7 +129,7 @@ if ($_POST && (isset($_POST['create']) || isset($_POST['update']))) {
             }
         }
 
-        // Parse de la date d'installation
+        // getting installation date
         $an_installation = null;
         $mois_installation = null;
         if (!empty($date_installation)) {
@@ -141,7 +138,7 @@ if ($_POST && (isset($_POST['create']) || isset($_POST['update']))) {
                 $an_installation = intval($date_parts[0]);
                 $mois_installation = intval($date_parts[1]);
                 
-                // Validation de la date (ne doit pas être dans le futur)
+                // Checking if date is correct
                 $install_date = new DateTime($date_installation);
                 $today = new DateTime();
                 if ($install_date > $today) {
@@ -150,26 +147,20 @@ if ($_POST && (isset($_POST['create']) || isset($_POST['update']))) {
             }
         }
 
-        // Validation des valeurs numériques
+        // Checking if surface, power and production values are valid
         if ($surface < 0) {
             throw new Exception("La surface ne peut pas être négative.");
         }
-        
         if ($puissance_crete < 0) {
             throw new Exception("La puissance crête ne peut pas être négative.");
         }
-        
         if ($production_pvgis < 0) {
             throw new Exception("La production PVGIS ne peut pas être négative.");
         }
 
-        // Début de la transaction
         $pdo->beginTransaction();
 
-        // [... rest of the original code for handling installateur, pays, region, departement, commune, panneaux, onduleurs ...]
-        // I'll include the key parts:
-
-        // Gestion de l'installateur
+        // Installer data
         $id_installateur = null;
         if (!empty($installateur)) {
             $stmt = $pdo->prepare("SELECT id FROM Installateur WHERE install_nom = :nom");
@@ -185,13 +176,10 @@ if ($_POST && (isset($_POST['create']) || isset($_POST['update']))) {
             }
         }
 
-        // ... [similar code for other entities] ...
-
-        // FIXED: Determine if this is an update or create operation
         $isUpdate = isset($_POST['update']) || ($isEdit && $id);
 
         if ($isUpdate) {
-            // Modification d'une installation existante
+            // Editing an existing installation
             $sql = "UPDATE Installation SET 
                 id_Installateur = :id_installateur, nb_pann = :nb_panneaux, 
                 id_Commune = :id_commune, id_Panneau = :id_panneau,
@@ -227,7 +215,7 @@ if ($_POST && (isset($_POST['create']) || isset($_POST['update']))) {
 
             $response['message'] = "Installation modifiée avec succès !";
         } else {
-            // Création d'une nouvelle installation
+            // creating a new installation
             $sql = "INSERT INTO Installation (
                 id_Installateur, nb_pann, id_Commune, id_Panneau, id_Onduleur,
                 nb_ond, surface, an_installation, mois_installation, lat, lon,
@@ -265,7 +253,7 @@ if ($_POST && (isset($_POST['create']) || isset($_POST['update']))) {
         $stmt = $pdo->prepare($sql);
         $stmt->execute($params);
 
-        // Valider la transaction
+        // Sending request
         $pdo->commit();
 
         $response['success'] = true;
@@ -275,7 +263,7 @@ if ($_POST && (isset($_POST['create']) || isset($_POST['update']))) {
         }
         
     } catch(Exception $e) {
-        // Annuler la transaction en cas d'erreur
+        // Cancelling request if an error occurs to prevent data loss
         if ($pdo->inTransaction()) {
             $pdo->rollBack();
         }

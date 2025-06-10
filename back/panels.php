@@ -42,10 +42,6 @@ try {
         }
         $sql .= " LIMIT 100;";
 
-        $returnJson = [
-            "sql" => $sql // testing
-        ];
-
         // fetching from MySQL after filtering
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
@@ -57,7 +53,7 @@ try {
     exit;
 }
 catch (Exception $e) {
-    // because the js wants json
+    // returning json error response to prevent crash on the other side (and provide infos)
     $resp = [
         "error" => "Error loading block",
         "message" => $e->getMessage()

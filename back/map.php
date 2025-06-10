@@ -37,7 +37,6 @@ try {
     
     if ($action === 'get_departments') {
         // Get 20 random departments that have installations
-        // Fixed: removed dep_code which doesn't exist in the schema
         $sql = "SELECT DISTINCT d.id, d.dep_nom as name
                 FROM Departement d
                 INNER JOIN Commune c ON c.id_Departement = d.id
@@ -74,7 +73,6 @@ try {
         exit;
     }
 
-    // Default action: get installations
     // Get filter parameters from GET request
     $department_filter = isset($_GET['department']) ? $_GET['department'] : null;
     $region_filter = isset($_GET['region']) ? $_GET['region'] : null;

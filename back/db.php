@@ -1,6 +1,6 @@
 <?php
 
-$host = 'localhost'; // connection a la mariadb 
+$host = 'localhost'; // connection to mariadb/MySQL
 $db   = 'solaire';
 $user = 'monuser';
 $altUser = 'admin'; // used during testing

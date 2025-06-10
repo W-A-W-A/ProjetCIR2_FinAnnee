@@ -9,7 +9,7 @@ header('Access-Control-Allow-Headers: Content-Type');
 // Include the database connection
 require_once __DIR__ . '/db.php';
 
-
+// get 20 brands of ondulators
 function getOndBrands($limit = 20) {
   global $pdo;
   $sql = "SELECT DISTINCT id, nom FROM Marque_Onduleur ORDER BY nom ASC LIMIT $limit";
@@ -31,6 +31,7 @@ function getOndBrands($limit = 20) {
   return $resp;
 }
 
+// get 20 brands of panels
 function getPanelBrands($limit = 20) {
   global $pdo;
   $sql = "SELECT DISTINCT id, nom FROM Marque_Panneau ORDER BY nom ASC LIMIT $limit";
@@ -52,6 +53,7 @@ function getPanelBrands($limit = 20) {
   return $resp;
 }
 
+// get 20 departments
 function getDeps($limit = 20) {
   global $pdo;
   $sql = "SELECT DISTINCT id, dep_nom FROM Departement ORDER BY dep_nom ASC LIMIT $limit";
@@ -74,7 +76,7 @@ function getDeps($limit = 20) {
 }
 
 try {
-  
+  // returns all collected data as json
   echo json_encode([
     "ondBrand" => getOndBrands(),
     "panelBrand" => getPanelBrands(),
