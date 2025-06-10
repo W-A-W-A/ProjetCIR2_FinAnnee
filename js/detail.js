@@ -149,35 +149,15 @@ document.addEventListener('click', function (event) {
 document.addEventListener('DOMContentLoaded', async () => {
   const changeBtn = document.getElementById('changeInst');
   if (changeBtn) {
-<<<<<<< HEAD
     changeBtn.onclick = async function () {
-=======
-    changeBtn.addEventListener('click', function (event) {
-      event.preventDefault();
->>>>>>> 753bca6ac1009f8c941ab7e2c40b6488a5a0c31a
       const params = new URLSearchParams(window.location.search);
       const installId = params.get('detail');
       if (!installId) {
         alert("Impossible de récupérer l'identifiant de l'installation.");
         return;
       }
-<<<<<<< HEAD
       const response = await fetch(`./back/create.php?id=${installId}`, {
           method: 'PUT'
-=======
-      window.location.href = `create.html?id=${installId}`;
-    });
-  }
-  const deleteBtn = document.getElementById('delInst');
-  if (deleteBtn) {
-    deleteBtn.onclick = async function () {
-      if (!confirm("Voulez-vous vraiment supprimer cette installation ?")) return;
-      try {
-        const params = new URLSearchParams(window.location.search);
-        const installId = params.get('detail');
-        const response = await fetch(`./back/detail.php?id=${installId}`, {
-          method: 'DELETE'
->>>>>>> 753bca6ac1009f8c941ab7e2c40b6488a5a0c31a
         });
       const result = await response.json();
       if (result.success) {
