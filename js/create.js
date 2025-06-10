@@ -1,4 +1,51 @@
 $(document).ready(function () {
+    const params = new URLSearchParams(window.location.search);
+    const installId = params.get('id');
+    if (installId) {
+        // Pré-remplissage pour modification
+        $('#installId').val(installId);
+        // Appel AJAX pour récupérer les données
+        $.ajax({
+            url: `./back/create.php?id=${installId}`,
+            type: 'GET',
+            dataType: 'json',
+            headers: { 'X-Requested-With': 'XMLHttpRequest' },
+            success: function (result) {
+                if (result.success && result.data) {
+                    // Remplis les champs du formulaire avec result.data
+                    $('[name="installateur"]').val(result.data.install_nom || '');
+                    $('[name="nb_panneaux"]').val(result.data.nb_pann || '');
+                    $('[name="modele_panneaux"]').val(result.data.modele_pn || '');
+                    $('[name="marque_panneaux"]').val(result.data.marque_pn || '');
+                    $('[name="nb_onduleurs"]').val(result.data.nb_ond || '');
+                    $('[name="modele_onduleurs"]').val(result.data.modele_ond || '');
+                    $('[name="marque_onduleurs"]').val(result.data.marque_ond || '');
+                    $('[name="surface"]').val(result.data.surface || '');
+                    $('[name="puissance_crete"]').val(result.data.puissance_crete || '');
+                    $('[name="production_pvgis"]').val(result.data.production_pvgis || '');
+                    $('[name="commune"]').val(result.data.com_nom || '');
+                    $('[name="departement"]').val(result.data.dep_nom || '');
+                    $('[name="code_postal"]').val(result.data.code_postal || '');
+                    $('[name="region"]').val(result.data.reg_nom || '');
+                    $('[name="pays"]').val(result.data.pays_nom || '');
+                    $('[name="coordonnees_gps"]').val(result.data.coordonnees_gps || '');
+                    $('[name="date_installation"]').val(result.data.date_install || '');
+                    $('[name="pente"]').val(result.data.pente || '');
+                    $('[name="pente_opti"]').val(result.data.pente_opti || '');
+                    $('[name="orientation"]').val(result.data.ori || '');
+                    $('[name="orientation_opti"]').val(result.data.ori_opti || '');
+
+                }
+                // Affiche le bouton Modifier, cache le bouton Créer
+                $('#createBtn').hide();
+                $('#updateBtn').show();
+            }
+        });
+    } else {
+        // Création : bouton création visible, bouton modification caché
+        $('#createBtn').show();
+        $('#updateBtn').hide();
+    }
     // Remove the form action to prevent default submission
     $('form').removeAttr('action');
 

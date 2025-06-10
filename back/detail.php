@@ -127,4 +127,19 @@ catch (Exception $e) {
 
   echo json_encode($resp);
 }
+if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+    // Récupérer l'ID depuis l'URL'
+    $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+    if (!$id) {
+        http_response_code(400);
+        echo json_encode(['error' => true, 'message' => "ID manquant pour suppression"]);
+        exit;
+    }
+    $stmt = $pdo->prepare("DELETE FROM Installation WHERE id = ?");
+    $stmt->execute([$id]);
+    echo json_encode(['success' => true]);
+    // Return to the search page
+    header('Location: search.html');
+    exit;
+}
 ?>

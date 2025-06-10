@@ -147,6 +147,18 @@ document.addEventListener('click', function (event) {
 });
 
 document.addEventListener('DOMContentLoaded', async () => {
+  const changeBtn = document.getElementById('changeInst');
+  if (changeBtn) {
+    changeBtn.onclick = function () {
+      const params = new URLSearchParams(window.location.search);
+      const installId = params.get('detail');
+      if (!installId) {
+        alert("Impossible de récupérer l'identifiant de l'installation.");
+        return;
+      }
+      window.location.href = `create.html?id=${installId}`;
+    }
+  }
   try {
 
     // Load key hash
@@ -220,3 +232,41 @@ document.addEventListener('DOMContentLoaded', async () => {
       </div>`;
   }
 });
+
+const deleteBtn = document.getElementById('delInst');
+if (deleteBtn) {
+  deleteBtn.onclick = async function () {
+    if (!confirm("Voulez-vous vraiment supprimer cette installation ?")) return;
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const installId = params.get('detail');
+      const response = await fetch(`./back/detail.php?id=${installId}`, {
+        method: 'DELETE'
+      });
+      const result = await response.json();
+      if (result.success) {
+        alert("Installation supprimée !");
+        window.location.href = "search.html"; // Redirige après suppression
+      } else {
+        alert(result.message || "Erreur lors de la suppression.");
+      }
+    } catch (e) {
+      alert("Erreur lors de la suppression.");
+    }
+  }
+}
+
+const changeBtn = document.getElementById('changeInst');
+if (changeBtn) {
+  changeBtn.onclick = function () {
+    const params = new URLSearchParams(window.location.search);
+    // On récupère bien le paramètre 'detail' de l'URL
+    const installId = params.get('detail');
+    if (!installId) {
+      alert("Impossible de récupérer l'identifiant de l'installation.");
+      return;
+    }
+    // Redirige vers create.html avec l'id
+    window.location.href = `create.html?id=${installId}`;
+  }
+}
