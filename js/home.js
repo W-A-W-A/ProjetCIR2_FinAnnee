@@ -136,7 +136,6 @@ function initializeStats() {
 function showErrorMessage(message) {
     console.error('Showing error to user:', message);
 
-    // You can customize this to show a nice error message in your UI
     const statsSection = document.querySelector('.stats-section');
     if (statsSection) {
         const errorDiv = document.createElement('div');
@@ -205,7 +204,6 @@ document.addEventListener('DOMContentLoaded', function () {
             } else {
                 // For external links (like map.html, search.html), let the browser navigate normally
                 console.log(`Navigating to: ${href}`);
-                // Don't prevent default - let the link work normally
             }
         });
     });

@@ -176,7 +176,7 @@ function populateInstallationData(data) {
     const loc = document.getElementById('localisation').children;
     const param = document.getElementById('parametres').children;
 
-    // --- Installation ---
+    // Installation
     inst[0].textContent = data.nom_installateur || 'N/A';
     inst[1].textContent = data.nb_pann || 'N/A';
     inst[2].textContent = data.modele_pn || 'N/A';
@@ -187,7 +187,7 @@ function populateInstallationData(data) {
     inst[7].textContent = data.surface ? `${data.surface} m²` : 'N/A';
     inst[8].textContent = data.date_install || 'N/A';
 
-    // --- Localisation ---
+    // Position
     loc[0].textContent = data.com_nom || 'N/A';
     loc[1].textContent = data.dep_nom || 'N/A';
     loc[2].textContent = data.code_postal || 'N/A';
@@ -195,7 +195,7 @@ function populateInstallationData(data) {
     loc[4].textContent = data.pays_nom || 'N/A';
     loc[5].textContent = (data.lat && data.lon) ? `${data.lat.toFixed(5)}, ${data.lon.toFixed(5)}` : 'N/A';
 
-    // --- Paramètres de l'installation ---
+    // Installation parameters
     param[0].textContent = data.puissance_crete ? `${data.puissance_crete} kWc` : 'N/A';
     param[1].textContent = data.prod_pvgis ? `${data.prod_pvgis} kWh/an` : 'N/A';
     param[2].textContent = data.pente ? `${data.pente}°` : 'N/A';

@@ -152,6 +152,7 @@ function updateFieldSelection() {
                 response.results.forEach(result => {
                     const resultItem = document.createElement('div');
                     resultItem.className = 'result-item';
+                    // generating HTML for each result item
                     resultItem.innerHTML = `
                             <div class="result-header">
                                 <div class="result-stats">
