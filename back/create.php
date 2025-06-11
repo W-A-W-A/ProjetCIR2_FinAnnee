@@ -74,7 +74,7 @@ if ($isEdit && $id) {
 }
 
 // Gets form data (creation or update)
-if ($_POST && (isset($_POST['create']) || isset($_POST['update']))) {
+if ($_POST && (isset($_POST['create']) || isset($_POST['update']))) { // If fetch request is a create or update
     try {
         $installateur = trim($_POST['installateur'] ?? '');
         $nb_panneaux = intval($_POST['nb_panneaux'] ?? 0);

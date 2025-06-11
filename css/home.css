@@ -17,6 +17,35 @@ body {
     overflow: hidden;
 }
 
+h2 {
+    color: #FCFFFD;
+    font-size: 2.2rem;
+    font-weight: bold;
+    margin: 0;
+    text-shadow:
+        0 2px 4px rgba(93, 115, 126, 0.3),
+        0 4px 8px rgba(93, 115, 126, 0.2);
+    letter-spacing: 0.5px;
+    position: relative;
+    z-index: 2;
+    background: linear-gradient(135deg, #FCFFFD 0%, #C0FDFB 50%, #DAFFEF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 2px 4px rgba(93, 115, 126, 0.2));
+    animation: titleGlow 4s ease-in-out infinite alternate;
+}
+
+@keyframes titleGlow {
+    0% {
+        filter: drop-shadow(0 2px 4px rgba(93, 115, 126, 0.2));
+    }
+
+    100% {
+        filter: drop-shadow(0 4px 8px rgba(100, 182, 172, 0.3));
+    }
+}
+
 .header-container::before {
     content: '';
     position: absolute;
@@ -342,6 +371,9 @@ footer a:hover {
 }
 
 /* Responsive design */
+
+/* TABLET BREAKPOINT - For tablets and smaller desktop screens (768px and below)
+   This affects devices like iPad, small laptops, and large phones in landscape mode */
 @media (max-width: 768px) {
     .header-container {
         flex-direction: column;
@@ -404,6 +436,8 @@ footer a:hover {
     }
 }
 
+/* MOBILE BREAKPOINT - For mobile phones (480px and below)
+   This targets most smartphones in portrait mode */
 @media (max-width: 480px) {
     .header-container {
         padding: 0.8rem;
@@ -466,6 +500,8 @@ footer a:hover {
     }
 }
 
+/* SMALL MOBILE BREAKPOINT - For very small phones (320px and below)
+   This targets older smartphones and very small screens */
 @media (max-width: 320px) {
     .nav-tabs {
         flex-wrap: wrap;

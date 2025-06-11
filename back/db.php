@@ -1,9 +1,9 @@
 <?php
 
-$host = 'localhost'; // connection to mariadb/MySQL
+$host = 'localhost'; // connection to mariadb/MySQL on the VM
 $db   = 'solaire';
 $user = 'monuser';
-$altUser = 'admin'; // used during testing
+$altUser = 'admin'; // used during testing on local machines
 $pass = 'isen44';
 
 $options = [

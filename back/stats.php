@@ -1,6 +1,10 @@
 <?php
-// Set header to return JSON
+
 header('Content-Type: application/json');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET');
+header('Access-Control-Allow-Headers: Content-Type');
+
 
 // Include the database connection
 require_once __DIR__ . '/db.php';
@@ -49,16 +53,16 @@ try {
     $response["annee"] = (int)$result['total'];
 
     // Regional installations for a given year (example for a specific region)
+    $targetRegion = 1; // Specify the region ID you want to filter by
     $stmt = $pdo->prepare("
         SELECT COUNT(*) as total 
         FROM Installation i 
         JOIN Commune c ON i.id_Commune = c.id 
         JOIN Departement d ON c.id_Departement = d.id 
         JOIN Region r ON d.id_Region = r.id 
-        WHERE i.an_installation = ? 
-        LIMIT 1
+        WHERE i.an_installation = ? AND r.id = ?
     ");
-    $stmt->execute([$targetYear]);
+    $stmt->execute([$targetYear, $targetRegion]);
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $response["regionsAnnee"] = (int)$result['total'];
 

@@ -19,6 +19,35 @@ body {
     overflow: hidden;
 }
 
+h2 {
+    color: #FCFFFD;
+    font-size: 2.2rem;
+    font-weight: bold;
+    margin: 0;
+    text-shadow:
+        0 2px 4px rgba(93, 115, 126, 0.3),
+        0 4px 8px rgba(93, 115, 126, 0.2);
+    letter-spacing: 0.5px;
+    position: relative;
+    z-index: 2;
+    background: linear-gradient(135deg, #FCFFFD 0%, #C0FDFB 50%, #DAFFEF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 2px 4px rgba(93, 115, 126, 0.2));
+    animation: titleGlow 4s ease-in-out infinite alternate;
+}
+
+@keyframes titleGlow {
+    0% {
+        filter: drop-shadow(0 2px 4px rgba(93, 115, 126, 0.2));
+    }
+
+    100% {
+        filter: drop-shadow(0 4px 8px rgba(100, 182, 172, 0.3));
+    }
+}
+
 .header-container::before {
     content: '';
     position: absolute;
