@@ -204,6 +204,7 @@ function updateMapMarkers() {
                     <p><strong>Puissance:</strong> ${installation.power || 'N/A'}</p>
                     <p><strong>Département:</strong> ${installation.department_name || 'N/A'}</p>
                     <p><strong>Région:</strong> ${installation.region_name || 'N/A'}</p>
+                    <p><a href="./detail.html?detail=${installation.id}"><strong>Details d'Installation</strong></a></p>
                 </div>
             `;
 

@@ -13,6 +13,35 @@ body {
     align-items: center;
     justify-content: space-between;
     box-shadow: 0 4px 20px rgba(93, 115, 126, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.header-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        radial-gradient(circle at 20% 50%, rgba(192, 253, 251, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(218, 255, 239, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(100, 182, 172, 0.1) 0%, transparent 50%);
+    animation: headerShimmer 8s ease-in-out infinite alternate;
+    pointer-events: none;
+}
+
+@keyframes headerShimmer {
+    0% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 0.7;
+        transform: scale(1.05);
+    }
 }
 
 .logo {
@@ -27,7 +56,19 @@ body {
     font-size: 28px;
     color: #5D737E;
     font-weight: bold;
-    box-shadow: 0 8px 25px rgba(93, 115, 126, 0.2);
+    box-shadow:
+        0 8px 25px rgba(93, 115, 126, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
+}
+
+.logo:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow:
+        0 12px 35px rgba(93, 115, 126, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 .nav-tabs {
@@ -36,6 +77,8 @@ body {
     padding: 0;
     display: flex;
     gap: 8px;
+    position: relative;
+    z-index: 2;
 }
 
 .nav-tabs .nav-link {
@@ -46,9 +89,26 @@ body {
     padding: 14px 28px;
     font-weight: 600;
     font-size: 0.95rem;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     text-decoration: none;
     backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-tabs .nav-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.nav-tabs .nav-link:hover::before {
+    left: 100%;
 }
 
 .nav-tabs .nav-link.active {
@@ -56,7 +116,17 @@ body {
     color: #5D737E;
     font-weight: bold;
     border-color: rgba(93, 115, 126, 0.3);
+    box-shadow:
+        0 4px 15px rgba(192, 253, 251, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
 }
+
+.nav-tabs .nav-link:hover:not(.active) {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.15));
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(255, 255, 255, 0.1);
+}
+
 
 /* Search Section */
 .search-section {

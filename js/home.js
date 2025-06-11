@@ -81,41 +81,6 @@ function loadStats() {
     });
 }
 
-// Fetch API fallback
-function loadStatsWithFetch() {
-    return fetch('./back/stats.php', {
-        method: 'GET',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }
-    })
-        .then(response => {
-            console.log('Fetch response status:', response.status);
-
-            if (!response.ok) {
-                return response.text().then(text => {
-                    throw new Error(`HTTP ${response.status}: ${text}`);
-                });
-            }
-
-            return response.json();
-        })
-        .then(data => {
-            console.log('Stats loaded with fetch:', data);
-
-            if (data && typeof data === 'object' && !data.error) {
-                for (const key in data) {
-                    if (apiData.hasOwnProperty(key)) {
-                        apiData[key] = parseInt(data[key]) || 0;
-                    }
-                }
-                return data;
-            } else {
-                throw new Error(data.error || 'Invalid response format');
-            }
-        });
-}
 
 // Initialize stats animation
 function initializeStats() {
